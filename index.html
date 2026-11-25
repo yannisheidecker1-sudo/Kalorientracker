@@ -64,7 +64,7 @@ h1,h2,h3{margin:0;font-weight:600}
 .empty{color:var(--mute);font-size:13px;padding:6px 0}
 .tabs{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--line);display:flex;justify-content:center;padding:6px 8px calc(6px + env(safe-area-inset-bottom));z-index:5}
 .tabs .in{display:flex;max-width:560px;width:100%;gap:2px}
-.tab{flex:1;border:0;background:none;padding:6px 2px;color:var(--mute);font-size:11px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
+.tab{flex:1;border:0;background:none;padding:6px 1px;color:var(--mute);font-size:10.5px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 .tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .tab.on{color:var(--acc);font-weight:600}
 .fab{position:fixed;right:max(16px,calc(50% - 264px));bottom:calc(74px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:30px;line-height:1;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;z-index:6}
@@ -90,6 +90,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .res .t div:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .res .m{font-size:12px;color:var(--mute)}
 .sec-h{font-size:12px;color:var(--mute);text-transform:uppercase;letter-spacing:.04em;margin:12px 0 2px}
+.supg{display:grid;grid-template-columns:1fr 1fr;gap:8px}.supb{display:flex;align-items:center;gap:10px;text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:14px;padding:10px;cursor:pointer;font:inherit}.supb .ck{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:flex;align-items:center;justify-content:center;flex:none;color:#fff;font-weight:700}.supb.on{border-color:var(--acc);background:var(--acc-soft,rgba(31,157,107,.12))}.supb.on .ck{background:var(--acc);border-color:var(--acc)}.supb b{display:block;font-size:14px}.supb i{display:block;font-style:normal;font-size:11px;opacity:.7;margin-top:2px}
 .chips{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
 .prev{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;text-align:center;margin:12px 0}
 .prev div{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px 2px}
@@ -269,7 +270,1382 @@ const RAW2=[
 ["Rotwein",85,0.1,2,0,0,0.6,0,5,8,0.5,120,10,0,150,"Glas (150 ml)","ml"],
 ["Milchkaffee / Latte",45,2.5,3.5,2,0,3.5,1.2,35,90,0,120,10,0,300,"Tasse (300 ml)","ml"]
 ];
-const BASE=RAW.concat(RAW2).map((r,i)=>{const o={id:'b'+i,name:r[0],serv:r[14],sl:r[15],u:r[16]||'g'};NK.forEach((k,j)=>o[k]=r[1+j]);return o});
+const RAW3=[
+["Apfel Elstar",52,0.3,12.5,0.2,2,10.5,0,1,5,0.2,110,5,6,180,"1 Apfel (180 g)"],
+["Apfel Gala",55,0.3,13,0.1,2,11,0,1,5,0.2,110,5,5,180,"1 Apfel (180 g)"],
+["Apfel Braeburn",53,0.3,12.5,0.2,2,10.5,0,1,5,0.2,110,5,5,180,"1 Apfel (180 g)"],
+["Apfel Granny Smith",50,0.3,11.5,0.2,2.2,9.5,0,1,5,0.2,110,5,6,180,"1 Apfel (180 g)"],
+["Apfel Jonagold",54,0.3,13,0.2,2,11,0,1,5,0.2,110,5,5,180,"1 Apfel (180 g)"],
+["Apfel Pink Lady",55,0.3,13,0.2,2,11,0,1,5,0.2,110,5,5,180,"1 Apfel (180 g)"],
+["Apfel Fuji",58,0.2,14,0.2,2,12,0,1,5,0.2,110,5,4,180,"1 Apfel (180 g)"],
+["Apfel Boskoop",48,0.3,11,0.2,2.3,9,0,1,6,0.2,110,5,10,180,"1 Apfel (180 g)"],
+["Apfel Golden Delicious",54,0.3,13,0.2,2,11,0,1,5,0.2,110,5,5,180,"1 Apfel (180 g)"],
+["Apfel Cox Orange",54,0.3,12.5,0.2,2,11,0,1,5,0.2,110,5,6,150,"1 Apfel (150 g)"],
+["Apfel Topaz",52,0.3,12.5,0.2,2,10.5,0,1,5,0.2,110,5,5,180,"1 Apfel (180 g)"],
+["Apfel (Durchschnitt)",52,0.3,12,0.2,2,10.5,0,1,5,0.2,110,5,6,180,"1 Apfel (180 g)"],
+["Apfelmus",50,0.2,12,0.1,1,10.5,0,2,4,0.2,80,4,1,100,"Portion (100 g)"],
+["Cherrytomaten",20,0.9,3,0.2,1,2.8,0,6,10,0.4,240,11,18,100,"Handvoll (100 g)"],
+["Cocktailtomaten",20,0.9,3,0.2,1,2.8,0,6,10,0.4,240,11,18,100,"Handvoll (100 g)"],
+["Datteltomaten",20,0.9,3,0.2,1,2.8,0,6,10,0.4,240,11,18,100,"Handvoll (100 g)"],
+["Rispentomaten",19,0.9,3,0.2,1,2.6,0,6,10,0.4,240,11,18,120,"1 Tomate (120 g)"],
+["Strauchtomaten",19,0.9,3,0.2,1,2.6,0,6,10,0.4,240,11,18,120,"1 Tomate (120 g)"],
+["Fleischtomate",18,0.9,3,0.2,1,2.5,0,6,10,0.4,240,11,18,200,"1 Tomate (200 g)"],
+["Ochsenherztomate",18,0.9,3,0.2,1,2.5,0,6,10,0.4,240,11,18,250,"1 Tomate (250 g)"],
+["Romatomate",18,0.9,3,0.2,1,2.5,0,6,10,0.4,240,11,18,100,"1 Tomate (100 g)"],
+["Tomaten gehackt (Dose)",21,1.2,3.5,0.2,1.3,3.1,0,150,20,0.7,240,12,8,200,"½ Dose (200 g)"],
+["Tomaten passiert",28,1.5,4.5,0.2,1.5,4,0,100,20,0.7,300,15,8,200,"Portion (200 g)"],
+["Tomatenmark",80,4.3,14,0.5,4,12,0.1,100,30,3,1000,50,12,20,"1 EL (20 g)"],
+["Tomaten getrocknet",258,14,44,3,12,38,0.4,50,110,9,3400,170,40,20,"Portion (20 g)"],
+["Tomatensauce (Fertig)",45,1.5,8,0.8,1.5,6,0.1,400,20,0.6,250,15,5,150,"Portion (150 g)"],
+["Mandarine",46,0.8,10,0.3,1.8,9.5,0,2,37,0.2,166,12,27,80,"1 Mandarine (80 g)"],
+["Clementine",47,0.9,10,0.2,1.7,9.2,0,1,30,0.1,177,10,49,70,"1 Clementine (70 g)"],
+["Grapefruit",42,0.8,9,0.1,1.6,8.5,0,1,22,0.1,135,9,31,250,"½ Grapefruit (250 g)"],
+["Kirschen",63,1.1,14,0.2,2.1,12.8,0,0,13,0.4,222,11,7,100,"Handvoll (100 g)"],
+["Brombeeren",43,1.4,10,0.5,5.3,4.9,0,1,29,0.6,162,20,21,100,"Handvoll (100 g)"],
+["Aprikose",48,1.4,11,0.4,2,9.2,0,1,13,0.4,259,10,10,40,"1 Aprikose (40 g)"],
+["Pflaume",46,0.7,11,0.3,1.4,10,0,0,6,0.2,157,7,9,50,"1 Pflaume (50 g)"],
+["Nektarine",44,1.1,10.5,0.3,1.7,7.9,0,0,6,0.3,201,9,5,140,"1 Nektarine (140 g)"],
+["Granatapfel",83,1.7,19,1.2,4,14,0.1,3,10,0.3,236,12,10,150,"½ Granatapfel (150 g)"],
+["Feige frisch",74,0.8,19,0.3,2.9,16,0.1,1,35,0.4,232,17,2,50,"1 Feige (50 g)"],
+["Melone (Honigmelone)",36,0.5,8,0.1,0.8,8,0,16,9,0.2,267,12,18,200,"Stück (200 g)"],
+["Paprika gelb",27,1,5.4,0.2,1.7,4.5,0.1,2,11,0.5,225,12,184,150,"1 Paprika (150 g)"],
+["Paprika grün",20,0.9,3.5,0.2,1.7,2.4,0,3,10,0.3,175,10,80,150,"1 Paprika (150 g)"],
+["Karotten",41,0.9,8,0.2,2.8,4.7,0,69,33,0.3,320,12,6,100,"1 Karotte (100 g)"],
+["Kartoffeln roh",77,2,17,0.1,2.2,0.8,0,6,12,0.8,420,23,20,150,"1 Kartoffel (150 g)"],
+["Kohlrabi",27,1.7,4.8,0.1,3.6,2.6,0,20,24,0.4,350,19,63,150,"1 Kohlrabi (150 g)"],
+["Rosenkohl",43,3.4,5,0.3,3.8,2.2,0.1,25,42,1.4,389,23,85,150,"Portion (150 g)"],
+["Rotkohl",31,1.4,5,0.2,2.5,3.2,0,27,45,0.8,243,16,57,150,"Portion (150 g)"],
+["Weißkohl",25,1.3,4.2,0.1,2.5,3.2,0,18,40,0.5,170,15,36,150,"Portion (150 g)"],
+["Spargel",20,2.2,2,0.1,1.5,1.9,0,2,24,1,202,14,6,250,"Portion (250 g)"],
+["Radieschen",16,0.7,2,0.1,1.6,1.9,0,39,25,0.3,233,10,15,50,"5 Radieschen (50 g)"],
+["Fenchel",31,1.2,5,0.2,3.1,3.9,0,52,49,0.7,414,17,12,200,"1 Knolle (200 g)"],
+["Rucola",25,2.6,2,0.7,1.6,2,0.1,27,160,1.5,369,47,15,30,"Handvoll (30 g)"],
+["Feldsalat",21,2,3.6,0.4,1.8,0.7,0,4,35,2,420,13,35,50,"Portion (50 g)"],
+["Grünkohl",49,4.3,5,0.9,4,2.3,0.1,38,135,1.7,491,34,93,150,"Portion (150 g)"],
+["Grüne Bohnen",31,1.8,4,0.2,3.4,2.3,0,6,37,1,211,25,12,150,"Portion (150 g)"],
+["Kidneybohnen gekocht",127,8.7,18,0.5,6.4,2,0.1,2,28,2.9,403,45,1,150,"Portion (150 g)"],
+["Weiße Bohnen (Dose)",90,6,13,0.5,5,1,0.1,220,60,2,300,40,1,150,"Portion (150 g)"],
+["Räuchertofu",170,16,3,10,1.5,1,1.5,550,300,3,150,60,0,100,"Portion (100 g)"],
+["Tempeh",193,19,9,11,5,0,2.5,9,110,2.7,412,81,0,100,"Portion (100 g)"],
+["Edamame",121,12,9,5,5,2,0.6,6,63,2.3,482,64,10,100,"Portion (100 g)"],
+["Thunfisch Dose (Wasser)",110,25,0,1,0,0,0.3,300,10,1,250,30,0,120,"1 Dose (120 g)"],
+["Lachs",208,20,0,13,0,0,3,59,12,0.3,363,27,0,150,"Filet (150 g)"],
+["Hähnchenbrust (Durchschnitt)",110,23,0,1.5,0,0,0.4,60,8,0.4,330,28,0,150,"Portion (150 g)"],
+["Hackfleisch gemischt",260,17,0,21,0,0,8.5,75,10,1.9,300,18,0,150,"Portion (150 g)"],
+["Rinderhack",230,19,0,17,0,0,7,75,10,2.1,320,20,0,150,"Portion (150 g)"],
+["Schinken gekocht",107,19,1,3,0,0.5,1,1000,10,0.7,300,20,0,20,"1 Scheibe (20 g)"],
+["Bacon",417,13,1,40,0,0.5,14,1700,10,1,250,15,0,15,"1 Scheibe (15 g)"],
+["Eiklar",48,11,0.7,0.2,0,0.7,0,165,7,0.1,160,11,0,33,"1 Eiklar (33 g)"],
+["Whey Protein Pulver",395,78,7,6,0,5,3,150,400,1,400,60,0,30,"1 Scoop (30 g)"],
+["Proteinpudding",75,10,7,0.5,0,5,0.3,90,120,0.1,180,12,0,200,"1 Becher (200 g)"],
+["Joghurt 1,5 %",47,4,5,1.5,0,5,1,50,130,0,160,12,1,150,"1 Becher (150 g)"],
+["Milch 1,5 %",47,3.4,4.8,1.5,0,4.8,1,45,120,0,150,12,1,250,"Glas (250 ml)","ml"],
+["Milch 3,5 %",65,3.3,4.8,3.6,0,4.8,2.3,45,120,0,150,12,1,250,"Glas (250 ml)","ml"],
+["Sojadrink",39,3.3,2.5,1.8,0.5,2,0.3,30,120,0.4,120,15,0,250,"Glas (250 ml)","ml"],
+["Mandeldrink",24,0.5,3,1.1,0.3,2.5,0.1,40,120,0.3,60,10,0,250,"Glas (250 ml)","ml"],
+["Haselnüsse",628,15,10,61,10,4,4.5,0,114,3.3,680,163,6,30,"Handvoll (30 g)"],
+["Erdnüsse",567,26,8,49,8,4,7,5,92,4.6,705,168,0,30,"Handvoll (30 g)"],
+["Chiasamen",486,17,8,31,34,0,3.3,16,631,7.7,407,335,2,15,"1 EL (15 g)"],
+["Leinsamen",534,18,2,42,27,1.6,3.7,30,255,5.7,813,392,0,10,"1 EL (10 g)"],
+["Basmatireis gekocht",130,2.7,28,0.3,0.4,0,0.1,1,10,0.2,35,12,0,200,"Portion (200 g)"],
+["Vollkornreis gekocht",123,2.7,25,1,1.8,0.3,0.2,4,10,0.6,79,44,0,200,"Portion (200 g)"],
+["Spaghetti gekocht",158,5.8,31,0.9,1.8,0.6,0.2,3,7,0.5,45,18,0,250,"Portion (250 g)"],
+["Graubrot",230,7,45,1.3,4,2,0.2,500,20,1.5,150,30,0,50,"1 Scheibe (50 g)"],
+["Weißbrot / Toast",265,8,49,3,2.5,4,0.8,500,30,1.2,110,25,0,25,"1 Scheibe (25 g)"],
+["Dinkelbrot",235,9,43,2,5,2,0.3,450,25,2,170,50,0,50,"1 Scheibe (50 g)"],
+["Reiswaffeln",387,8,81,3,3,0.5,0.6,60,10,1,200,70,0,9,"1 Waffel (9 g)"],
+["Müsli (Ø)",370,10,60,8,8,15,1.5,20,60,3,400,90,0,60,"Portion (60 g)"],
+["Nutella",539,6.3,57.5,30.9,3.4,56.3,10.6,43,180,3,400,80,0,15,"1 EL (15 g)"],
+["Pizza Margherita (Tiefkühl)",240,10,31,8,2,3,4,600,180,1,150,25,0,350,"1 Pizza (350 g)"],
+["Lasagne",140,7,13,6,1,3,3,350,90,0.8,200,20,1,400,"Portion (400 g)"],
+["Currywurst mit Soße",200,9,8,15,1,6,5,800,20,1,250,15,2,250,"Portion (250 g)"],
+["Hamburger / Burger (Ø)",250,13,25,11,1.5,5,4,500,90,2,220,20,1,220,"1 Burger (220 g)"],
+["Schokolade Vollmilch",535,7,57,30,2,55,18,80,200,2,370,60,0,10,"1 Stück (10 g)"],
+["Schokolade Zartbitter",550,6,45,38,10,30,23,10,50,8,700,120,0,10,"1 Stück (10 g)"],
+["Cola Zero",0.4,0,0,0,0,0,0,10,3,0,3,1,0,330,"Dose (330 ml)","ml"],
+["Milchreis",120,3,22,2,0.2,9,1.2,40,90,0.1,130,11,0,200,"Portion (200 g)"],
+["Pfannkuchen",200,6,28,7,1,6,3,200,90,1,120,15,0,80,"1 Pfannkuchen (80 g)"],
+["Rührei",160,11,1,12,0,1,4,150,50,1.5,130,12,0,120,"Portion (120 g)"],
+["Spiegelei",190,13,0.5,15,0,0.5,4.5,150,55,1.8,130,12,0,60,"1 Ei (60 g)"],
+["Gekochtes Ei",143,12.6,0.7,9.5,0,0.7,3,140,55,1.9,130,12,0,60,"1 Ei (60 g)"]
+];
+const FOOD_TXT=`#fruit
+Bananen (Ø)|93|1.1|20|0.2|2|17|0.1|120|1 Banane (120 g)
+Banane klein|93|1.1|20|0.2|2|17|0.1|90|1 kleine Banane (90 g)
+Plantain gekocht|122|1.3|32|0.4|2.3|15|0.1|150|Portion (150 g)
+Apfel mit Schale|52|0.3|11.4|0.4|2.4|10.4|0.1|180|1 Apfel (180 g)
+Apfel geschält|48|0.3|11.5|0.2|1.5|10.4|0|160|1 Apfel (160 g)
+Apfelringe getrocknet|243|1|60|0.3|8|57|0|20|Handvoll (20 g)
+Apfelkompott|60|0.3|14|0.1|1.2|12|0|120|Portion (120 g)
+Birne Williams Christ|55|0.4|13|0.1|3|10|0|170|1 Birne (170 g)
+Birne Conference|55|0.4|13|0.1|3|10|0|170|1 Birne (170 g)
+Birne Abate Fetel|54|0.4|13|0.1|3|10|0|180|1 Birne (180 g)
+Nashi Birne|42|0.5|10|0.2|3.6|7|0|200|1 Nashi (200 g)
+Quitte|57|0.4|15|0.1|1.9|8|0|150|1 Quitte (150 g)
+Mirabelle|50|0.8|12|0.2|1.5|10|0|40|5 Mirabellen (40 g)
+Zwetschge|47|0.6|11|0.2|1.6|9.9|0|30|3 Zwetschgen (90 g)
+Pflaume getrocknet|240|2.2|64|0.4|7.1|38|0|30|5 Backpflaumen (30 g)
+Reneklode|50|0.7|12|0.2|1.5|10|0|40|3 Renekloden (120 g)
+Süßkirsche|63|1.1|14|0.2|2.1|12.8|0|100|Handvoll (100 g)
+Sauerkirsche|50|1|12|0.3|1.6|8.5|0|100|Handvoll (100 g)
+Aprikose getrocknet|241|3.4|56|0.5|7.3|53|0|30|5 Aprikosen (30 g)
+Pfirsich Dose|60|0.5|15|0.1|1.4|14|0|120|2 Hälften (120 g)
+Nektarine gelb|44|1.1|10.5|0.3|1.7|7.9|0|140|1 Nektarine (140 g)
+Platterbse Pfirsich (Plattpfirsich)|42|0.9|10|0.2|1.5|8.5|0|100|1 Plattpfirsich (100 g)
+Erdbeere (Ø)|32|0.7|7.7|0.3|2|4.9|0|150|Schale (150 g)
+Himbeere TK|41|1.1|8|0.5|6|4.5|0|100|Portion (100 g)
+Heidelbeere TK|50|0.6|12|0.3|2.5|9|0|100|Portion (100 g)
+Johannisbeere rot|35|1.1|8|0.2|3.5|7|0|100|Portion (100 g)
+Johannisbeere schwarz|63|1.4|15|0.4|4.3|10|0|100|Portion (100 g)
+Stachelbeere|44|0.9|10|0.6|4.3|8|0|100|Portion (100 g)
+Preiselbeere|46|0.5|12|0.1|4.6|4|0|50|Portion (50 g)
+Cranberry getrocknet|308|0.2|82|1.4|5.7|72|0.1|30|Handvoll (30 g)
+Goji-Beeren getrocknet|349|14|64|0.4|13|45|0|20|Handvoll (20 g)
+Holunderbeere|73|0.7|18|0.5|7|10|0|100|Portion (100 g)
+Brombeere TK|43|1.4|10|0.5|5.3|4.9|0|100|Portion (100 g)
+Maulbeere|43|1.4|10|0.4|1.7|8|0|100|Portion (100 g)
+Weintraube blau|69|0.7|16|0.2|0.9|15.5|0|100|Handvoll (100 g)
+Weintraube grün kernlos|67|0.6|16|0.2|0.9|15|0|100|Handvoll (100 g)
+Rosine Sultanine|299|3.1|79|0.5|4|59|0.2|30|Handvoll (30 g)
+Orange Navel|47|0.9|9.4|0.1|2.4|9.4|0|180|1 Orange (180 g)
+Blutorange|50|1|11|0.2|2.5|9|0|180|1 Orange (180 g)
+Mandarine Dose|50|0.6|12|0.1|0.5|11|0|100|Portion (100 g)
+Satsuma|47|0.8|10.6|0.3|1.7|9.5|0|80|1 Satsuma (80 g)
+Pomelo|38|0.8|9.6|0.04|1|7|0|250|Portion (250 g)
+Limette|30|0.7|10.5|0.2|2.8|1.7|0|50|1 Limette (50 g)
+Kumquat|71|1.9|16|0.9|6.5|9|0.1|20|2 Kumquats (30 g)
+Ananas Dose|60|0.4|15|0.1|0.8|14|0|120|2 Ringe (120 g)
+Mango getrocknet|319|2.5|78|1.2|2.4|66|0.3|30|Handvoll (30 g)
+Papaya|43|0.5|11|0.3|1.7|7.8|0.1|150|Portion (150 g)
+Passionsfrucht|97|2.2|23|0.7|10|11|0.1|20|1 Frucht (20 g)
+Litschi|66|0.8|17|0.4|1.3|15|0.1|100|Portion (100 g)
+Drachenfrucht|50|1.1|11|0.4|3|8|0.1|200|1 Frucht (200 g)
+Kaki|70|0.6|19|0.2|3.6|13|0|150|1 Kaki (150 g)
+Sharonfrucht|70|0.6|19|0.2|3.6|13|0|150|1 Frucht (150 g)
+Guave|68|2.6|14|1|5.4|9|0.3|100|1 Guave (100 g)
+Kokosnuss Fruchtfleisch|354|3.3|15|33|9|6|30|30|Stück (30 g)
+Kokosflocken|600|6|24|57|14|7|50|10|1 EL (10 g)
+Kokoswasser|19|0.7|3.7|0.2|1.1|2.6|0.2|250|Glas (250 ml)|ml
+Feige getrocknet|249|3.3|64|0.9|9.8|48|0.1|30|2 Feigen (30 g)
+Dattel Medjool|277|1.8|75|0.2|6.7|66|0|25|1 Dattel (25 g)
+Honigmelone|36|0.5|8|0.1|0.8|8|0|200|Stück (200 g)
+Galiamelone|30|0.6|7|0.1|0.7|7|0|200|Stück (200 g)
+Cantaloupe-Melone|34|0.8|8|0.2|0.9|7.9|0.1|200|Stück (200 g)
+Rhabarber|21|0.9|4.5|0.2|1.8|1.1|0|100|Portion (100 g)
+Avocado Hass|160|2|8.5|14.7|6.7|0.7|2.1|150|½ Avocado (75 g)
+Olive grün|145|1|4|15|3.3|0|2|10|3 Oliven (10 g)
+Olive schwarz|115|0.8|6|11|3.2|0|1.4|10|3 Oliven (10 g)
+Fruchtsalat|50|0.6|12|0.2|1.5|10|0|150|Schale (150 g)
+Obstsalat Dose|60|0.5|15|0.1|1|14|0|150|Portion (150 g)
+#veg
+Tomate Ø|18|0.9|3.5|0.2|1.2|2.6|0|120|1 Tomate (120 g)
+Salatgurke|12|0.6|1.8|0.2|0.5|1.7|0|200|½ Gurke (200 g)
+Minigurke|12|0.6|2|0.2|0.6|1.7|0|50|1 Minigurke (50 g)
+Gewürzgurke|15|0.5|2.5|0.2|1|2|0|40|1 Gurke (40 g)
+Essiggurke Gewürzgurke Glas|15|0.5|2.5|0.2|1|2|0|40|1 Gurke (40 g)
+Cornichons|15|0.6|2.5|0.2|1|2|0|10|3 Stück (10 g)
+Zucchini grün|17|1.2|2|0.3|1.1|2|0.1|200|1 Zucchini (200 g)
+Zucchini gelb|17|1.2|2|0.3|1.1|2|0.1|200|1 Zucchini (200 g)
+Kürbis Butternut|45|1|10|0.1|2|2.2|0|200|Portion (200 g)
+Kürbis Muskat|40|1|9|0.1|1.5|2|0|200|Portion (200 g)
+Kürbiskerne|559|30|11|49|6|1.4|8.7|20|1 EL (20 g)
+Paprika orange|35|1|7|0.3|2|5|0.1|150|1 Paprika (150 g)
+Spitzpaprika|31|1|6|0.3|2|4.2|0.1|120|1 Spitzpaprika (120 g)
+Peperoni|40|2|6|0.5|3|4|0.1|20|1 Peperoni (20 g)
+Chili rot frisch|40|1.9|9|0.4|1.5|5|0.1|5|1 Chili (5 g)
+Jalapeño|29|0.9|6.5|0.4|2.8|4|0.1|15|1 Jalapeño (15 g)
+Brokkoli gekocht|35|2.4|7|0.4|3.3|1.4|0.1|150|Portion (150 g)
+Romanesco|25|2|4|0.3|2.5|2|0|150|Portion (150 g)
+Blumenkohl gekocht|23|1.8|4|0.3|2.3|2|0.1|150|Portion (150 g)
+Rosenkohl gekocht|36|2.6|7|0.5|3.5|2|0.1|150|Portion (150 g)
+Spitzkohl|25|1.3|4.5|0.2|2.5|3.5|0|150|Portion (150 g)
+Wirsing|26|3|2.7|0.4|3.2|2.5|0|150|Portion (150 g)
+Chinakohl|13|1.2|2.2|0.2|1.2|1.4|0|150|Portion (150 g)
+Pak Choi|13|1.5|2.2|0.2|1|1.2|0|150|Portion (150 g)
+Sauerkraut|19|1.1|3.3|0.2|2.2|1.8|0|100|Portion (100 g)
+Rotkohl gekocht Glas|50|1|9|1.5|2|7|0.2|150|Portion (150 g)
+Kohlrabi roh|27|1.7|4.8|0.1|3.6|2.6|0|150|1 Kohlrabi (150 g)
+Möhre|41|0.9|8|0.2|2.8|4.7|0|100|1 Möhre (100 g)
+Möhre gekocht|35|0.8|7|0.2|3|4|0|100|Portion (100 g)
+Pastinake|75|1.2|15|0.3|4.9|4.8|0.1|100|Portion (100 g)
+Petersilienwurzel|55|1.5|11|0.4|4.5|4|0.1|100|Portion (100 g)
+Sellerie Knolle|42|1.5|7.5|0.3|4.5|2.4|0.1|100|Portion (100 g)
+Staudensellerie|16|0.7|3|0.2|1.6|1.3|0|100|2 Stangen (100 g)
+Rote Bete gekocht|43|1.7|9.6|0.2|2.8|7|0|100|Portion (100 g)
+Schwarzwurzel|20|1|2|0.3|3.3|2|0|100|Portion (100 g)
+Topinambur|73|2|15|0|1.6|9|0|100|Portion (100 g)
+Meerrettich|48|1.2|11|0.7|3.3|8|0.1|10|1 TL (10 g)
+Ingwer frisch|80|1.8|18|0.8|2|1.7|0.2|5|1 Stück (5 g)
+Rettich weiß|18|0.6|3.4|0.1|1.6|2.5|0|100|Portion (100 g)
+Mairübe|21|1|4|0.1|2|3.8|0|100|Portion (100 g)
+Steckrübe|37|1.1|8|0.2|2.4|5|0|100|Portion (100 g)
+Spargel weiß|18|1.9|2.5|0.1|1.5|2|0|250|Portion (250 g)
+Spargel grün|20|2.2|2|0.1|2|1.9|0|200|Portion (200 g)
+Artischocke|47|3.3|11|0.2|5.4|1|0|120|1 Artischocke (120 g)
+Fenchel roh|31|1.2|4.9|0.2|3.1|3.9|0|200|1 Knolle (200 g)
+Lauchzwiebel|32|1.8|7|0.2|2.6|2.3|0|20|1 Stange (20 g)
+Frühlingszwiebel|32|1.8|7|0.2|2.6|2.3|0|20|1 Stange (20 g)
+Schalotte|72|2.5|17|0.1|3.2|8|0|20|1 Schalotte (20 g)
+Zwiebel rot|40|1.1|9|0.1|1.7|4.2|0|80|1 Zwiebel (80 g)
+Zwiebel gebraten|200|3|20|12|3|9|1|15|1 EL (15 g)
+Röstzwiebeln|550|6|35|42|3|6|18|10|1 EL (10 g)
+Knoblauch Zehe|141|6.4|28|0.5|2|1|0.1|5|1 Zehe (5 g)
+Bärlauch|20|2|2.5|0.3|1.5|0.5|0|10|Handvoll (10 g)
+Champignon braun|22|2.5|3.3|0.3|1|2|0.1|100|Portion (100 g)
+Champignon gebraten|90|3|3|7|1|2|1|100|Portion (100 g)
+Pfifferlinge|11|1.5|0.2|0.5|5|0.2|0.1|100|Portion (100 g)
+Steinpilze|34|3.7|4|0.4|2.5|1|0.1|100|Portion (100 g)
+Austernpilze|33|3.3|6|0.4|2.2|1|0.1|100|Portion (100 g)
+Shiitake|34|2.2|7|0.5|2.5|2.4|0.1|100|Portion (100 g)
+Kräuterseitlinge|35|3.3|5|0.4|2.5|1|0.1|100|Portion (100 g)
+Spinat TK|22|2.9|1.2|0.4|2|0.4|0.1|150|Portion (150 g)
+Rahmspinat|60|3|4|3.5|2|1.5|2|150|Portion (150 g)
+Mangold|19|1.8|3.7|0.2|1.6|1.1|0|100|Portion (100 g)
+Eichblattsalat|15|1.3|2|0.2|1.4|0.8|0|50|Portion (50 g)
+Kopfsalat|14|1.4|2|0.2|1.3|1|0|50|Portion (50 g)
+Romanasalat|17|1.2|3.3|0.3|2.1|1.2|0|80|Portion (80 g)
+Endivie|17|1.3|3|0.2|3.1|0.3|0|80|Portion (80 g)
+Radicchio|23|1.4|4.5|0.3|3|0.6|0|50|Portion (50 g)
+Chicorée|17|1|3.5|0.1|1.5|2|0|100|1 Chicorée (100 g)
+Brunnenkresse|11|2.3|1.3|0.1|0.5|0.2|0|20|Handvoll (20 g)
+Kresse|32|2.6|5.5|0.7|1.1|4|0|10|1 EL (10 g)
+Rauke|25|2.6|3.7|0.7|1.6|2|0.1|30|Handvoll (30 g)
+Babyspinat|23|2.9|3.6|0.4|2.2|0.4|0.1|50|Handvoll (50 g)
+Petersilie|36|3|6.3|0.8|3.3|0.9|0.1|5|1 EL (5 g)
+Schnittlauch|30|3.3|4.4|0.7|2.5|1.9|0.1|5|1 EL (5 g)
+Basilikum frisch|23|3.2|2.7|0.6|1.6|0.3|0|5|Handvoll (5 g)
+Dill|43|3.5|7|1.1|2.1|0|0.1|5|1 EL (5 g)
+Koriander frisch|23|2.1|3.7|0.5|2.8|0.9|0|5|Handvoll (5 g)
+Minze frisch|44|3.3|8|0.7|6.8|0|0.2|5|Handvoll (5 g)
+Rosmarin frisch|131|3.3|21|5.9|14|0|2.8|2|1 Zweig (2 g)
+Thymian frisch|101|5.6|24|1.7|14|0|0.5|2|1 Zweig (2 g)
+Oregano getrocknet|265|9|69|4.3|43|4|1.6|1|1 TL (1 g)
+Bohnen grün TK|31|1.8|5|0.2|3|2.3|0|150|Portion (150 g)
+Dicke Bohnen|88|7.9|12|0.7|7.5|2|0.1|100|Portion (100 g)
+Prinzessbohnen|31|1.8|5|0.2|3|2.3|0|150|Portion (150 g)
+Zuckerschoten|42|2.8|7.5|0.2|2.6|4|0|100|Portion (100 g)
+Erbsen frisch|81|5.4|14|0.4|5.1|5.7|0.1|100|Portion (100 g)
+Erbsen Dose|60|4|8|0.5|4.5|3|0.1|100|Portion (100 g)
+Mais gekocht (Kolben)|96|3.4|21|1.5|2.4|4.5|0.2|150|1 Kolben (150 g)
+Maiskörner Dose|81|2.8|13|1.2|3|3|0.2|100|Portion (100 g)
+Babymais|26|2.5|4|0.4|2|1.5|0|50|Portion (50 g)
+Sojasprossen|30|3|6|0.2|1.8|2|0|50|Portion (50 g)
+Mungobohnensprossen|30|3|6|0.2|1.8|2|0|50|Portion (50 g)
+Alfalfa-Sprossen|23|4|2|0.7|1.9|0.2|0.1|30|Portion (30 g)
+Bambussprossen|27|2.6|5.2|0.3|2.2|3|0|50|Portion (50 g)
+Okra|33|1.9|7|0.2|3.2|1.5|0|100|Portion (100 g)
+Lotuswurzel|74|2.6|17|0.1|4.9|0.5|0|100|Portion (100 g)
+Maniok gekocht|160|1.4|38|0.3|1.8|1.7|0.1|150|Portion (150 g)
+Taro gekocht|142|0.5|34|0.1|5.1|0.5|0|150|Portion (150 g)
+Yams|118|1.5|28|0.2|4.1|0.5|0|150|Portion (150 g)
+Ratatouille|55|1.2|5.5|3|2|4|0.5|200|Portion (200 g)
+Gemüsepfanne TK|40|2|6|0.8|2.5|3|0.1|250|Portion (250 g)
+Wok-Gemüse TK|40|2|6|0.8|2.5|3|0.1|250|Portion (250 g)
+Mischgemüse TK|45|2.5|7|0.5|3|3|0.1|200|Portion (200 g)
+Leipziger Allerlei|40|2.5|6|0.4|3|3|0.1|200|Portion (200 g)
+Gemüsebrühe Instant (zubereitet)|4|0.1|0.6|0.1|0|0.3|0|250|Tasse (250 ml)|ml
+Salat gemischt (Beutel)|17|1.3|2.5|0.2|1.5|1.5|0|100|Portion (100 g)
+Kartoffelsalat (Essig und Öl)|130|1.5|17|6|1.5|2|0.6|200|Portion (200 g)
+Kartoffelsalat mit Mayonnaise|190|1.7|15|13|1.3|2|1.5|200|Portion (200 g)
+Krautsalat|90|1.2|10|5|2|8|0.6|150|Portion (150 g)
+Gurkensalat|45|0.8|4|3|0.7|3|0.4|150|Portion (150 g)
+Tomatensalat mit Zwiebeln|65|1|4|5|1.2|3|0.7|150|Portion (150 g)
+Griechischer Salat|110|3.5|4|9|1.3|3|4|250|Portion (250 g)
+Caesar Salad mit Hähnchen|140|10|6|8|1.2|2|2.2|300|Portion (300 g)
+Nudelsalat|170|4|20|8|1.5|3|1.3|200|Portion (200 g)
+Bohnensalat|95|4|11|3.5|4.5|2|0.5|200|Portion (200 g)
+Linsensalat|130|7|15|4.5|5|2|0.6|200|Portion (200 g)
+Couscoussalat|150|4|22|5|2|3|0.8|200|Portion (200 g)
+Tabouleh|120|2.5|15|5.5|2.5|2|0.8|150|Portion (150 g)
+#potato
+Kartoffeln festkochend roh|70|1.9|15|0.1|2|0.8|0|150|1 Kartoffel (150 g)
+Kartoffeln mehligkochend roh|76|2|16.5|0.1|2|0.8|0|150|1 Kartoffel (150 g)
+Pellkartoffeln|71|2|15|0.1|1.7|0.9|0|200|2 Kartoffeln (200 g)
+Salzkartoffeln|70|1.9|15|0.1|1.5|0.8|0|200|2 Kartoffeln (200 g)
+Bratkartoffeln|140|2.5|18|6.5|1.8|1|0.7|200|Portion (200 g)
+Kartoffelpüree|90|2|14|3|1.5|1|1.6|200|Portion (200 g)
+Kartoffelpüree Instant (zubereitet)|75|2|13|1.8|1.5|1|1|200|Portion (200 g)
+Kartoffelklöße|120|2.5|25|0.8|2|0.8|0.2|150|1 Kloß (150 g)
+Semmelknödel|180|6|28|4.5|1.5|2|1.5|120|1 Knödel (120 g)
+Kartoffelpuffer|220|3.5|25|12|2|1|1.3|100|1 Puffer (100 g)
+Reibekuchen|220|3.5|25|12|2|1|1.3|100|1 Reibekuchen (100 g)
+Kroketten TK|200|3|27|9|2.5|0.5|1|100|5 Kroketten (100 g)
+Kartoffelecken Ofen|130|2.5|20|4.5|2.3|1|0.4|200|Portion (200 g)
+Rösti|190|2.5|20|11|2|1|1.2|150|Portion (150 g)
+Gnocchi|150|3.5|32|0.5|2|1|0.1|200|Portion (200 g)
+Kartoffelsuppe|60|1.5|8|2|1|1|0.8|300|Teller (300 g)
+Süßkartoffel gebacken|90|2|21|0.2|3.3|6.5|0.1|200|Portion (200 g)
+Süßkartoffel Pommes|220|2.5|33|9|4|7|1|150|Portion (150 g)
+Pommes Ofen TK|150|2.5|23|5|2.5|0.5|0.5|150|Portion (150 g)
+Pommes frites Fast Food|312|3.4|41|15|3.8|0.3|2|110|Portion mittel (110 g)
+Pommes Wedges TK|140|2.5|21|5|2.5|0.5|0.5|150|Portion (150 g)
+Kartoffelchips Paprika|530|6|50|33|4|3|3|30|Handvoll (30 g)
+Kartoffelstärke|350|0.3|86|0.1|0|0|0|10|1 EL (10 g)
+#legume
+Linsen rot roh|340|25|50|1|11|2|0.2|50|Portion (50 g)
+Linsen braun roh|330|24|50|1.4|11|2|0.2|50|Portion (50 g)
+Berglinsen gekocht|116|9|17|0.4|7.9|1.8|0.1|180|Portion (180 g)
+Linsen aus der Dose|90|6.5|12|0.6|4.5|1.5|0.1|200|Portion (200 g)
+Linsensuppe|75|4.5|10|2|3|1.5|0.5|300|Teller (300 g)
+Kichererbsen aus der Dose|120|7|17|2.5|5|3|0.3|150|Portion (150 g)
+Kichererbsen roh|364|19|61|6|17|11|0.6|50|Portion (50 g)
+Falafel|333|13|31|18|5|2|2.5|60|3 Falafel (60 g)
+Hummus klassisch|230|7|10|17|5|0.5|2.5|50|2 EL (50 g)
+Hummus Paprika|210|6|11|15|5|1.5|2|50|2 EL (50 g)
+Kidneybohnen Dose|95|6.5|13|0.5|6|2|0.1|150|Portion (150 g)
+Schwarze Bohnen gekocht|132|8.9|24|0.5|8.7|0.3|0.1|150|Portion (150 g)
+Weiße Bohnen gekocht|105|7|19|0.4|6|0.3|0.1|150|Portion (150 g)
+Baked Beans|85|4.7|14|0.4|3.7|5|0.1|200|Portion (200 g)
+Kichererbsen-Curry|110|5|13|4|4|3|1|300|Portion (300 g)
+Chili con Carne|120|8|10|5|3.5|3|2|350|Portion (350 g)
+Erbsensuppe|70|4.5|8|2.5|3|1|1|300|Teller (300 g)
+Erbsensuppe mit Würstchen|85|5|8|3.5|3|1|1.3|350|Teller (350 g)
+Eintopf Linsen mit Würstchen|90|5.5|9|3.5|3|1.5|1.2|350|Teller (350 g)
+Sojabohnen gekocht|173|17|10|9|6|3|1.3|100|Portion (100 g)
+Sojageschnetzeltes trocken|330|50|30|1|13|8|0.2|40|Portion (40 g)
+Sojaschnetzel zubereitet|90|14|8|0.5|3.5|2|0.1|150|Portion (150 g)
+Lupinenkerne|116|16|10|2.3|4.6|0.5|0.3|100|Portion (100 g)
+Erdnussbutter crunchy|610|25|11|50|6.5|6|10|15|1 EL (15 g)
+Erdnussbutter Zero|420|45|20|15|6|4|3|15|1 EL (15 g)
+Erdnüsse geröstet gesalzen|600|25|10|50|7|4|7|30|Handvoll (30 g)
+Erdnussflips|480|13|52|24|4|3|5|30|Handvoll (30 g)
+#grain
+Haferflocken zart|372|13.5|59|7|10|1|1.3|40|4 EL (40 g)
+Haferflocken kernig|372|13.5|59|7|10|1|1.3|40|4 EL (40 g)
+Haferkleie|246|17|66|7|15|1|1.2|20|2 EL (20 g)
+Porridge mit Wasser|65|2.3|10.5|1.2|1.7|0.2|0.2|250|Schüssel (250 g)
+Porridge mit Milch|95|4|13|2.5|1.7|4.5|1.2|250|Schüssel (250 g)
+Overnight Oats Natur|110|5|15|3|2|4|1|250|Glas (250 g)
+Müsli ungesüßt|360|11|58|7|9|4|1|50|Schüssel (50 g)
+Müsli Schoko|420|9|62|15|7|22|5|50|Schüssel (50 g)
+Müsli Früchte|360|8|66|6|7|20|1|50|Schüssel (50 g)
+Knuspermüsli|440|9|62|17|6|20|4|50|Schüssel (50 g)
+Granola|450|10|60|18|7|18|4|40|Schüssel (40 g)
+Cornflakes Zucker|375|7|84|0.8|3|8|0.2|30|Schüssel (30 g)
+Cornflakes Honig|380|6.5|85|1|2.5|27|0.3|30|Schüssel (30 g)
+Cheerios|375|10|70|5|8|20|1|30|Schüssel (30 g)
+Smacks Honey|380|5|85|1.5|3|43|0.2|30|Schüssel (30 g)
+Choco Krispies|385|5|85|3|3|35|1.5|30|Schüssel (30 g)
+Special K|375|14|72|1.5|4|17|0.5|30|Schüssel (30 g)
+Weetabix|360|12|66|2|10|4|0.5|37|2 Stück (37 g)
+Hirse roh|378|11|73|4.2|8.5|1|0.7|50|Portion (50 g)
+Hirse gekocht|120|3.5|23|1|1.3|0.2|0.2|180|Portion (180 g)
+Buchweizen gekocht|92|3.4|20|0.6|2.7|0.9|0.1|180|Portion (180 g)
+Amaranth gekocht|102|3.8|19|1.6|2.1|1|0.4|180|Portion (180 g)
+Bulgur gekocht|83|3|19|0.2|4.5|0.1|0|180|Portion (180 g)
+Dinkel gekocht|120|4.5|23|1|3|0.5|0.2|180|Portion (180 g)
+Grünkern|325|11|60|2.5|9|1.5|0.4|50|Portion (50 g)
+Gerstengraupen gekocht|123|2.3|28|0.4|3.8|0.3|0.1|180|Portion (180 g)
+Polenta gekocht|70|1.5|15|0.3|1|0.1|0.1|200|Portion (200 g)
+Maisgrieß|360|8|78|1.2|3|1|0.2|40|Portion (40 g)
+Grieß|333|11|68|0.8|3|1|0.1|40|Portion (40 g)
+Grießbrei|105|3.5|18|2|0.5|11|1.2|250|Portion (250 g)
+Milchreis Zimt und Zucker|125|3|23|2.4|0.3|9|1.5|200|Portion (200 g)
+Reis Langkorn roh|350|7|78|0.6|1.5|0.1|0.2|60|Portion (60 g)
+Jasminreis gekocht|130|2.7|28|0.3|0.4|0|0.1|200|Portion (200 g)
+Risottoreis gekocht|130|2.4|28|0.4|0.4|0|0.1|200|Portion (200 g)
+Parboiled Reis gekocht|125|2.8|27|0.3|0.6|0|0.1|200|Portion (200 g)
+Wildreis gekocht|101|4|21|0.3|1.8|0.7|0.1|180|Portion (180 g)
+Reis Beutel gekocht|130|2.7|28|0.3|0.5|0|0.1|125|Beutel (125 g)
+Reis gebraten mit Ei|170|5|27|4.5|1.2|1|1|250|Portion (250 g)
+Risotto Pilze|140|3.5|22|4.5|1|1|2|300|Portion (300 g)
+Sushi Reis gekocht|140|2.5|31|0.3|0.5|2.5|0.1|150|Portion (150 g)
+Nudeln Vollkorn roh|340|13|62|2.5|8|2.5|0.5|80|Portion (80 g)
+Spaghetti roh|355|12.5|72|1.5|3|3|0.3|80|Portion (80 g)
+Penne gekocht|158|5.8|31|0.9|1.8|0.6|0.2|250|Portion (250 g)
+Fusilli gekocht|158|5.8|31|0.9|1.8|0.6|0.2|250|Portion (250 g)
+Tagliatelle gekocht|158|5.8|31|0.9|1.8|0.6|0.2|250|Portion (250 g)
+Spirelli gekocht|158|5.8|31|0.9|1.8|0.6|0.2|250|Portion (250 g)
+Makkaroni gekocht|158|5.8|31|0.9|1.8|0.6|0.2|250|Portion (250 g)
+Hörnchennudeln gekocht|158|5.8|31|0.9|1.8|0.6|0.2|250|Portion (250 g)
+Eiernudeln gekocht|165|6.5|30|2|1.8|0.7|0.5|250|Portion (250 g)
+Reisnudeln gekocht|109|0.9|25|0.2|1|0|0|200|Portion (200 g)
+Glasnudeln gekocht|86|0.1|21|0|0.5|0|0|200|Portion (200 g)
+Udon Nudeln gekocht|115|3|24|0.5|1|0.5|0.1|200|Portion (200 g)
+Soba Nudeln gekocht|99|5|21|0.1|1.5|0.5|0|200|Portion (200 g)
+Ramen Nudeln gekocht|140|4.5|27|1.5|1.5|0.5|0.3|200|Portion (200 g)
+Linsennudeln gekocht|120|9|19|1|4|1|0.2|200|Portion (200 g)
+Kichererbsennudeln gekocht|125|8|20|2|4|2|0.3|200|Portion (200 g)
+Spaghetti Bolognese|140|7|15|5.5|1.5|3|2|350|Portion (350 g)
+Spaghetti Carbonara|190|8|20|8|1.2|1|3.5|350|Portion (350 g)
+Spaghetti Aglio e Olio|180|5|25|7|1.5|1|1|300|Portion (300 g)
+Nudeln mit Tomatensauce|130|4|23|2.5|2|3.5|0.5|350|Portion (350 g)
+Nudeln mit Pesto|200|6|24|9|2|2|1.8|300|Portion (300 g)
+Nudelauflauf mit Käse und Schinken|150|8|13|7|1|2|3.5|350|Portion (350 g)
+Käsespätzle|190|9|20|8|1.2|2|4.5|350|Portion (350 g)
+Spätzle|155|6|28|2|1.2|1|0.6|200|Portion (200 g)
+Maultaschen|180|8|22|6|1.5|1.5|2|200|4 Maultaschen (200 g)
+Tortellini gekocht|170|7|26|4|1.5|1|1.8|250|Portion (250 g)
+Ravioli Dose|90|3|13|2.8|1|3|1|400|1 Dose (400 g)
+Ravioli frisch Ricotta Spinat|175|7|27|4|1.5|1|2|250|Portion (250 g)
+Lasagne Bolognese|150|8|13|7|1|3|3.5|400|Portion (400 g)
+Cannelloni|140|7|12|7|1|2|3|350|Portion (350 g)
+Mac and Cheese|180|8|20|8|1|3|4|300|Portion (300 g)
+Couscous roh|360|13|73|1.6|5|2|0.3|60|Portion (60 g)
+Quinoa roh|368|14|64|6|7|1.5|0.7|60|Portion (60 g)
+Chiapudding|120|4|14|5|5|8|1|150|Portion (150 g)
+#bread
+Roggenbrot|215|6|42|1.2|6|2.5|0.2|50|1 Scheibe (50 g)
+Roggenmischbrot|225|7|44|1.3|5.5|2.5|0.2|50|1 Scheibe (50 g)
+Weizenmischbrot|240|8|47|1.5|4|2.5|0.3|50|1 Scheibe (50 g)
+Weizenbrot|250|8|49|1.5|3|3|0.3|50|1 Scheibe (50 g)
+Vollkornbrot Sonnenblumenkerne|240|8|35|6|8|3|0.8|60|1 Scheibe (60 g)
+Mehrkornbrot|235|8|40|3.5|6.5|3|0.5|50|1 Scheibe (50 g)
+Körnerbrot|260|9|35|7|8|3|0.9|50|1 Scheibe (50 g)
+Eiweißbrot|240|25|8|10|8|2|1.5|45|1 Scheibe (45 g)
+Low Carb Brot|280|22|9|16|9|1.5|2|45|1 Scheibe (45 g)
+Pumpernickel|200|6|38|1|8|3|0.2|40|1 Scheibe (40 g)
+Schwarzbrot|215|6|42|1.2|6|2.5|0.2|50|1 Scheibe (50 g)
+Bauernbrot|230|7|45|1.5|4|2.5|0.3|50|1 Scheibe (50 g)
+Ciabatta|265|9|52|2|2.5|2|0.3|60|1 Stück (60 g)
+Baguette|270|9|55|1|2.5|3|0.2|50|1 Stück (50 g)
+Fladenbrot|265|8.5|53|2|2.5|2.5|0.4|80|1 Stück (80 g)
+Naan Brot|300|9|50|7|2.5|4|2.5|90|1 Naan (90 g)
+Pita Brot|275|9|56|1.2|2.5|2|0.2|60|1 Pita (60 g)
+Tortilla Weizen|310|8|52|7|3|2.5|2|60|1 Wrap (60 g)
+Tortilla Vollkorn|290|9|45|7|7|2|1.5|60|1 Wrap (60 g)
+Tortilla Mais|220|5.5|45|2.5|5|1|0.4|30|1 Tortilla (30 g)
+Taco Shells|470|7|60|22|5|1|4|10|1 Schale (10 g)
+Toastbrot Vollkorn|250|10|43|3.5|7|4|0.7|30|1 Scheibe (30 g)
+Toastbrot Weizen|265|8|49|3.5|2.5|4|0.8|25|1 Scheibe (25 g)
+Dinkeltoast|255|9|46|3|5|3|0.6|30|1 Scheibe (30 g)
+Brioche|370|8|50|15|2|12|8|50|1 Stück (50 g)
+Hefezopf|340|8|52|11|2|14|4|60|1 Scheibe (60 g)
+Laugenstange|265|9|50|2.5|3|1.5|0.6|70|1 Stange (70 g)
+Laugenbrezel klein|260|8|50|3|3|1|0.8|40|1 Brezel (40 g)
+Weizenbrötchen|270|9|53|1.5|3|2.5|0.3|55|1 Brötchen (55 g)
+Roggenbrötchen|235|7|46|1.5|5|2|0.3|60|1 Brötchen (60 g)
+Kaiserbrötchen|275|9|54|2|3|2|0.3|60|1 Brötchen (60 g)
+Körnerbrötchen|270|10|42|6|6|2|0.9|70|1 Brötchen (70 g)
+Mehrkornbrötchen|265|10|44|4|6|2|0.7|65|1 Brötchen (65 g)
+Vollkornbrötchen|235|9|40|3|7|2|0.5|65|1 Brötchen (65 g)
+Dinkelbrötchen|260|10|47|2.5|4|2|0.4|65|1 Brötchen (65 g)
+Mohnbrötchen|290|10|50|5|3.5|2|0.7|65|1 Brötchen (65 g)
+Sesambrötchen|290|10|48|6|3.5|2|0.9|65|1 Brötchen (65 g)
+Käsebrötchen|310|12|40|11|2.5|2|6|80|1 Brötchen (80 g)
+Rosinenbrötchen|290|7|53|5|3|15|2|70|1 Brötchen (70 g)
+Milchbrötchen|310|8|52|7|2|11|3.5|50|1 Brötchen (50 g)
+Burger Brötchen|270|8.5|50|3.5|2.5|7|1|70|1 Bun (70 g)
+Hot Dog Brötchen|275|8.5|50|3.5|2|5|0.8|60|1 Brötchen (60 g)
+Hörnchen|330|8|50|11|2|6|5|50|1 Hörnchen (50 g)
+Croissant Butter|406|8|45|21|2.5|7|12|60|1 Croissant (60 g)
+Croissant Schoko|420|7|48|22|2.5|17|13|70|1 Croissant (70 g)
+Pain au chocolat|420|7.5|46|23|2.5|15|14|60|1 Stück (60 g)
+Butterbrezel|380|8|45|18|2.5|2|10|90|1 Brezel (90 g)
+Zwieback|390|10|73|6|3|10|2.5|10|1 Zwieback (10 g)
+Knäckebrot Vollkorn|330|10|58|2|16|2|0.4|10|1 Scheibe (10 g)
+Knäckebrot Sesam|380|12|53|10|13|2|1.5|10|1 Scheibe (10 g)
+Cracker Salz|440|10|68|14|3|3|6|5|1 Cracker (5 g)
+Salzstangen|380|10|74|4|3|3|1|20|10 Stangen (20 g)
+Reiswaffeln Schoko|410|7|72|10|3|25|6|10|1 Waffel (10 g)
+Maiswaffeln|390|8|82|2.5|4|1|0.4|8|1 Waffel (8 g)
+Brotchips|470|9|65|19|4|3|3|30|Handvoll (30 g)
+Semmelbrösel|395|13|75|5|4|3|1|10|1 EL (10 g)
+Panko|360|12|72|2|3|3|0.5|10|1 EL (10 g)
+Croutons|450|10|65|16|4|3|3|15|Handvoll (15 g)
+Pizzateig|260|7|50|3|2|2|0.5|150|Portion (150 g)
+Blätterteig|540|6|40|40|2|2|20|50|1 Stück (50 g)
+Mürbeteig|480|6|52|27|2|10|16|50|Portion (50 g)
+Hefeteig|280|8|50|4|2|4|0.8|100|Portion (100 g)
+#bakery
+Apfelstrudel|230|3|35|9|2|14|3|150|1 Stück (150 g)
+Apfeltasche|300|4|40|14|1.5|13|6|90|1 Stück (90 g)
+Berliner Pfannkuchen|390|6|50|18|1.5|18|7|70|1 Berliner (70 g)
+Krapfen|390|6|50|18|1.5|18|7|70|1 Krapfen (70 g)
+Donut Zucker|420|5|50|22|1.5|20|10|60|1 Donut (60 g)
+Donut Schoko|430|5|52|23|1.5|25|11|65|1 Donut (65 g)
+Muffin Schoko|400|5|52|19|2|30|5|110|1 Muffin (110 g)
+Muffin Blaubeer|370|5|50|17|1.5|27|3|110|1 Muffin (110 g)
+Cupcake mit Frosting|390|3|56|17|1|45|8|90|1 Cupcake (90 g)
+Brownie|470|5|55|26|2.5|40|9|60|1 Brownie (60 g)
+Cookie Schoko|480|5|65|23|2.5|38|11|40|1 Cookie (40 g)
+Haferkeks|440|6|65|18|4|25|8|20|1 Keks (20 g)
+Löffelbiskuit|390|9|79|3.5|2|40|1|10|1 Biskuit (10 g)
+Lebkuchen|370|5|70|8|3|50|1.5|40|1 Lebkuchen (40 g)
+Spekulatius|480|5|72|19|2|35|9|8|1 Keks (8 g)
+Zimtsterne|450|9|55|22|5|45|2|10|1 Stern (10 g)
+Vanillekipferl|520|6|55|31|2|25|8|15|1 Kipferl (15 g)
+Stollen|400|7|55|17|3|30|7|60|1 Scheibe (60 g)
+Marmorkuchen|390|5|50|19|1|30|6|60|1 Stück (60 g)
+Rührkuchen|410|5|50|21|1|30|8|60|1 Stück (60 g)
+Sandkuchen|420|5|52|22|1|32|9|60|1 Stück (60 g)
+Käsekuchen|260|8|26|13|0.5|20|7|130|1 Stück (130 g)
+Apfelkuchen|220|3|35|8|1.5|20|3.5|130|1 Stück (130 g)
+Streuselkuchen|380|5|52|17|1.5|25|8|90|1 Stück (90 g)
+Bienenstich|370|5|45|19|1|25|10|100|1 Stück (100 g)
+Schwarzwälder Kirschtorte|270|3.5|30|15|1|22|9|130|1 Stück (130 g)
+Sahnetorte|290|3|28|18|0.5|22|11|130|1 Stück (130 g)
+Obsttorte|190|3|32|6|1.5|20|3|130|1 Stück (130 g)
+Erdbeerkuchen|200|3|32|7|1.5|18|3.5|130|1 Stück (130 g)
+Tiramisu|280|5|27|17|0.5|20|9|120|Portion (120 g)
+Panna Cotta|210|3|20|13|0|18|8|120|Portion (120 g)
+Crème brûlée|290|4|22|21|0|20|12|120|Portion (120 g)
+Mousse au Chocolat|210|4|20|12|1|18|7|100|Portion (100 g)
+Pudding Schoko|110|3|18|3|0.5|14|1.8|125|Becher (125 g)
+Pudding Vanille|100|3|17|2.5|0|14|1.5|125|Becher (125 g)
+Götterspeise|65|1.5|15|0|0|13|0|125|Portion (125 g)
+Rote Grütze|90|0.5|21|0.1|1|18|0|150|Portion (150 g)
+Pfannkuchen Nutella|290|6|35|14|1.5|19|4|150|1 Pfannkuchen (150 g)
+Waffel|330|7|40|16|1|15|7|75|1 Waffel (75 g)
+Crêpe Zucker|230|6|33|8|1|10|3|80|1 Crêpe (80 g)
+Eclair|260|5|24|16|0.5|13|8|75|1 Eclair (75 g)
+Windbeutel|250|5|20|17|0.5|10|9|80|1 Windbeutel (80 g)
+Macaron|420|7|62|17|3|55|4|15|1 Macaron (15 g)
+Baklava|430|6|50|24|2|35|8|40|1 Stück (40 g)
+Churros|440|6|50|24|1.5|10|6|60|3 Stück (60 g)
+Kaiserschmarrn|230|7|28|10|1|14|4|250|Portion (250 g)
+Germknödel|210|5|40|3|2|15|1.5|250|1 Knödel (250 g)
+Pfannkuchen herzhaft|190|7|20|9|1|2|3|100|1 Pfannkuchen (100 g)
+Eierkuchen|190|6|27|6|1|4|2.5|100|1 Eierkuchen (100 g)
+Pancakes|230|6|33|8|1|7|2.5|60|2 Pancakes (120 g)
+Protein Pancakes|180|18|18|4|3|3|1|100|2 Pancakes (100 g)
+#meat
+Rinderfilet gebraten|185|27|0|8|0|0|3.2|150|Portion (150 g)
+Rumpsteak|130|22|0|4.5|0|0|1.9|200|Steak (200 g)
+Entrecôte|180|21|0|11|0|0|4.5|200|Steak (200 g)
+Rinderhüfte|120|22|0|3.5|0|0|1.4|150|Portion (150 g)
+Rinderrouladen|150|25|0|5|0|0|2.3|180|1 Roulade (180 g)
+Rindergulasch|140|24|0|4.5|0|0|1.9|200|Portion (200 g)
+Sauerbraten|175|28|3|5|0.3|2|2|200|Portion (200 g)
+Rinderbraten|165|27|0|6|0|0|2.5|150|Portion (150 g)
+Tafelspitz|155|28|0|4.5|0|0|2|150|Portion (150 g)
+Rinderschmorbraten|180|26|1|8|0.2|0.6|3.2|180|Portion (180 g)
+Hackfleisch Rind|230|19|0|17|0|0|7|150|Portion (150 g)
+Hackfleisch Schwein|260|17|0|21|0|0|8.5|150|Portion (150 g)
+Hackfleisch halb und halb|250|18|0|19|0|0|7.8|150|Portion (150 g)
+Hackfleisch Geflügel|140|19|0|7|0|0|2|150|Portion (150 g)
+Frikadelle|220|14|7|15|0.5|1|5|90|1 Frikadelle (90 g)
+Bulette|220|14|7|15|0.5|1|5|90|1 Bulette (90 g)
+Hamburger Patty|250|17|1|20|0|0|8|100|1 Patty (100 g)
+Hackbraten|200|14|5|13|0.5|1|5|150|Portion (150 g)
+Königsberger Klopse|130|9|9|7|0.5|1|3|250|Portion (250 g)
+Fleischbällchen|230|15|8|15|0.5|1|5|100|5 Bällchen (100 g)
+Schweineschnitzel natur|110|21|0|2.5|0|0|0.9|150|1 Schnitzel (150 g)
+Schweineschnitzel paniert|230|17|14|12|1|1|2.5|180|1 Schnitzel (180 g)
+Wiener Schnitzel|230|16|14|12|1|1|4|180|1 Schnitzel (180 g)
+Jägerschnitzel|190|15|9|11|1|2|3.5|250|Portion (250 g)
+Rahmschnitzel|170|15|3|11|0.3|1|5|250|Portion (250 g)
+Schweinebraten|190|25|1|10|0|0|3.6|150|Portion (150 g)
+Schweinenacken|190|20|0|12|0|0|4.3|150|Portion (150 g)
+Kassler|180|22|0.5|10|0|0|3.6|150|Portion (150 g)
+Schweinebauch|330|14|0|30|0|0|11|100|Portion (100 g)
+Spareribs|290|18|2|23|0|1|8|250|Portion (250 g)
+Schweinshaxe|290|23|0|22|0|0|8|400|Portion (400 g)
+Eisbein|220|21|0|15|0|0|5.4|400|Portion (400 g)
+Rippchen|260|20|0|20|0|0|7|200|Portion (200 g)
+Leberwurst|320|12|3|29|0|1|11|20|1 Scheibe (20 g)
+Teewurst|360|13|1|34|0|0.5|12|20|1 Scheibe (20 g)
+Mettwurst|350|14|1|33|0|0.5|12|20|1 Scheibe (20 g)
+Streichwurst|320|12|3|29|0|1|11|20|1 EL (20 g)
+Blutwurst|320|14|2|29|0|0.5|11|20|1 Scheibe (20 g)
+Leberkäse Scheibe|290|12|1|26|0|0.5|9|100|1 Scheibe (100 g)
+Fleischwurst|270|12|1|24|0|0.5|9|25|1 Scheibe (25 g)
+Lyoner|250|12|2|22|0|0.5|8|20|1 Scheibe (20 g)
+Jagdwurst|240|12|2|21|0|0.5|7.5|20|1 Scheibe (20 g)
+Bierschinken|190|14|1|14|0|0.5|5|20|1 Scheibe (20 g)
+Putenschinken|100|20|1|1.5|0|0.5|0.5|20|1 Scheibe (20 g)
+Schwarzwälder Schinken|215|30|0.5|10|0|0|3.5|20|1 Scheibe (20 g)
+Lachsschinken|130|23|0.5|4|0|0.5|1.5|20|1 Scheibe (20 g)
+Prosciutto|250|27|0|16|0|0|5.5|15|1 Scheibe (15 g)
+Serrano Schinken|240|30|0|13|0|0|4.5|15|1 Scheibe (15 g)
+Mortadella|310|14|1|28|0|0.5|10|20|1 Scheibe (20 g)
+Salami Mailänder|390|23|1|32|0|0.5|12|10|1 Scheibe (10 g)
+Salami Pfeffer|400|22|1|34|0|0.5|13|10|1 Scheibe (10 g)
+Cabanossi|420|21|1|37|0|0.5|14|20|Stück (20 g)
+Chorizo|440|24|2|37|0|1|13|20|2 Scheiben (20 g)
+Pepperoni Wurst|430|22|3|37|0|1|14|10|3 Scheiben (10 g)
+Wiener Würstchen|260|11|2|23|0|0.5|8.5|50|1 Würstchen (50 g)
+Bockwurst|250|11|2|22|0|0.5|8|100|1 Bockwurst (100 g)
+Knackwurst|290|12|2|26|0|0.5|9.5|75|1 Knacker (75 g)
+Bratwurst Nürnberger|290|14|1|26|0|0.5|9.5|25|1 Würstchen (25 g)
+Bratwurst grob|300|14|1|27|0|0.5|10|120|1 Bratwurst (120 g)
+Weißwurst|280|11|1|26|0|0.5|9.5|70|1 Weißwurst (70 g)
+Currywurst Wurst|270|12|2|24|0|0.5|8.5|150|Portion (150 g)
+Käsekrainer|290|13|2|25|0|0.5|10|120|1 Wurst (120 g)
+Geflügelwurst|190|13|2|14|0|0.5|4|20|1 Scheibe (20 g)
+Geflügelwiener|200|12|3|15|0|0.5|4.2|50|1 Würstchen (50 g)
+Hot Dog Würstchen|250|11|3|22|0|1|8|75|1 Würstchen (75 g)
+Dönerfleisch|220|18|3|15|0|1|6|150|Portion (150 g)
+Gyros|210|20|2|14|0|1|5|150|Portion (150 g)
+Schaschlik|180|19|3|10|0.5|2|3.5|200|1 Spieß (200 g)
+Lammkeule|210|25|0|12|0|0|5.4|150|Portion (150 g)
+Lammkotelett|250|20|0|19|0|0|8.5|150|2 Koteletts (150 g)
+Lammhack|280|17|0|23|0|0|10|150|Portion (150 g)
+Kalbsschnitzel|110|22|0|2|0|0|0.8|150|1 Schnitzel (150 g)
+Kalbsleber|130|20|3|3.5|0|0|1.2|100|Portion (100 g)
+Hühnerleber|120|17|1|5|0|0|1.5|100|Portion (100 g)
+Rinderleber|135|20|4|3.6|0|0|1.2|100|Portion (100 g)
+Wildschwein|120|21|0|3.5|0|0|1.2|150|Portion (150 g)
+Rehfleisch|110|22|0|2|0|0|0.8|150|Portion (150 g)
+Hirschfleisch|120|23|0|2|0|0|0.9|150|Portion (150 g)
+Kaninchen|135|21|0|5|0|0|1.5|150|Portion (150 g)
+Entenbrust mit Haut|200|19|0|14|0|0|4.5|150|Portion (150 g)
+Entenkeule|210|18|0|15|0|0|4.5|200|1 Keule (200 g)
+Gänsebraten|300|22|0|23|0|0|7|200|Portion (200 g)
+Putenschnitzel|105|24|0|1|0|0|0.3|150|1 Schnitzel (150 g)
+Putenschnitzel paniert|190|18|11|8|0.8|1|1.5|150|1 Schnitzel (150 g)
+Putenkeule|130|21|0|5|0|0|1.6|200|Portion (200 g)
+Putenhackfleisch|120|20|0|4|0|0|1.2|150|Portion (150 g)
+Hähnchenbrust gebraten|165|31|0|4|0|0|1|150|Portion (150 g)
+Hähnchenbrust paniert|230|18|14|11|1|1|2|150|Portion (150 g)
+Hähnchenschenkel mit Haut|210|17|0|16|0|0|4.5|200|1 Schenkel (200 g)
+Hähnchenflügel|220|19|0|16|0|0|4.5|60|3 Flügel (180 g)
+Hähnchen gegrillt halb|190|23|0|10|0|0|2.8|400|½ Hähnchen (400 g)
+Chicken Nuggets|250|15|16|14|1|0.5|2|100|5 Nuggets (100 g)
+Chicken Wings Barbecue|240|18|8|15|0.5|6|4|200|Portion (200 g)
+Hähnchen-Geschnetzeltes|130|21|3|4|0.5|2|1.5|250|Portion (250 g)
+Hühnerfrikassee|110|10|6|5|0.5|1|2|300|Portion (300 g)
+Hühnersuppe|35|3.5|3|1|0.3|0.5|0.3|300|Teller (300 g)
+Rinderbrühe|8|1|0.5|0.2|0|0.3|0.1|250|Tasse (250 ml)|ml
+Gulaschsuppe|85|7|6|4|1.2|2|1.5|350|Teller (350 g)
+Rindfleisch Beutel Snack (Beef Jerky)|300|50|10|5|0|8|2|25|1 Beutel (25 g)
+#fish
+Lachsfilet gebraten|210|24|0|12|0|0|2.5|150|Filet (150 g)
+Räucherlachs|180|22|0|10|0|0|2|50|3 Scheiben (50 g)
+Lachs gebeizt (Graved Lax)|200|22|2|12|0|2|2.2|50|3 Scheiben (50 g)
+Forelle gebraten|140|22|0|5.5|0|0|1.2|150|1 Forelle (150 g)
+Forelle geräuchert|140|22|0|6|0|0|1.5|100|Filet (100 g)
+Regenbogenforelle|130|20|0|5|0|0|1.1|150|1 Forelle (150 g)
+Kabeljau|82|18|0|0.7|0|0|0.1|150|Filet (150 g)
+Seelachs paniert|190|14|14|9|1|1|1|150|Portion (150 g)
+Rotbarsch|100|19|0|2.5|0|0|0.5|150|Filet (150 g)
+Scholle|90|17|0|2|0|0|0.4|150|Filet (150 g)
+Seezunge|85|17|0|1.5|0|0|0.4|150|Filet (150 g)
+Dorade|100|19|0|2.5|0|0|0.7|150|Filet (150 g)
+Wolfsbarsch|97|18|0|2.5|0|0|0.6|150|Filet (150 g)
+Pangasius|90|16|0|2.5|0|0|0.7|150|Filet (150 g)
+Tilapia|96|20|0|1.7|0|0|0.6|150|Filet (150 g)
+Hering mariniert|200|15|5|13|0|5|2.5|100|Portion (100 g)
+Matjes|220|15|2|17|0|1|3|100|Filet (100 g)
+Rollmops|180|14|7|11|0|6|2|100|1 Rollmops (100 g)
+Bismarckhering|190|14|6|12|0|5|2.5|100|Portion (100 g)
+Makrele geräuchert|280|20|0|22|0|0|4.5|100|Portion (100 g)
+Makrele Filet in Öl|290|18|0|24|0|0|4.5|100|Portion (100 g)
+Sardinen in Öl|210|24|0|12|0|0|2|90|1 Dose (90 g)
+Sardinen in Tomatensauce|165|16|2|10|0|1.5|2|100|1 Dose (100 g)
+Sprotten geräuchert|230|18|0|18|0|0|3.5|50|Portion (50 g)
+Anchovis|200|29|0|10|0|0|2|10|3 Filets (10 g)
+Thunfisch Dose Öl|190|26|0|9|0|0|1.5|120|1 Dose (120 g)
+Thunfischsteak|135|28|0|2.5|0|0|0.6|150|Steak (150 g)
+Thunfischsalat|150|11|4|10|0.5|2|1.5|150|Portion (150 g)
+Fischstäbchen 10er|190|13|17|8|1|1|1|30|1 Stäbchen (30 g)
+Backfisch|210|15|15|10|1|1|1.5|150|Portion (150 g)
+Fish and Chips|200|11|20|9|2|1|1.5|350|Portion (350 g)
+Fischfrikadelle|180|13|11|9|0.5|1|1.5|100|1 Frikadelle (100 g)
+Fischbrötchen mit Matjes|230|10|27|9|2|3|1.5|150|1 Brötchen (150 g)
+Garnelen roh|85|18|0.5|1|0|0|0.2|100|Portion (100 g)
+Garnelen paniert|230|13|20|11|1|1|2|100|Portion (100 g)
+Scampi|90|19|0.5|1|0|0|0.2|100|Portion (100 g)
+Krabben|70|15|0|1|0|0|0.2|50|Portion (50 g)
+Nordseekrabben|70|15|0|1|0|0|0.2|50|Portion (50 g)
+Miesmuscheln|85|12|4|2|0|0|0.4|150|Portion (150 g)
+Venusmuscheln|75|13|3|1|0|0|0.2|150|Portion (150 g)
+Austern|70|8|4.5|2|0|0|0.4|60|3 Austern (60 g)
+Jakobsmuscheln|90|17|3|0.8|0|0|0.1|100|Portion (100 g)
+Tintenfisch|80|15|1.5|1.2|0|0|0.3|100|Portion (100 g)
+Calamari frittiert|190|11|17|9|1|0.5|1.5|100|Portion (100 g)
+Hummer|90|19|0.5|1|0|0|0.2|150|Portion (150 g)
+Krebsfleisch|85|18|0|1|0|0|0.2|100|Portion (100 g)
+Surimi|95|8|13|0.5|0|4|0.1|50|3 Stück (50 g)
+Kaviar (Lachsrogen)|250|25|1|17|0|0|3.5|15|1 EL (15 g)
+Lachs Sushi Nigiri|140|7|24|1.5|0.5|3|0.3|30|1 Nigiri (30 g)
+Maki Sushi Gurke|130|3|28|0.5|1|3|0.1|20|1 Röllchen (20 g)
+California Roll|150|5|25|3.5|1|3|0.5|25|1 Stück (25 g)
+Sushi Menü gemischt|145|6|26|2|0.8|3|0.3|300|Box (300 g)
+Poke Bowl Lachs|150|9|18|5|2|4|1|400|Bowl (400 g)
+Thunfisch Pizza|240|12|30|8|2|3|3|350|1 Pizza (350 g)
+#egg
+Ei Größe M|143|12.6|0.7|9.5|0|0.7|3|55|1 Ei (55 g)
+Ei Größe L|143|12.6|0.7|9.5|0|0.7|3|63|1 Ei (63 g)
+Eigelb|320|16|0.3|27|0|0.3|8|18|1 Eigelb (18 g)
+Eiweiß|48|11|0.7|0.2|0|0.7|0|35|1 Eiweiß (35 g)
+Omelett|170|11|1|13|0|1|4.5|150|Portion (150 g)
+Omelett mit Käse und Schinken|210|14|1.5|16|0|1|6.5|200|Portion (200 g)
+Spiegelei gebraten|190|13|0.5|15|0|0.5|4.5|60|1 Ei (60 g)
+Rührei mit Butter|170|11|1|13|0|1|5|120|Portion (120 g)
+Eiersalat|230|7|2|22|0.2|1.5|4|100|Portion (100 g)
+Eier in Senfsauce|150|8|5|11|0.5|2|3|250|Portion (250 g)
+Wachtelei|158|13|0.4|11|0|0.4|3.6|10|1 Ei (10 g)
+Frühstücksei hart|143|12.6|0.7|9.5|0|0.7|3|55|1 Ei (55 g)
+Frühstücksei weich|143|12.6|0.7|9.5|0|0.7|3|55|1 Ei (55 g)
+Eipulver|540|47|3|37|0|3|11|10|1 EL (10 g)
+#dairy
+Frischmilch 1,5 %|47|3.4|4.8|1.5|0|4.8|1|250|Glas (250 ml)|ml
+Fettarme Milch 0,3 %|35|3.4|4.9|0.3|0|4.9|0.2|250|Glas (250 ml)|ml
+H-Milch 1,5 %|47|3.4|4.8|1.5|0|4.8|1|250|Glas (250 ml)|ml
+Laktosefreie Milch 1,5 %|47|3.4|4.8|1.5|0|4.8|1|250|Glas (250 ml)|ml
+Ziegenmilch|69|3.6|4.5|4.1|0|4.5|2.7|250|Glas (250 ml)|ml
+Kondensmilch 7,5 %|135|6.5|9.5|7.5|0|9.5|4.7|10|1 EL (10 ml)|ml
+Kaffeesahne 10 %|120|3|4.2|10|0|4.2|6.3|10|1 Portion (10 ml)|ml
+Schlagsahne 30 %|292|2.4|3.3|30|0|3.3|20|30|2 EL (30 ml)|ml
+Sahne 10 %|120|3|4.2|10|0|4.2|6.3|30|2 EL (30 ml)|ml
+Saure Sahne|190|3|3.5|19|0|3.5|12|50|2 EL (50 g)
+Crème fraîche|290|2.5|3|30|0|3|20|30|1 EL (30 g)
+Crème légère|120|3|4|10|0|4|6|30|1 EL (30 g)
+Joghurt Natur 3,5 %|66|3.5|4.7|3.8|0|4.7|2.5|150|1 Becher (150 g)
+Joghurt Natur 0,1 %|40|4.3|5|0.1|0|5|0.1|150|1 Becher (150 g)
+Griechischer Joghurt 0,2 %|55|10|4|0.2|0|4|0.1|150|1 Becher (150 g)
+Skyr Vanille|75|10|8|0.2|0|7|0.1|150|1 Becher (150 g)
+Skyr Erdbeere|75|9|9|0.2|0|8|0.1|150|1 Becher (150 g)
+Skyr Heidelbeere|75|9|9|0.2|0|8|0.1|150|1 Becher (150 g)
+Fruchtjoghurt Erdbeere|95|3.2|15|2.5|0.2|14|1.6|150|1 Becher (150 g)
+Fruchtjoghurt Kirsche|95|3.2|15|2.5|0.2|14|1.6|150|1 Becher (150 g)
+Fruchtjoghurt 0,1 %|65|4|12|0.1|0.3|10|0.1|150|1 Becher (150 g)
+Joghurt mit der Ecke|120|3.5|18|3.8|0.3|15|2.5|135|1 Becher (135 g)
+Proteinjoghurt|65|10|5|0.5|0|4|0.3|200|1 Becher (200 g)
+Quark Magerstufe|68|12|3.5|0.3|0|3.5|0.2|250|Packung (250 g)
+Quark 20 % Fett i. Tr.|107|12|3.5|5|0|3.5|3.2|250|Packung (250 g)
+Quark 40 % Fett i. Tr.|150|11|3|10|0|3|6.5|250|Packung (250 g)
+Fruchtquark|105|8|14|2|0.3|13|1.2|150|1 Becher (150 g)
+Kräuterquark|110|10|3|6|0.2|2.5|3.5|100|Portion (100 g)
+Hüttenkäse Natur|98|12|3.5|4.3|0|3.5|2.7|200|Becher (200 g)
+Hüttenkäse light|75|12|3.5|1.5|0|3.5|1|200|Becher (200 g)
+Frischkäse Doppelrahm|330|6|3|32|0|3|21|20|1 EL (20 g)
+Frischkäse light|130|10|4|8|0|4|5|20|1 EL (20 g)
+Frischkäse Kräuter|250|6|3|24|0|3|15|20|1 EL (20 g)
+Philadelphia Natur|240|5.5|4|23|0|4|15|20|1 EL (20 g)
+Ricotta|150|11|3|10|0|3|6.5|50|2 EL (50 g)
+Mascarpone|410|4.5|4|42|0|4|27|30|1 EL (30 g)
+Buttermilch Natur|37|3.4|4|0.5|0|4|0.3|250|Glas (250 ml)|ml
+Kefir 3,5 %|64|3.4|4.5|3.5|0|4.5|2.3|250|Glas (250 ml)|ml
+Trinkjoghurt|70|3|11|1.5|0.2|10|1|330|Flasche (330 ml)|ml
+Molke|27|0.9|5|0.2|0|5|0.1|250|Glas (250 ml)|ml
+Kakao Milchgetränk|75|3.3|10|2.6|0.5|9.5|1.6|250|Glas (250 ml)|ml
+Müllermilch Schoko|80|3.3|11.5|2.3|0.3|10.5|1.4|400|Flasche (400 ml)|ml
+Milchshake Vanille|105|3|18|2.5|0|17|1.5|300|Becher (300 ml)|ml
+Butter Brotaufstrich 10 g|741|0.7|0.6|82|0|0.6|52|10|1 Portion (10 g)
+Margarine|720|0.2|0.5|80|0|0.5|20|10|1 TL (10 g)
+Halbfettmargarine|380|0.2|0.5|40|0|0.5|9|10|1 TL (10 g)
+Butterschmalz|900|0.3|0|99.5|0|0|65|10|1 TL (10 g)
+Schweineschmalz|900|0|0|99.5|0|0|39|10|1 TL (10 g)
+Kokosmilch|180|1.8|3|18|0.5|2|16|50|4 EL (50 ml)|ml
+Kokosmilch light|80|0.8|2|8|0.5|1.5|7|50|4 EL (50 ml)|ml
+Kokosjoghurt|110|1|6|9|0|4|8|150|1 Becher (150 g)
+Sojajoghurt|50|3.5|3|2.2|0.5|2|0.4|150|1 Becher (150 g)
+Hafermilch Barista|55|1|7|2.7|0.8|3.5|0.3|250|Glas (250 ml)|ml
+Reisdrink|50|0.1|10|1|0.2|5|0.1|250|Glas (250 ml)|ml
+Cashewdrink|25|0.5|2.5|1.4|0.2|2|0.3|250|Glas (250 ml)|ml
+Erbsendrink|34|2|1|2.2|0.3|0.5|0.3|250|Glas (250 ml)|ml
+Sojadrink ungesüßt|33|3.3|0.1|1.8|0.5|0.1|0.3|250|Glas (250 ml)|ml
+Mandeldrink ungesüßt|13|0.4|0.1|1.1|0.2|0.1|0.1|250|Glas (250 ml)|ml
+Hafersahne|150|1|6|13|0.5|3|1.2|50|4 EL (50 ml)|ml
+Pflanzliche Butter|700|0|0.5|78|0|0.5|25|10|1 TL (10 g)
+Vegane Frischcreme|210|2|5|20|0.5|3|6|20|1 EL (20 g)
+#cheese
+Gouda jung|356|25|0|28|0|0|18|30|1 Scheibe (30 g)
+Gouda mittelalt|365|26|0|29|0|0|19|30|1 Scheibe (30 g)
+Gouda alt|380|28|0|30|0|0|19|30|1 Scheibe (30 g)
+Edamer|330|26|0|25|0|0|16|30|1 Scheibe (30 g)
+Tilsiter|340|25|0|27|0|0|17|30|1 Scheibe (30 g)
+Butterkäse|330|24|0|26|0|0|16|30|1 Scheibe (30 g)
+Emmentaler 45 %|380|28|0|30|0|0|19|30|1 Scheibe (30 g)
+Gruyère|410|27|0|32|0|0|19|30|1 Scheibe (30 g)
+Appenzeller|400|26|0|32|0|0|19|30|1 Scheibe (30 g)
+Bergkäse|390|28|0|31|0|0|19|30|1 Scheibe (30 g)
+Cheddar|410|25|1|34|0|0.5|21|30|1 Scheibe (30 g)
+Parmesan gerieben|400|36|0|28|0|0|18|10|1 EL (10 g)
+Grana Padano|390|33|0|29|0|0|18|10|1 EL (10 g)
+Pecorino|390|26|0|32|0|0|21|10|1 EL (10 g)
+Mozzarella light|170|18|1|10|0|1|6|125|1 Kugel (125 g)
+Mozzarella gerieben|280|22|1|21|0|1|13|30|Handvoll (30 g)
+Büffelmozzarella|250|17|1|20|0|1|13|125|1 Kugel (125 g)
+Burrata|280|14|1|25|0|1|16|100|1 Burrata (100 g)
+Feta light|190|16|2|13|0|1.5|9|50|Portion (50 g)
+Schafskäse|265|14|1.5|22|0|1.5|15|50|Portion (50 g)
+Halloumi|320|22|2|25|0|2|16|60|Scheibe (60 g)
+Grillkäse|300|20|2|23|0|2|15|60|Scheibe (60 g)
+Camembert 45 %|300|20|0|24|0|0|15|60|Ecke (60 g)
+Brie|330|21|0|27|0|0|17|50|Stück (50 g)
+Gorgonzola|350|20|0|29|0|0|19|30|Stück (30 g)
+Blauschimmelkäse|350|21|0|29|0|0|19|30|Stück (30 g)
+Roquefort|370|20|0|31|0|0|20|30|Stück (30 g)
+Ziegenkäse Rolle|280|18|1|23|0|1|16|30|Scheibe (30 g)
+Ziegenfrischkäse|220|14|2|17|0|2|12|30|Portion (30 g)
+Harzer Käse|130|30|0|0.7|0|0|0.4|100|1 Stück (100 g)
+Handkäse|130|30|0|0.7|0|0|0.4|100|1 Stück (100 g)
+Quark Käse Sauermilchkäse|135|30|0|1|0|0|0.6|100|1 Stück (100 g)
+Schmelzkäse|250|12|5|20|0|3|13|20|1 Ecke (20 g)
+Schmelzkäse light|140|13|6|6|0|3|4|20|1 Ecke (20 g)
+Käsescheibe Toast|285|18|4|22|0|3|14|20|1 Scheibe (20 g)
+Reibekäse gemischt|330|24|1|26|0|1|16|30|Handvoll (30 g)
+Pizzakäse gerieben|290|22|1|22|0|1|14|30|Handvoll (30 g)
+Raclette Käse|350|24|0|28|0|0|18|50|2 Scheiben (50 g)
+Fondue Käse|290|19|2|23|0|2|15|100|Portion (100 g)
+Bresso|240|5|4|23|0|4|15|20|1 EL (20 g)
+Cremiger Ziegenkäse|230|12|2|19|0|2|13|30|Portion (30 g)
+Vegane Käsealternative|270|1|20|20|1|0.5|17|30|1 Scheibe (30 g)
+#nuts
+Mandeln geschält|580|21|9|50|12|4|3.8|30|Handvoll (30 g)
+Mandeln gehackt|580|21|9|50|12|4|3.8|10|1 EL (10 g)
+Mandelmus|620|21|7|55|10|4|4|15|1 EL (15 g)
+Mandelblättchen|590|22|8|52|12|4|4|10|1 EL (10 g)
+Walnusskerne|654|15|7|65|7|2.6|6|30|8 Hälften (30 g)
+Cashewkerne geröstet|580|18|27|46|3|6|9|30|Handvoll (30 g)
+Cashewmus|590|18|28|47|3|6|9|15|1 EL (15 g)
+Haselnusskerne|628|15|10|61|10|4|4.5|30|Handvoll (30 g)
+Haselnussmus|640|15|9|62|9|4|4.5|15|1 EL (15 g)
+Pistazien|560|20|18|45|10|8|5.5|30|Handvoll (30 g)
+Pekannüsse|690|9|4|72|9|4|6|30|Handvoll (30 g)
+Macadamia|720|8|5|76|9|5|12|30|Handvoll (30 g)
+Paranüsse|660|14|4|67|8|2.3|15|20|4 Nüsse (20 g)
+Pinienkerne|670|14|13|68|4|3.6|5|10|1 EL (10 g)
+Kastanien gebraten|200|2.5|43|2|8|7|0.3|50|Portion (50 g)
+Maronen vorgegart|190|2.5|42|1.5|6|10|0.3|50|Portion (50 g)
+Kürbiskerne geröstet|560|30|11|49|6|1.4|8.7|20|1 EL (20 g)
+Sonnenblumenkerne|580|21|20|48|9|3|5|20|1 EL (20 g)
+Sesam|570|18|12|50|12|0.3|7|10|1 EL (10 g)
+Tahini|590|17|12|52|9|0.5|7.5|15|1 EL (15 g)
+Mohn|520|18|28|42|20|3|4.5|10|1 EL (10 g)
+Hanfsamen|550|32|9|45|4|1.5|4.5|10|1 EL (10 g)
+Leinsamen geschrotet|530|18|2|42|27|1.5|3.7|10|1 EL (10 g)
+Flohsamenschalen|20|2|1|0.5|80|0|0|5|1 TL (5 g)
+Studentenfutter|480|13|35|34|7|28|5|30|Handvoll (30 g)
+Nussmischung gesalzen|610|20|12|52|7|4|7|30|Handvoll (30 g)
+Nuss-Nougat Creme Protein|470|20|30|30|5|10|6|15|1 EL (15 g)
+Erdnussbutter Zucker frei|600|27|10|50|7|3|9|15|1 EL (15 g)
+Mandel-Erdnussmus|610|24|10|52|8|4|6|15|1 EL (15 g)
+Kokosraspeln|660|6|8|62|16|7|53|10|1 EL (10 g)
+Trockenfrüchte Mix|290|2.5|70|0.7|6|55|0.1|30|Handvoll (30 g)
+Fruchtriegel Datteln|330|3|70|4|7|55|1|30|1 Riegel (30 g)
+Nussriegel|480|11|45|28|5|28|4|35|1 Riegel (35 g)
+#oil
+Olivenöl nativ extra|884|0|0|100|0|0|14|10|1 EL (10 ml)|ml
+Sonnenblumenöl|884|0|0|100|0|0|11|10|1 EL (10 ml)|ml
+Leinöl|884|0|0|100|0|0|9|10|1 EL (10 ml)|ml
+Sesamöl|884|0|0|100|0|0|14|10|1 EL (10 ml)|ml
+Walnussöl|884|0|0|100|0|0|9|10|1 EL (10 ml)|ml
+Kürbiskernöl|884|0|0|100|0|0|18|10|1 EL (10 ml)|ml
+Erdnussöl|884|0|0|100|0|0|17|10|1 EL (10 ml)|ml
+Maiskeimöl|884|0|0|100|0|0|13|10|1 EL (10 ml)|ml
+Traubenkernöl|884|0|0|100|0|0|10|10|1 EL (10 ml)|ml
+Avocadoöl|884|0|0|100|0|0|12|10|1 EL (10 ml)|ml
+Olivenöl Spray|700|0|0|78|0|0|11|1|1 Sprühstoß (1 g)
+Bratfett Spray|50|0|0|5|0|0|1|1|1 Sprühstoß (1 g)
+Essig Balsamico|90|0.5|17|0|0|15|0|10|1 EL (10 ml)|ml
+Aceto Balsamico di Modena|90|0.5|17|0|0|15|0|10|1 EL (10 ml)|ml
+Apfelessig|20|0|0.5|0|0|0.5|0|10|1 EL (10 ml)|ml
+Weißweinessig|20|0|0.5|0|0|0.5|0|10|1 EL (10 ml)|ml
+Salatdressing Joghurt|90|1.5|6|7|0.3|4|1|30|2 EL (30 g)
+Salatdressing French|250|0.5|10|23|0|8|2.5|30|2 EL (30 g)
+Salatdressing Italian|180|0.5|6|17|0|4|2|30|2 EL (30 g)
+Salatdressing Caesar|320|2|4|33|0|2|5|30|2 EL (30 g)
+Salatdressing Balsamico light|35|0.2|7|0.5|0|6|0|30|2 EL (30 g)
+Essig-Öl-Dressing selbst gemacht|350|0|2|38|0|1.5|5|30|2 EL (30 g)
+Remoulade|390|1|8|40|0.2|6|4|20|1 EL (20 g)
+Mayo light|290|1|8|28|0|4|3|15|1 EL (15 g)
+Salatmayonnaise|300|1|5|31|0|3|3|15|1 EL (15 g)
+Aioli|500|1|2|55|0|1|8|15|1 EL (15 g)
+Tartarsauce|330|1.5|8|33|0.3|5|4|20|1 EL (20 g)
+Joghurtdip|70|3|5|4|0|4|2|30|2 EL (30 g)
+Tzatziki|110|3|4|9|0.3|3|3.5|50|2 EL (50 g)
+Guacamole|150|2|8|13|5|1|2.5|50|2 EL (50 g)
+Salsa mild|35|1.5|7|0.2|1.5|4|0|50|2 EL (50 g)
+Sour Cream Dip|180|3|5|17|0|3|10|30|2 EL (30 g)
+Käsesauce Nacho|130|4|8|9|0|2|5|50|2 EL (50 g)
+#sweet
+Zucker weiß|400|0|100|0|0|100|0|5|1 TL (5 g)
+Zucker braun|390|0|98|0|0|97|0|5|1 TL (5 g)
+Puderzucker|390|0|98|0|0|98|0|10|1 EL (10 g)
+Vanillezucker|390|0|98|0|0|97|0|8|1 Päckchen (8 g)
+Birkenzucker Xylit|240|0|100|0|0|0|0|5|1 TL (5 g)
+Erythrit|0|0|100|0|0|0|0|5|1 TL (5 g)
+Stevia Streusüße|0|0|1|0|0|0|0|1|1 Dosis (1 g)
+Süßstoff Tablette|0|0|0|0|0|0|0|0.1|1 Tablette (0.1 g)
+Ahornsirup|260|0|67|0|0|60|0|20|1 EL (20 g)
+Agavendicksaft|310|0|76|0|0|68|0|20|1 EL (20 g)
+Zuckerrübensirup|290|1|72|0|0|60|0|20|1 EL (20 g)
+Honig flüssig|304|0.3|82|0|0.2|82|0|20|1 EL (20 g)
+Konfitüre Erdbeer|250|0.4|62|0.1|1|58|0|20|1 EL (20 g)
+Marmelade Orange|250|0.3|62|0.1|0.5|58|0|20|1 EL (20 g)
+Fruchtaufstrich ohne Zucker|130|0.5|30|0.1|2|25|0|20|1 EL (20 g)
+Marmelade Himbeer|245|0.5|60|0.1|1.5|55|0|20|1 EL (20 g)
+Nutella Becher|539|6.3|57.5|30.9|3.4|56.3|10.6|15|1 EL (15 g)
+Lebkuchenherz|390|5|72|8|3|50|1.5|40|1 Herz (40 g)
+Milchschokolade|535|7|57|30|2|55|18|20|2 Rippen (20 g)
+Zartbitterschokolade 85 %|600|10|20|50|14|13|30|20|2 Rippen (20 g)
+Weiße Schokolade|550|6|58|33|0|58|20|20|2 Rippen (20 g)
+Nussschokolade|545|9|50|34|3|48|14|20|2 Rippen (20 g)
+Schokolade Haselnuss ganze Nüsse|555|9|47|36|4|44|12|20|2 Rippen (20 g)
+Kakaopulver|350|20|11|21|28|1|12|10|1 EL (10 g)
+Trinkschokolade Pulver|390|5|85|4|5|75|2|20|2 TL (20 g)
+Schokoladenglasur|450|4|65|20|3|60|12|20|Portion (20 g)
+Fruchtgummi|340|6|77|0.2|0|47|0|30|Handvoll (30 g)
+Gummibärchen Haribo|343|7|77|0.1|0|46|0|30|Handvoll (30 g)
+Weingummi|330|6|75|0.2|0|55|0|30|Handvoll (30 g)
+Lakritz|330|3|75|1|0|45|0.3|20|Handvoll (20 g)
+Lutscher|390|0|98|0|0|98|0|15|1 Lutscher (15 g)
+Bonbons|390|0|98|0|0|85|0|5|1 Bonbon (5 g)
+Kaugummi zuckerfrei|220|0|65|0|0|0|0|2|1 Stück (2 g)
+Marshmallows|330|2|80|0|0|60|0|10|2 Stück (10 g)
+Waffelröllchen|480|6|63|22|2|30|9|10|1 Röllchen (10 g)
+Eiscreme Schoko|220|4|27|11|1|25|7|100|2 Kugeln (100 g)
+Eiscreme Erdbeer|190|3|27|8|0.5|24|5|100|2 Kugeln (100 g)
+Eis am Stiel Wasser|80|0|20|0|0|18|0|60|1 Eis (60 g)
+Eis Sorbet|130|0.3|32|0.1|1|28|0|100|2 Kugeln (100 g)
+Magnum Eis|290|3|28|18|0.5|26|11|85|1 Eis (85 g)
+Cornetto|250|3.5|31|12|0.5|18|7|70|1 Eis (70 g)
+Softeis|150|3.5|22|5|0|20|3|120|1 Portion (120 g)
+Joghurteis|120|3.5|22|2|0|20|1.2|100|2 Kugeln (100 g)
+Protein Eis|85|7|10|2|3|2|1|100|100 g
+Eisbecher|230|3.5|30|11|0.5|26|7|200|Portion (200 g)
+Fruchtkaubonbon|370|0|88|2|0|70|1|30|Handvoll (30 g)
+Müsliriegel Schoko|410|6|65|13|5|30|6|25|1 Riegel (25 g)
+Proteinriegel Schoko|370|30|35|12|6|8|6|50|1 Riegel (50 g)
+Energieriegel|400|7|62|13|5|35|4|45|1 Riegel (45 g)
+Datteln Nuss Riegel|380|8|50|16|7|35|2|40|1 Riegel (40 g)
+#snack
+Chips Salz|535|6|50|34|4|0.5|3|30|Handvoll (30 g)
+Chips Paprika Chio|525|6|50|33|4|3|3|30|Handvoll (30 g)
+Pringles Original|530|4|50|34|3|1.5|8|30|Handvoll (30 g)
+Pringles Sour Cream|530|4.5|50|34|3|2|8|30|Handvoll (30 g)
+Tortilla Chips|490|7|63|24|5|1|3|30|Handvoll (30 g)
+Nachos Käse|500|8|58|26|4|2|5|30|Handvoll (30 g)
+Popcorn gesalzen|480|10|55|25|10|0.5|3|30|Schüssel (30 g)
+Popcorn süß|430|6|75|12|7|35|2|30|Schüssel (30 g)
+Popcorn Mikrowelle Butter|470|9|52|25|9|1|7|30|Schüssel (30 g)
+Salzbrezeln|380|10|75|3|3|2|0.6|30|Handvoll (30 g)
+Erdnussflips Erdnusslocken|510|13|50|28|4|3|5|30|Handvoll (30 g)
+Cracker Käse|480|10|58|23|2.5|3|8|30|Handvoll (30 g)
+Reiscracker|390|8|80|3|2|2|0.8|20|Handvoll (20 g)
+Gemüsechips|490|3|55|28|8|10|3|30|Handvoll (30 g)
+Süßkartoffelchips|500|2|55|30|6|10|3|30|Handvoll (30 g)
+Proteinchips|390|45|25|10|6|2|1.5|30|Handvoll (30 g)
+Käsestangen|420|22|45|17|3|2|8|30|Handvoll (30 g)
+Nuts Honey Roasted|550|18|35|38|6|20|5|30|Handvoll (30 g)
+Studentenfutter ungesalzen|480|14|30|36|7|25|5|30|Handvoll (30 g)
+Oliven gefüllt|130|1.5|3|13|3|0.5|2|20|5 Oliven (20 g)
+Antipasti Mix|130|2|6|11|3|3|1.5|80|Portion (80 g)
+Getrocknete Tomaten in Öl|270|5|13|23|5|10|3|30|Portion (30 g)
+Fleischsnack Salami Sticks|470|23|2|41|0|1|15|25|1 Stick (25 g)
+Kabanossi Snack|440|22|2|38|0|1|14|25|1 Stück (25 g)
+Käsewürfel|370|25|0|30|0|0|19|30|Portion (30 g)
+Laugenbrezel Mini|380|10|70|6|3|1.5|1|30|Handvoll (30 g)
+#drink
+Leitungswasser|0|0|0|0|0|0|0|250|Glas (250 ml)|ml
+Sprudelwasser|0|0|0|0|0|0|0|250|Glas (250 ml)|ml
+Apfelsaft|46|0.1|11|0.1|0.1|10|0|200|Glas (200 ml)|ml
+Apfelschorle 1:1|23|0|5.5|0|0|5.5|0|300|Glas (300 ml)|ml
+Orangensaft frisch|45|0.7|10|0.2|0.2|9|0|200|Glas (200 ml)|ml
+Multivitaminsaft|47|0.5|11|0.1|0.1|10|0|200|Glas (200 ml)|ml
+Traubensaft|66|0.4|16|0.1|0|16|0|200|Glas (200 ml)|ml
+Kirschsaft|55|0.5|13|0.1|0|12|0|200|Glas (200 ml)|ml
+Kirschnektar|55|0.3|13|0|0|12|0|200|Glas (200 ml)|ml
+Bananennektar|60|0.3|14|0|0.3|13|0|200|Glas (200 ml)|ml
+Tomatensaft|18|0.8|3.5|0.1|0.5|3.2|0|200|Glas (200 ml)|ml
+Karottensaft|40|0.8|9|0.1|0.5|8|0|200|Glas (200 ml)|ml
+Gemüsesaft|20|0.8|4|0.1|0.5|3.5|0|200|Glas (200 ml)|ml
+Rote-Bete-Saft|40|1|9|0.1|0.4|8|0|200|Glas (200 ml)|ml
+Sauerkrautsaft|10|0.5|1.5|0|0.5|1|0|200|Glas (200 ml)|ml
+Smoothie Obst|55|0.6|12|0.3|1|11|0|250|Flasche (250 ml)|ml
+Smoothie grün|45|0.8|9|0.3|1.5|8|0|250|Flasche (250 ml)|ml
+Protein Shake mit Wasser|50|9|2|0.8|0|1.5|0.4|300|Shaker (300 ml)|ml
+Protein Shake mit Milch|75|10|6|1.5|0|6|1|300|Shaker (300 ml)|ml
+Eistee Pfirsich|33|0|8|0|0|8|0|330|Dose (330 ml)|ml
+Eistee Zitrone|30|0|7|0|0|7|0|330|Dose (330 ml)|ml
+Eistee zero|2|0|0.3|0|0|0|0|330|Dose (330 ml)|ml
+Limonade|42|0|10.5|0|0|10.5|0|330|Glas (330 ml)|ml
+Zitronenlimonade Sprite|37|0|9|0|0|9|0|330|Dose (330 ml)|ml
+Fanta Orange|38|0|9|0|0|9|0|330|Dose (330 ml)|ml
+Coca-Cola|42|0|10.6|0|0|10.6|0|330|Dose (330 ml)|ml
+Coca-Cola Zero|0.4|0|0|0|0|0|0|330|Dose (330 ml)|ml
+Coca-Cola Light|0.4|0|0|0|0|0|0|330|Dose (330 ml)|ml
+Pepsi|41|0|10.4|0|0|10.4|0|330|Dose (330 ml)|ml
+Pepsi Max|0.5|0|0|0|0|0|0|330|Dose (330 ml)|ml
+Mezzo Mix|40|0|9.5|0|0|9.5|0|330|Dose (330 ml)|ml
+Spezi|40|0|9.5|0|0|9.5|0|330|Glas (330 ml)|ml
+Almdudler|38|0|9|0|0|9|0|330|Flasche (330 ml)|ml
+Schorle Rhabarber|30|0|7|0|0|7|0|300|Glas (300 ml)|ml
+Fritz-Kola|44|0|11|0|0|11|0|330|Flasche (330 ml)|ml
+Club-Mate|20|0|5|0|0|5|0|500|Flasche (500 ml)|ml
+Red Bull|45|0|11|0|0|11|0|250|Dose (250 ml)|ml
+Red Bull Zero|3|0|0|0|0|0|0|250|Dose (250 ml)|ml
+Monster Energy|47|0|11.5|0|0|11|0|500|Dose (500 ml)|ml
+Monster Ultra Zero|3|0|0.5|0|0|0|0|500|Dose (500 ml)|ml
+Rockstar Energy|45|0|11|0|0|11|0|500|Dose (500 ml)|ml
+Isotonisches Getränk|25|0|6|0|0|5|0|500|Flasche (500 ml)|ml
+Elektrolytgetränk|15|0|3.5|0|0|3|0|500|Flasche (500 ml)|ml
+Tonic Water|35|0|8.5|0|0|8.5|0|200|Glas (200 ml)|ml
+Bitter Lemon|38|0|9|0|0|9|0|200|Glas (200 ml)|ml
+Ginger Ale|35|0|8.5|0|0|8.5|0|200|Glas (200 ml)|ml
+Malzbier|38|0.4|9|0|0|8|0|330|Flasche (330 ml)|ml
+Kaffee mit Milch|10|0.6|0.9|0.4|0|0.8|0.2|200|Tasse (200 ml)|ml
+Espresso|2|0.1|0.3|0|0|0|0|40|1 Espresso (40 ml)|ml
+Cappuccino|35|2|3.3|1.5|0|3.3|1|200|Tasse (200 ml)|ml
+Latte Macchiato|50|3|4.5|2|0|4.5|1.3|300|Glas (300 ml)|ml
+Flat White|45|3|4|2|0|4|1.3|200|Tasse (200 ml)|ml
+Caffè Latte Hafermilch|35|0.8|5|1.2|0.3|3|0.2|300|Tasse (300 ml)|ml
+Eiskaffee|110|2.5|17|3.5|0|16|2.2|250|Glas (250 ml)|ml
+Mocha|80|3|11|3|0.5|10|2|300|Tasse (300 ml)|ml
+Heiße Schokolade|90|3.3|13|3|0.5|12|1.8|250|Tasse (250 ml)|ml
+Chai Latte|65|2|11|1.5|0|10|1|300|Tasse (300 ml)|ml
+Tee ungesüßt|1|0|0.2|0|0|0|0|250|Tasse (250 ml)|ml
+Tee mit Zucker|20|0|5|0|0|5|0|250|Tasse (250 ml)|ml
+Grüner Tee|1|0|0.2|0|0|0|0|250|Tasse (250 ml)|ml
+Kräutertee|1|0|0.2|0|0|0|0|250|Tasse (250 ml)|ml
+Matcha Latte|50|2.5|6|2|0.5|5|1.2|300|Tasse (300 ml)|ml
+Kakao mit Milch|75|3.3|10|2.6|0.5|9.5|1.6|250|Tasse (250 ml)|ml
+Glühwein|110|0|15|0|0|14|0|200|Tasse (200 ml)|ml
+Punsch alkoholfrei|55|0|13|0|0|13|0|200|Tasse (200 ml)|ml
+#alcohol
+Pils|42|0.4|3|0|0|0|0|500|Glas (500 ml)|ml
+Helles Bier|42|0.4|3|0|0|0|0|500|Maß (500 ml)|ml
+Weizenbier|45|0.5|3.5|0|0|0|0|500|Glas (500 ml)|ml
+Kölsch|42|0.4|3|0|0|0|0|200|Stange (200 ml)|ml
+Altbier|43|0.4|3.3|0|0|0|0|250|Glas (250 ml)|ml
+Radler|35|0.2|7|0|0|6|0|500|Glas (500 ml)|ml
+Alkoholfreies Bier|25|0.3|5|0|0|1|0|500|Flasche (500 ml)|ml
+Alkoholfreies Weizen|28|0.4|6|0|0|1|0|500|Flasche (500 ml)|ml
+Dunkles Bier|45|0.5|4|0|0|1|0|500|Glas (500 ml)|ml
+Rotwein trocken|85|0.1|2.6|0|0|0.6|0|150|Glas (150 ml)|ml
+Weißwein trocken|75|0.1|2.6|0|0|1|0|150|Glas (150 ml)|ml
+Weißwein lieblich|90|0.1|5|0|0|4|0|150|Glas (150 ml)|ml
+Rosé Wein|75|0.1|2.5|0|0|1|0|150|Glas (150 ml)|ml
+Sekt trocken|75|0.2|3|0|0|2|0|100|Glas (100 ml)|ml
+Prosecco|70|0.2|3|0|0|2|0|100|Glas (100 ml)|ml
+Champagner|75|0.2|2.5|0|0|1.5|0|100|Glas (100 ml)|ml
+Weinschorle|40|0|1.5|0|0|0.8|0|250|Glas (250 ml)|ml
+Aperol Spritz|85|0|10|0|0|10|0|200|Glas (200 ml)|ml
+Hugo|75|0|8|0|0|8|0|200|Glas (200 ml)|ml
+Gin Tonic|75|0|5|0|0|5|0|250|Glas (250 ml)|ml
+Wodka|230|0|0|0|0|0|0|40|2 cl (20 ml)|ml
+Whisky|235|0|0|0|0|0|0|40|4 cl (40 ml)|ml
+Rum|230|0|0|0|0|0|0|40|4 cl (40 ml)|ml
+Jägermeister|320|0|30|0|0|30|0|20|2 cl (20 ml)|ml
+Underberg|270|0|10|0|0|10|0|20|1 Fläschchen (20 ml)|ml
+Korn Schnaps|230|0|0|0|0|0|0|20|2 cl (20 ml)|ml
+Likör Eierlikör|300|3|30|8|0|30|5|40|4 cl (40 ml)|ml
+Cuba Libre|90|0|10|0|0|10|0|250|Glas (250 ml)|ml
+Mojito|90|0|12|0|0|12|0|250|Glas (250 ml)|ml
+Caipirinha|120|0|14|0|0|14|0|250|Glas (250 ml)|ml
+Moscow Mule|90|0|9|0|0|9|0|250|Glas (250 ml)|ml
+Long Island Iced Tea|130|0|13|0|0|10|0|250|Glas (250 ml)|ml
+Cider|45|0|5|0|0|5|0|330|Flasche (330 ml)|ml
+Bowle|70|0|9|0|0|9|0|200|Glas (200 ml)|ml
+#sauce
+Ketchup Heinz|110|1.2|25|0.1|0.8|23|0|20|1 EL (20 g)
+Curry Ketchup|110|1.2|25|0.1|0.8|23|0|20|1 EL (20 g)
+Currysauce|105|1|24|0.4|1|20|0|50|3 EL (50 g)
+Senf mittelscharf|70|4.5|4|4|3|2|0.3|10|1 TL (10 g)
+Senf süß|110|3|20|2|2|18|0.2|10|1 TL (10 g)
+Barbecuesauce|125|1|28|0.5|1|24|0|20|1 EL (20 g)
+Sweet Chili Sauce|180|0.3|43|0.3|0.5|38|0|20|1 EL (20 g)
+Sambal Oelek|35|1.5|5|0.5|3|3|0|5|1 TL (5 g)
+Sriracha|90|1.5|18|1|1.5|14|0.2|5|1 TL (5 g)
+Tabasco|10|0.5|1|0.3|0.5|0.5|0|2|5 Tropfen (2 ml)|ml
+Worcestersauce|70|1|15|0|0|12|0|5|1 TL (5 ml)|ml
+Sojasauce hell|60|8|5|0|0.8|1|0|15|1 EL (15 ml)|ml
+Teriyaki Sauce|100|3|22|0|0|18|0|20|1 EL (20 ml)|ml
+Austernsauce|50|1.5|11|0.1|0.1|7|0|15|1 EL (15 g)
+Fischsauce|35|5|4|0|0|3|0|10|1 EL (10 ml)|ml
+Hoisin Sauce|220|3|44|3.5|1|27|0.6|20|1 EL (20 g)
+Pesto Basilikum|450|5|4|45|2|3|7|20|1 EL (20 g)
+Pesto Rosso|370|4|7|36|3|5|5|20|1 EL (20 g)
+Tomatenpesto|370|4|7|36|3|5|5|20|1 EL (20 g)
+Bolognesesauce Glas|65|3|7|2.5|1.5|5|0.8|125|Portion (125 g)
+Arrabbiata Sauce|45|1.4|7|1.5|1.5|5|0.2|125|Portion (125 g)
+Tomatensauce Basilikum|45|1.5|8|0.8|1.5|6|0.1|125|Portion (125 g)
+Carbonara Sauce|140|3|5|12|0.3|2|6|125|Portion (125 g)
+Sahnesauce|120|1.5|5|10|0.2|2|6.5|50|Portion (50 g)
+Rahmsauce Pilze|90|1.5|5|7|0.5|1.5|3.5|100|Portion (100 g)
+Béchamelsauce|110|3|9|7|0.3|4|4.5|100|Portion (100 g)
+Hollandaise|300|2|4|30|0|1|18|50|Portion (50 g)
+Bratensauce|50|1|6|2.5|0.3|1|1.2|100|Portion (100 g)
+Jägersauce|55|1.5|7|2.5|0.5|2|1|100|Portion (100 g)
+Zigeunersauce|50|1.2|8|1.5|1|5|0.2|100|Portion (100 g)
+Chili Sauce Mild|50|1|10|0.5|1|8|0|20|1 EL (20 g)
+Curry Paste rot|110|3|15|4.5|5|8|1.5|15|1 TL (15 g)
+Curry Paste gelb|110|3|15|4.5|5|8|1.5|15|1 TL (15 g)
+Currypulver|325|14|55|14|53|2|2|3|1 TL (3 g)
+Tomatenketchup Bio|100|1.2|23|0.1|1|20|0|20|1 EL (20 g)
+Knoblauchsauce|350|1|4|37|0|2|5|20|1 EL (20 g)
+Schaschlik Sauce|115|1.5|24|1|1|18|0.2|30|2 EL (30 g)
+Pommes Sauce|300|1|10|29|0|3|3.5|20|1 EL (20 g)
+Maggi Würze|20|2.5|2.5|0|0|0.5|0|2|5 Tropfen (2 ml)|ml
+Gemüsebrühe Pulver|230|7|35|7|1|8|3|5|1 TL (5 g)
+Hühnerbrühe Würfel|230|7|25|11|1|3|5|5|1 Würfel (5 g)
+Salz|0|0|0|0|0|0|0|1|1 Prise (1 g)
+Pfeffer|255|10|64|3.3|25|0.6|1.4|1|1 Prise (1 g)
+Paprikapulver|290|14|54|13|35|10|2|3|1 TL (3 g)
+Zimt|247|4|81|1.2|53|2|0.3|3|1 TL (3 g)
+Muskat|525|6|49|36|21|3|26|1|1 Prise (1 g)
+Vanilleschote|290|3|13|0.1|0|13|0|2|1 Schote (2 g)
+Backpulver|55|0|28|0|0|0|0|5|1 TL (5 g)
+Hefe frisch|110|9|8|1.5|7|0|0.3|42|1 Würfel (42 g)
+Trockenhefe|325|40|41|7|27|0|1|7|1 Päckchen (7 g)
+Gelatine|335|85|0|0|0|0|0|5|1 Blatt (2 g)
+Speisestärke|350|0.3|86|0.1|0|0|0|10|1 EL (10 g)
+Kakao Backkakao|350|20|11|21|28|1|12|10|1 EL (10 g)
+#soup
+Tomatensuppe|40|1|7|1|1|5|0.4|300|Teller (300 g)
+Gemüsesuppe|35|1.2|6|0.8|1.8|2.5|0.2|300|Teller (300 g)
+Kürbissuppe|45|1|7|1.5|1|4|0.8|300|Teller (300 g)
+Hühnersuppe mit Nudeln|45|3.5|5|1.2|0.5|0.5|0.4|300|Teller (300 g)
+Nudelsuppe|45|2.5|7|0.8|0.5|0.5|0.2|300|Teller (300 g)
+Zwiebelsuppe|45|1.5|6|1.5|0.8|2|0.7|300|Teller (300 g)
+Champignoncremesuppe|65|1.5|5|4.5|0.5|1|2.5|300|Teller (300 g)
+Spargelcremesuppe|55|1.5|5|3.5|0.5|1.5|2|300|Teller (300 g)
+Brokkolicremesuppe|60|2|5|4|1|1.5|2|300|Teller (300 g)
+Kartoffelsuppe mit Würstchen|85|3.5|8|4|1|1|1.6|350|Teller (350 g)
+Tomatensuppe Dose|45|1|8|1|1|5.5|0.3|300|Teller (300 g)
+Miso Suppe|30|2|3|1|0.5|1|0.2|250|Schale (250 ml)|ml
+Ramen Suppe mit Ei|90|5|12|2.5|1|1|0.8|450|Schüssel (450 g)
+Pho Bo|60|5|7|1.2|0.5|1|0.5|500|Schüssel (500 g)
+Tom Kha Gai|80|5|4|5|0.5|2|4|300|Schüssel (300 g)
+Borschtsch|55|2.5|7|2|1.5|4|0.8|300|Teller (300 g)
+Minestrone|45|2|7|1.2|2|2|0.3|300|Teller (300 g)
+Gazpacho|40|1|5|2|1|4|0.3|250|Schale (250 g)
+Fischsuppe|55|6|3|2|0.5|1|0.4|300|Teller (300 g)
+Kohlsuppe|35|1.8|5|0.8|2|3|0.2|300|Teller (300 g)
+Instant Nudelsuppe zubereitet|75|2|11|2.5|0.5|0.5|1|400|Becher (400 g)
+Instant Nudeln Trocken|450|9|60|19|2|2|9|85|1 Packung (85 g)
+#fast
+Big Mac|230|12|20|11|1.5|5|4|215|1 Big Mac (215 g)
+Cheeseburger Fast Food|260|14|27|11|1.5|7|5|120|1 Cheeseburger (120 g)
+Hamburger Fast Food|250|13|28|9|1.5|6|3.5|105|1 Hamburger (105 g)
+McChicken|250|10|27|11|2|4|2|180|1 McChicken (180 g)
+Chicken McNuggets 6 Stück|250|15|16|14|1|0.5|2.3|100|6 Stück (100 g)
+McRib|240|12|25|10|2|7|3|210|1 McRib (210 g)
+Filet-O-Fish|250|10|27|11|1.5|5|2|140|1 Burger (140 g)
+Whopper|230|12|18|12|1.5|5|4|270|1 Whopper (270 g)
+Crispy Chicken Burger|260|12|27|11|2|4|2|200|1 Burger (200 g)
+Veggie Burger|230|8|28|9|3|5|2|180|1 Burger (180 g)
+Doppelburger|265|15|20|14|1.5|5|5.5|230|1 Burger (230 g)
+Fried Chicken KFC Bucket Stück|260|18|10|16|0.5|0.5|4|120|1 Stück (120 g)
+Zinger Burger|250|11|28|10|2|4|1.8|200|1 Burger (200 g)
+Pommes Rot Weiß|330|3.5|38|18|3|1.5|2.5|200|Portion (200 g)
+Pommes mit Ketchup|300|3|40|14|3|10|2|200|Portion (200 g)
+Currywurst mit Pommes|270|8|22|16|2|7|5|400|Portion (400 g)
+Döner Kebab Kalb|215|12|16|11|2|2|4|350|1 Döner (350 g)
+Dönerteller|190|13|15|9|2|2|3|500|Teller (500 g)
+Dürüm Döner|210|12|20|9|2|2|3|350|1 Dürüm (350 g)
+Falafel Dürüm|200|7|27|7|5|3|1|350|1 Dürüm (350 g)
+Gyros Pita|200|13|18|8|1.5|2|3|300|1 Pita (300 g)
+Gyrosteller|180|14|10|9|1.5|2|3.5|450|Teller (450 g)
+Hot Dog|250|10|21|14|1|5|5|150|1 Hot Dog (150 g)
+Pizza Salami|265|11|30|11|2|3|4|350|1 Pizza (350 g)
+Pizza Margherita Restaurant|240|10|31|8|2|3|4|400|1 Pizza (400 g)
+Pizza Hawaii|240|10|32|8|2|5|3.5|400|1 Pizza (400 g)
+Pizza Prosciutto|245|11|30|9|2|3|3.8|400|1 Pizza (400 g)
+Pizza Funghi|230|9|31|7|2|3|3|400|1 Pizza (400 g)
+Pizza Quattro Formaggi|290|13|29|14|2|3|7|400|1 Pizza (400 g)
+Pizza Tonno|240|12|30|8|2|3|3|400|1 Pizza (400 g)
+Pizza Diavola|270|12|30|12|2|3|4.5|400|1 Pizza (400 g)
+Pizzaschnitte|265|10|32|10|2|3|4|120|1 Stück (120 g)
+Calzone|250|11|32|9|2|2|3.5|350|1 Calzone (350 g)
+Flammkuchen|250|8|25|13|1.5|3|6|300|1 Flammkuchen (300 g)
+Burrito Rind|200|9|25|7|3|2|3|300|1 Burrito (300 g)
+Burrito Bowl|150|9|18|5|4|2|1.5|450|Bowl (450 g)
+Quesadilla|260|12|25|13|2|2|6|200|1 Quesadilla (200 g)
+Tacos Rind|210|10|20|10|2|2|4|100|2 Tacos (100 g)
+Nachos mit Käse und Hack|230|9|22|12|3|2|5|250|Portion (250 g)
+Fajita Hähnchen|170|12|19|5|2.5|3|1.5|250|1 Fajita (250 g)
+Sandwich Schinken Käse|230|11|26|9|1.5|3|4|200|1 Sandwich (200 g)
+Sandwich Hähnchen|200|13|25|5|2|3|1.5|220|1 Sandwich (220 g)
+Sandwich Thunfisch|210|12|24|7|2|3|1.8|220|1 Sandwich (220 g)
+Subway 6 Zoll Hähnchen|175|12|26|3|3|5|1|230|1 Sub (230 g)
+Subway 6 Zoll Italian BMT|220|11|27|8|2.5|5|3|250|1 Sub (250 g)
+Club Sandwich|210|12|20|9|1.5|2|3|300|1 Sandwich (300 g)
+Bagel Frischkäse Lachs|230|10|31|7|2|4|3|180|1 Bagel (180 g)
+Bagel Plain|270|10|53|1.5|2.5|6|0.3|100|1 Bagel (100 g)
+Wrap Hähnchen|190|11|22|6|2|2|1.8|250|1 Wrap (250 g)
+Wrap Falafel|200|7|28|7|4|3|1|250|1 Wrap (250 g)
+Wrap Thunfisch|190|10|24|6|2|2|1.2|250|1 Wrap (250 g)
+Bratwurst im Brötchen|270|11|23|15|1.5|3|5|180|1 Brötchen (180 g)
+Leberkässemmel|270|11|26|13|1.5|3|4.5|150|1 Semmel (150 g)
+Schnitzelbrötchen|250|12|27|9|2|2|2|200|1 Brötchen (200 g)
+Frikadellenbrötchen|240|11|26|10|2|2|3.5|170|1 Brötchen (170 g)
+Käsebrötchen belegt|250|11|27|10|2|3|5|150|1 Brötchen (150 g)
+Brötchen mit Salami|260|10|30|10|2|3|3.8|140|1 Brötchen (140 g)
+Brötchen mit Käse|250|11|30|9|2|3|4.7|130|1 Brötchen (130 g)
+Brötchen mit Schinken|230|10|31|6|2|3|2|130|1 Brötchen (130 g)
+Brötchen mit Marmelade|265|6|52|4|2|20|1.5|110|1 Brötchen (110 g)
+Brötchen mit Nutella|300|6|43|12|2.5|20|3.5|90|1 Brötchen (90 g)
+Brötchen mit Butter und Honig|300|6|50|8|2|20|4|100|1 Brötchen (100 g)
+Brötchen mit Ei|230|10|28|7|2|3|2.5|130|1 Brötchen (130 g)
+Brötchen mit Lachs|230|11|28|7|2|3|2.2|130|1 Brötchen (130 g)
+Butterbrot|290|6|35|13|2.5|2|6.5|60|1 Scheibe (60 g)
+Brot mit Käse|285|12|27|14|3|2|8|80|1 Scheibe (80 g)
+Brot mit Wurst|250|9|28|11|3|2|3.8|80|1 Scheibe (80 g)
+Brot mit Frischkäse|240|7|30|10|3|2|5|75|1 Scheibe (75 g)
+Brot mit Erdnussbutter|330|12|32|17|4|4|3.5|70|1 Scheibe (70 g)
+Brot mit Avocado|220|6|26|10|5|1|2|90|1 Scheibe (90 g)
+Brot mit Quark und Marmelade|230|9|36|5|3|14|2.2|90|1 Scheibe (90 g)
+Käsebrot Gouda|280|13|27|13|3|2|8|80|1 Scheibe (80 g)
+Spiegeleibrot|230|10|20|12|2.5|1|3.8|100|1 Scheibe (100 g)
+Rührei auf Toast|230|11|20|12|1.5|1.5|4|150|1 Portion (150 g)
+Eier Benedict|260|12|15|17|1|1.5|6|220|1 Portion (220 g)
+Avocadobrot mit Ei|230|9|18|13|5|1|3|180|1 Portion (180 g)
+Frühstücksplatte|230|11|20|12|2|3|4|300|Portion (300 g)
+#ready
+Lasagne TK Dr. Oetker|140|6.5|15|6|1|3|3|400|1 Packung (400 g)
+Pizza Ristorante Salami|260|11|30|11|2|3|4.2|320|1 Pizza (320 g)
+Pizza Ristorante Margherita|250|10|32|9|2|3|4|300|1 Pizza (300 g)
+Pizza Ristorante Speciale|240|11|29|9|2|3|3.8|340|1 Pizza (340 g)
+Wagner Steinofen Pizza Salami|255|11|30|10|2|3|4|320|1 Pizza (320 g)
+Tiefkühl Baguette Käse|270|10|34|10|2|3|4.5|120|1 Baguette (120 g)
+Tiefkühl Rahmspinat|60|3|4|3.5|2|1.5|2|200|Portion (200 g)
+Tiefkühl Gemüsepfanne Hähnchen|90|8|9|2.5|2|2|0.6|400|1 Packung (400 g)
+Fertiggericht Gulasch|100|7|8|4|1.5|2|1.5|400|1 Packung (400 g)
+Fertiggericht Spaghetti Bolognese|110|5|16|3|1.5|3|1|400|1 Packung (400 g)
+Fertiggericht Chili sin Carne|90|5|13|2|4|3|0.4|400|1 Packung (400 g)
+Fertiggericht Reis Hähnchen|120|7|16|3|1|2|0.8|400|1 Packung (400 g)
+Fertiggericht Nudeln Sahne Schinken|150|6|18|6|1|2|3|400|1 Packung (400 g)
+Fertiggericht Currywurst mit Reis|120|5|15|4.5|1|4|1.5|400|1 Packung (400 g)
+Fertiggericht Linsen mit Wurst|95|5|11|3|3|2|1|400|1 Packung (400 g)
+Fertiggericht Gemüse Curry mit Reis|110|3|18|3|2|4|1.5|400|1 Packung (400 g)
+Dosengericht Ravioli Rind|95|3.5|13|3|1|3|1.2|400|1 Dose (400 g)
+Dosengericht Linseneintopf|75|4|10|2|3|1.5|0.7|400|1 Dose (400 g)
+Dosengericht Erbseneintopf|75|4|9|2|3|1.5|0.8|400|1 Dose (400 g)
+Gulaschsuppe Dose|70|5|6|3|1|2|1.2|400|1 Dose (400 g)
+Instant Reis Gericht|130|3|27|1|1|1|0.3|250|1 Beutel (250 g)
+Tiefkühl Hähnchen Nuggets|250|14|16|14|1|0.5|2|100|5 Nuggets (100 g)
+Tiefkühl Schnitzel|230|13|17|12|1.5|1|2.5|120|1 Schnitzel (120 g)
+Tiefkühl Fischstäbchen Iglo|180|13|17|7|1|1|1|30|1 Stäbchen (30 g)
+Tiefkühl Backfisch|210|12|18|10|1|1|1|125|1 Stück (125 g)
+Tiefkühl Pommes dünn|150|2.5|23|5|2.5|0.5|0.5|150|Portion (150 g)
+Tiefkühl Kroketten|190|3|28|7|2.5|0.5|1|100|Portion (100 g)
+Tiefkühl Reibekuchen|200|3|24|11|2|0.5|1|100|1 Stück (100 g)
+Tiefkühl Gemüse Burger|220|9|22|10|4|3|1.5|90|1 Burger (90 g)
+Tiefkühl Pizzabrötchen|250|9|32|9|2|3|3|100|1 Brötchen (100 g)
+Tiefkühl Laugenbrötchen|260|8|50|3|3|1|0.6|60|1 Brötchen (60 g)
+Tiefkühl Croissant|380|8|42|20|2|7|10|50|1 Croissant (50 g)
+Tiefkühl Waffeln|330|7|42|15|1|13|6|50|1 Waffel (50 g)
+Tiefkühl Kuchen Apfel|220|3|32|9|1|15|4|120|1 Stück (120 g)
+Tiefkühl Beeren Mix|40|0.8|8|0.3|3|6|0|100|Portion (100 g)
+Tiefkühl Mango Stücke|60|0.8|14|0.4|1.8|13|0.1|100|Portion (100 g)
+Tiefkühl Spinat Blätter|22|2.9|1.2|0.4|2|0.4|0.1|150|Portion (150 g)
+Tiefkühl Hackbällchen|230|14|8|15|1|1|5|100|5 Stück (100 g)
+Tiefkühl Garnelen|85|18|0.5|1|0|0|0.2|100|Portion (100 g)
+Tiefkühl Lachsfilet|200|20|0|13|0|0|2.5|125|1 Filet (125 g)
+Tiefkühl Gnocchi|150|3.5|32|0.5|2|1|0.1|200|Portion (200 g)
+Tiefkühl Blumenkohlreis|25|2|4|0.3|2.5|2|0|150|Portion (150 g)
+Tiefkühl Pizza Veggie|230|9|31|7|2.5|3|2.5|350|1 Pizza (350 g)
+Tiefkühl Flammkuchen|250|7|26|13|1.5|3|6|300|1 Flammkuchen (300 g)
+Tiefkühl Maultaschen|180|8|22|6|1.5|1.5|2|200|Portion (200 g)
+Tiefkühl Käsespätzle|180|8|20|8|1.2|2|4.5|350|Portion (350 g)
+Tiefkühl Kaiserschmarrn|230|7|28|10|1|14|4|250|Portion (250 g)
+Tiefkühl Germknödel|210|5|40|3|2|15|1.5|250|1 Knödel (250 g)
+#supp
+Whey Protein Schoko|395|75|8|6|1|6|3|30|1 Scoop (30 g)
+Whey Protein Vanille|390|76|7|5.5|0.5|5|3|30|1 Scoop (30 g)
+Whey Isolat|370|90|1.5|1|0|1|0.5|30|1 Scoop (30 g)
+Casein Protein|370|80|5|2|0|3|1|30|1 Scoop (30 g)
+Veganes Protein Erbse|380|78|5|6|3|1|1.2|30|1 Scoop (30 g)
+Veganes Protein Reis|385|78|8|3|1|1|0.5|30|1 Scoop (30 g)
+Mass Gainer|390|20|65|4|2|15|1.5|100|1 Portion (100 g)
+Kreatin Monohydrat|0|0|0|0|0|0|0|5|1 Messlöffel (5 g)
+BCAA Pulver|0|0|0|0|0|0|0|10|1 Portion (10 g)
+Protein Cookie|370|30|35|12|6|8|6|60|1 Cookie (60 g)
+Protein Brot|250|25|8|10|8|2|1.5|45|1 Scheibe (45 g)
+Protein Pudding Milchmischgetränk|75|10|7|0.5|0|5|0.3|200|1 Becher (200 g)
+Protein Riegel Clif|370|20|45|10|5|20|3|68|1 Riegel (68 g)
+Protein Pasta|340|45|30|3|8|3|0.6|80|Portion (80 g)
+Protein Müsli|380|25|40|12|8|8|2|50|Portion (50 g)
+Protein Wrap|240|20|20|7|8|2|1.2|60|1 Wrap (60 g)
+Protein Brötchen|260|25|10|11|8|2|1.5|70|1 Brötchen (70 g)
+Magerquark Shake|70|12|4|0.3|0|4|0.2|300|Glas (300 g)
+Casein Pudding|90|15|7|0.5|0|4|0.3|200|Portion (200 g)
+Tofu Rührei|130|11|3|8|2|1|1.2|150|Portion (150 g)
+Seitan|140|25|4|2|0.5|1|0.3|100|Portion (100 g)
+Vegane Bratwurst|220|18|8|13|3|1|2|100|1 Bratwurst (100 g)
+Vegane Nuggets|230|12|19|11|3|1|1.2|100|5 Stück (100 g)
+Vegane Frikadelle|180|14|10|9|4|2|1.2|90|1 Frikadelle (90 g)
+Veganer Burger Patty|210|17|9|12|4|1|3.5|113|1 Patty (113 g)
+Vegane Aufschnitt Scheibe|200|12|10|12|3|2|1.5|20|1 Scheibe (20 g)
+Vegane Salami|240|15|10|15|3|2|2|20|1 Scheibe (20 g)
+Veganer Käse Scheibe|280|1|20|21|1|1|18|20|1 Scheibe (20 g)
+Tofu Würstchen|230|17|7|15|3|1|2|50|1 Würstchen (50 g)
+Hanfprotein|390|47|8|9|20|2|1|30|2 EL (30 g)
+Spirulina|290|57|24|8|4|3|2|3|1 TL (3 g)
+Matcha Pulver|324|30|39|5|39|1|1|2|1 TL (2 g)
+Maca Pulver|325|14|71|2|7|30|0.5|5|1 TL (5 g)
+Weizengras Pulver|270|20|30|3|30|1|0.5|5|1 TL (5 g)
+Vitamin Gummies|300|0|75|0|0|45|0|5|2 Stück (5 g)
+Multivitamin Tablette|1|0|0|0|0|0|0|1|1 Tablette (1 g)
+Kollagen Pulver|365|90|0|0|0|0|0|10|1 EL (10 g)
+Mahlzeitenersatz Shake|390|30|40|11|8|12|2|50|1 Portion (50 g)
+Haferbrei Protein|140|15|15|2|3|2|0.5|250|Schüssel (250 g)
+#intl
+Pad Thai|160|7|22|5|2|5|1|400|Portion (400 g)
+Thai Curry grün mit Reis|130|6|16|5|1.5|3|3|450|Portion (450 g)
+Thai Curry rot mit Hähnchen|120|8|10|6|1.5|3|3.5|400|Portion (400 g)
+Massaman Curry|150|7|12|9|2|4|5|400|Portion (400 g)
+Gebratene Nudeln mit Gemüse|150|5|22|5|2|3|0.8|350|Portion (350 g)
+Gebratener Reis Huhn|170|8|24|4|1.5|2|1|350|Portion (350 g)
+Chow Mein|150|6|20|5|2|3|1|350|Portion (350 g)
+Süß-sauer Hähnchen|150|8|20|4|1|10|0.8|400|Portion (400 g)
+Ente süß-sauer|190|9|22|7|1|12|2|400|Portion (400 g)
+Frühlingsrolle|220|5|25|11|2|3|2|80|1 Rolle (80 g)
+Dim Sum|190|8|25|6|1|1|2|100|4 Stück (100 g)
+Gyoza|200|8|25|7|1.5|2|2|100|4 Stück (100 g)
+Sushi Reis mit Lachs Bowl|150|8|20|4|1|3|0.8|400|Bowl (400 g)
+Ramen mit Schweinefleisch|110|6|15|3|1|1|1|500|Schüssel (500 g)
+Bibimbap|130|6|20|3|2|3|0.7|450|Schüssel (450 g)
+Kimchi|15|1.1|2.4|0.5|1.6|1|0.1|50|Portion (50 g)
+Butter Chicken|140|9|8|8|1|5|4|350|Portion (350 g)
+Chicken Tikka Masala|130|10|7|7|1|4|3|350|Portion (350 g)
+Linsen Dal|105|6|14|3|4|2|1.5|300|Portion (300 g)
+Palak Paneer|140|7|6|10|2|2|5|300|Portion (300 g)
+Samosa|260|5|28|14|2|2|3|60|1 Samosa (60 g)
+Chana Masala|120|5|16|4|5|3|0.5|300|Portion (300 g)
+Basmatireis mit Gemüse|140|3|26|2.5|1.5|2|0.4|300|Portion (300 g)
+Tandoori Hähnchen|140|20|3|5|0.5|2|1.5|200|Portion (200 g)
+Naan mit Knoblauch|310|8|48|9|2|4|3|90|1 Naan (90 g)
+Falafel Teller|230|8|24|11|5|3|1.5|400|Teller (400 g)
+Shawarma|200|15|15|9|2|2|2.5|300|1 Portion (300 g)
+Couscous mit Gemüse|110|4|20|1.5|3|3|0.3|300|Portion (300 g)
+Moussaka|140|7|9|8|1.5|3|3.5|350|Portion (350 g)
+Souvlaki|180|20|3|10|0.5|2|3|200|1 Spieß (200 g)
+Griechisches Gyros mit Tzatziki|190|13|8|11|1.5|2|3.5|300|Portion (300 g)
+Spanakopita|260|8|20|17|2|2|6|130|1 Stück (130 g)
+Paella|135|9|18|3|1|1|0.7|400|Portion (400 g)
+Tortilla Española|190|7|15|11|1.5|1.5|2.5|150|1 Stück (150 g)
+Patatas Bravas|150|2.5|20|7|2.5|2|0.8|200|Portion (200 g)
+Tapas gemischt|180|8|12|11|1.5|2|3|250|Portion (250 g)
+Croque Monsieur|270|13|22|14|1|3|6.5|180|1 Croque (180 g)
+Quiche Lorraine|260|9|18|17|0.8|2|8|150|1 Stück (150 g)
+Ratatouille Provence|55|1.2|5.5|3|2|4|0.5|250|Portion (250 g)
+Boeuf Bourguignon|150|15|4|8|0.8|2|3|300|Portion (300 g)
+Coq au Vin|140|15|3|7|0.5|1.5|2|300|Portion (300 g)
+Crêpes mit Zimt und Zucker|250|6|35|9|1|14|3.5|100|1 Crêpe (100 g)
+Risotto Milanese|140|3.5|22|4.5|0.5|1|2.5|300|Portion (300 g)
+Gnocchi Gorgonzola|180|6|22|8|1.5|2|4.5|300|Portion (300 g)
+Saltimbocca|180|25|2|8|0|0.5|3|180|2 Stück (180 g)
+Bruschetta|180|4|22|8|2|3|1.2|100|2 Stück (100 g)
+Caprese Salat|160|9|4|12|1|3|7|200|Portion (200 g)
+Vitello Tonnato|190|18|3|12|0.3|1|2.5|150|Portion (150 g)
+Antipasti Teller|190|8|7|14|1.5|3|4|250|Teller (250 g)
+Carpaccio|130|20|1|5|0|0.5|2|100|Portion (100 g)
+Pasta Vongole|140|7|20|3|1.5|1|0.5|400|Portion (400 g)
+Pasta Arrabbiata|130|4|24|2|2|3|0.4|350|Portion (350 g)
+Pasta Pomodoro|130|4|24|2.5|2|3.5|0.5|350|Portion (350 g)
+Pasta Alfredo|200|7|20|10|1|2|6|350|Portion (350 g)
+Pasta Primavera|130|5|20|3.5|2|3|1|350|Portion (350 g)
+Pasta Puttanesca|150|5|22|4.5|2|3|0.8|350|Portion (350 g)
+Pasta Amatriciana|160|7|21|5.5|1.5|3|2|350|Portion (350 g)
+Pasta Lachs Sahne|170|8|20|7|1|2|3.5|350|Portion (350 g)
+Hamburger Eigenbau|240|15|20|11|2|4|4|220|1 Burger (220 g)
+Gemüselasagne|110|5|12|4.5|1.5|3|2|400|Portion (400 g)
+Gefüllte Paprika|110|7|8|5|2|4|2|300|1 Paprika (300 g)
+Kohlroulade|110|7|8|5|2|3|2|250|1 Roulade (250 g)
+Rouladen mit Rotkohl und Klößen|130|9|12|5|1.5|3|2|450|Portion (450 g)
+Schweinebraten mit Knödel|150|10|14|6|1.5|2|2|450|Portion (450 g)
+Sauerbraten mit Klößen|140|10|14|5|1.5|3|1.8|450|Portion (450 g)
+Gulasch mit Nudeln|130|9|12|5|1.5|2|2|400|Portion (400 g)
+Hühnerfrikassee mit Reis|120|8|14|4|1|1.5|1.8|400|Portion (400 g)
+Eintopf Gemüse mit Rindfleisch|70|5|7|2.5|2|2|1|450|Teller (450 g)
+Kartoffelgratin|130|3.5|13|7|1.5|2|4.5|250|Portion (250 g)
+Pellkartoffeln mit Quark|90|6|13|1.5|2|2|1|350|Portion (350 g)
+Bratkartoffeln mit Spiegelei|150|5|15|8|1.5|1|2.5|350|Portion (350 g)
+Reibekuchen mit Apfelmus|180|3|25|8|2|8|1|250|Portion (250 g)
+Dampfnudeln mit Vanillesauce|180|5|30|4|1|10|2|300|Portion (300 g)
+Grießbrei mit Früchten|110|3.5|20|2|1|12|1|300|Portion (300 g)
+Milchreis mit Apfelmus|125|3|23|2|1|10|1.3|350|Portion (350 g)`;
+const CATM={fruit:[2,12,0.4,200,12,25],veg:[20,30,0.7,280,18,25],potato:[10,10,0.8,400,22,12],legume:[10,45,2.5,350,45,1],grain:[10,20,1.5,200,50,0],bread:[450,25,1.5,170,30,0],bakery:[250,40,1.2,150,20,0],meat:[70,10,1.8,320,22,0],fish:[90,25,0.8,350,28,1],egg:[140,55,1.9,130,12,0],dairy:[50,115,0.1,150,12,1],cheese:[600,600,0.3,100,25,0],nuts:[5,150,3,600,200,1],oil:[0,0,0,0,0,0],sweet:[20,60,1.2,200,40,0],snack:[500,30,1.2,500,30,3],drink:[8,8,0.1,60,5,5],alcohol:[4,8,0.3,60,8,0],sauce:[800,20,0.8,200,15,3],soup:[350,15,0.5,150,10,2],fast:[450,70,1.8,250,25,3],ready:[350,50,1.2,220,20,3],supp:[200,300,2,300,60,0],intl:[350,40,1.2,230,25,3]};
+const NA_HI=[[/wurst|schinken|salami|mortadella|bacon|speck|cabanossi|chorizo|pepperoni|leberkäse|prosciutto|serrano|kassler|jerky|aufschnitt|knack/i,1100],[/gewürzgurke|essiggurke|cornichon|sauerkraut|oliven?\b|olive /i,700],[/geräuchert|räucher|mariniert|matjes|rollmops|bismarck|anchov|sprotten|gebeizt|kaviar|surimi|sardinen|thunfisch dose|in öl/i,600],[/gesalzen|salzbrezel|salzstangen/i,500]];
+function parseFoods(txt){let cat='veg';const out=[];txt.split('\n').forEach(l=>{l=l.trim();if(!l)return;if(l[0]==='#'){cat=l.slice(1);return}const a=l.split('|'),n=a.slice(1,8).map(Number),m=(CATM[cat]||CATM.veg).slice();for(const [re,v] of NA_HI)if(re.test(a[0])){m[0]=v;break}out.push([a[0],...n,...m,+a[8],a[9],a[10]||undefined])});return out}
+const RAW4=parseFoods(FOOD_TXT);
+const BASE=RAW.concat(RAW2,RAW3,RAW4).map((r,i)=>{const o={id:'b'+i,name:r[0],serv:r[14],sl:r[15],u:r[16]||'g'};NK.forEach((k,j)=>o[k]=r[1+j]);return o});
 
 const MEALS=[['bf','Frühstück'],['lu','Mittagessen'],['di','Abendessen'],['sn','Snacks']];
 const MICROS=[
@@ -290,38 +1666,54 @@ const pad=n=>String(n).padStart(2,'0');
 const dkey=d=>d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());
 let TODAY=dkey(new Date());
 function defState(){return{v:1,ts:0,
-  profile:{sex:'m',age:20,h:179,goal:79,act:1.725,rate:1.0,prot:2.0,protPct:28,fatPct:25,macroMode:'pct'},
+  profile:{sex:'m',age:20,h:179,goal:79,act:1.725,rate:1.0,prot:2.0,protPct:28,fatPct:25,macroMode:'pct',trDays:4},
   days:{},weights:[{d:TODAY,kg:93}],foods:[],recipes:[],recent:[]}}
 let S=defState();
 let wkOff=0, cur=TODAY, tab='home', sheet=null, uid=null, dbDoc=null, saveT=null;
 
 const KEY='kt_state_v1',BAK='kt_state_bak';
-let storOk=true,persisted=false,lastSave=0;
+let storOk=true,persisted=false,lastSave=0,storReady=false,syncT=null;
 function adopt(j){try{const o=JSON.parse(j);if(!o||!o.profile||!o.days)return false;S=Object.assign(defState(),o);S.profile=Object.assign(defState().profile,o.profile);initRewards();return true}catch(e){return false}}
 function load(){
   let j=null;try{j=localStorage.getItem(KEY)}catch(e){storOk=false}
-  if(!(j&&adopt(j))){try{const b=localStorage.getItem(BAK);if(b)adopt(b)}catch(e){}}
+  if(!(j&&adopt(j))){
+    try{const b=localStorage.getItem(BAK);if(b)adopt(b)}catch(e){}
+    try{const ks=Object.keys(localStorage).filter(k=>/^kt_bak_\d{4}-/.test(k)).sort().reverse();for(const k of ks){if(!S.ts&&adopt(localStorage.getItem(k)))break}}catch(e){}
+  }
   initRewards();
 }
 function idbOpen(){return new Promise((res,rej)=>{const r=indexedDB.open('kt',1);r.onupgradeneeded=()=>r.result.createObjectStore('s');r.onsuccess=()=>res(r.result);r.onerror=()=>rej(r.error)})}
 async function idbGet(){const d=await idbOpen();return new Promise(res=>{const q=d.transaction('s').objectStore('s').get('state');q.onsuccess=()=>res(q.result);q.onerror=()=>res(null)})}
 async function idbSet(j){try{const d=await idbOpen();d.transaction('s','readwrite').objectStore('s').put(j,'state')}catch(e){}}
+function hsh(t){let h=5381;for(let i=0;i<t.length;i++)h=((h<<5)+h+t.charCodeAt(i))|0;return (h>>>0).toString(36)+t.length}
+function stamp(){
+  const now=Date.now();S.dh=S.dh||{};S.dt=S.dt||{};
+  Object.keys(S.days).forEach(d=>{const h=hsh(JSON.stringify(S.days[d]));if(S.dh[d]!==h){S.dh[d]=h;S.dt[d]=now}});
+  const ph=hsh(JSON.stringify(S.profile));
+  if(S.ph===undefined){S.ph=ph;S.pt=(ph===hsh(JSON.stringify(defState().profile)))?0:(S.ts||now)}
+  else if(S.ph!==ph){S.ph=ph;S.pt=now}
+}
 function save(){
   S.ts=Date.now();lastSave=S.ts;
+  try{stamp()}catch(e){}
   try{snapTargets();checkRewards()}catch(e){}
   const j=JSON.stringify(S);
   try{
     const prev=localStorage.getItem(KEY),bd=localStorage.getItem('kt_bak_day');
-    if(prev&&bd!==TODAY){localStorage.setItem(BAK,prev);localStorage.setItem('kt_bak_day',TODAY)}
+    if(prev&&bd!==TODAY){
+      localStorage.setItem(BAK,prev);localStorage.setItem('kt_bak_day',TODAY);
+      try{localStorage.setItem('kt_bak_'+TODAY,prev);Object.keys(localStorage).filter(k=>/^kt_bak_\d{4}-/.test(k)).sort().slice(0,-7).forEach(k=>localStorage.removeItem(k))}catch(e){}
+    }
     localStorage.setItem(KEY,j);storOk=true;
   }catch(e){storOk=false}
-  idbSet(j);
+  if(storReady)idbSet(j);
   clearTimeout(saveT);saveT=setTimeout(pushDb,400);
+  if(syncCfg()&&storReady){clearTimeout(syncT);syncT=setTimeout(()=>syncNow(),4000)}
 }
 function flush(){
   const j=JSON.stringify(S);
   try{localStorage.setItem(KEY,j)}catch(e){}
-  idbSet(j);pushDb();
+  if(storReady)idbSet(j);pushDb();
 }
 async function initStorage(){
   try{if(navigator.storage&&navigator.storage.persist)persisted=await navigator.storage.persist()}catch(e){}
@@ -330,7 +1722,10 @@ async function initStorage(){
     if(j){const o=JSON.parse(j);if((o.ts||0)>(S.ts||0)&&adopt(j)){try{localStorage.setItem(KEY,j)}catch(e){}render()}}
     else if(S.ts)idbSet(JSON.stringify(S));
   }catch(e){}
+  storReady=true;
+  try{const t=await idbGet();if(S.ts&&(!t||(JSON.parse(t).ts||0)<S.ts))idbSet(JSON.stringify(S))}catch(e){}
   await initDb();
+  syncNow();
 }
 async function initDb(){
   if(!HAS_AI)return;
@@ -354,6 +1749,145 @@ async function pushDb(){
   try{await dbDoc.set({json:JSON.stringify(S),ts:S.ts})}catch(e){}
 }
 
+/* ---------- Geräte-Sync (Firebase, kostenlos) ---------- */
+const SYNK='kt_sync',PREM='kt_state_premerge';
+let syncing=false,syncAgain=false,syncMsg='',syncAt=0;
+function syncCfg(){try{return JSON.parse(localStorage.getItem(SYNK)||'null')}catch(e){return null}}
+function setCfg(c){try{if(c)localStorage.setItem(SYNK,JSON.stringify(c));else localStorage.removeItem(SYNK)}catch(e){}}
+function fbErr(j){
+  const m=(j&&j.error&&j.error.message)||'';
+  if(/EMAIL_EXISTS/.test(m))return 'Dieses Konto gibt es schon. Tippe auf „Anmelden“.';
+  if(/INVALID_LOGIN|INVALID_PASSWORD|EMAIL_NOT_FOUND/.test(m))return 'E-Mail oder Passwort stimmt nicht.';
+  if(/WEAK_PASSWORD/.test(m))return 'Das Passwort braucht mindestens 6 Zeichen.';
+  if(/INVALID_EMAIL/.test(m))return 'Die E-Mail-Adresse ist ungültig.';
+  if(/OPERATION_NOT_ALLOWED/.test(m))return 'E-Mail-Login ist in Firebase noch nicht aktiviert (Schritt 2).';
+  if(/API key not valid|API_KEY/i.test(m))return 'Der Web-API-Key ist ungültig.';
+  if(/TOO_MANY/.test(m))return 'Zu viele Versuche. Warte kurz und probiere es nochmal.';
+  return m||'Anmeldung fehlgeschlagen';
+}
+async function fbAuth(kind,email,pw,cfg){
+  const r=await fetchT('https://identitytoolkit.googleapis.com/v1/accounts:'+kind+'?key='+encodeURIComponent(cfg.key),15000,{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({email,password:pw,returnSecureToken:true})});
+  const j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(fbErr(j));
+  return {uid:j.localId,email:j.email||email,rt:j.refreshToken,idt:j.idToken,exp:Date.now()+(Math.max(60,+j.expiresIn||3600)-60)*1000};
+}
+async function fbToken(cfg){
+  if(cfg.idt&&cfg.exp>Date.now())return cfg.idt;
+  const r=await fetchT('https://securetoken.googleapis.com/v1/token?key='+encodeURIComponent(cfg.key),15000,{method:'POST',headers:{'content-type':'application/x-www-form-urlencoded'},body:'grant_type=refresh_token&refresh_token='+encodeURIComponent(cfg.rt)});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){const e=new Error('Anmeldung abgelaufen. Bitte im Profil neu anmelden.');e.relogin=true;throw e}
+  cfg.idt=j.id_token;cfg.rt=j.refresh_token||cfg.rt;cfg.exp=Date.now()+(Math.max(60,+j.expires_in||3600)-60)*1000;setCfg(cfg);
+  return cfg.idt;
+}
+async function zip(str){
+  if(typeof CompressionStream==='undefined')return{c:0,s:str};
+  const cs=new CompressionStream('gzip'),w=cs.writable.getWriter();w.write(new TextEncoder().encode(str));w.close();
+  const buf=new Uint8Array(await new Response(cs.readable).arrayBuffer());let b='';
+  for(let i=0;i<buf.length;i+=8192)b+=String.fromCharCode.apply(null,buf.subarray(i,i+8192));
+  return{c:1,s:btoa(b)};
+}
+async function unzip(str,c){
+  if(!c)return str;
+  const bin=atob(str),u=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+  const ds=new DecompressionStream('gzip'),w=ds.writable.getWriter();w.write(u);w.close();
+  return await new Response(ds.readable).text();
+}
+const fsUrl=cfg=>'https://firestore.googleapis.com/v1/projects/'+encodeURIComponent(cfg.pid)+'/databases/(default)/documents/users/'+encodeURIComponent(cfg.uid);
+async function fsGet(cfg,idt){
+  const r=await fetchT(fsUrl(cfg),15000,{headers:{Authorization:'Bearer '+idt}});
+  if(r.status===404)return null;
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok){const m=(j.error&&j.error.message)||('HTTP '+r.status);throw new Error(r.status===403?'Zugriff verweigert. Prüfe die Firestore-Regeln (Schritt 4).':m)}
+  const f=j.fields||{},n=+((f.n||{}).integerValue||0);if(!n)return null;
+  let str='';for(let i=0;i<n;i++)str+=((f['p'+i]||{}).stringValue||'');
+  return JSON.parse(await unzip(str,+((f.c||{}).integerValue||0)));
+}
+async function fsPut(cfg,idt,state){
+  const z=await zip(JSON.stringify(state)),parts=[];
+  for(let i=0;i<z.s.length;i+=250000)parts.push(z.s.slice(i,i+250000));
+  const fields={n:{integerValue:String(parts.length)},c:{integerValue:String(z.c)},ts:{integerValue:String(state.ts||Date.now())}};
+  parts.forEach((x,i)=>fields['p'+i]={stringValue:x});
+  const r=await fetchT(fsUrl(cfg),20000,{method:'PATCH',headers:{Authorization:'Bearer '+idt,'content-type':'application/json'},body:JSON.stringify({fields})});
+  if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(r.status===403?'Zugriff verweigert. Prüfe die Firestore-Regeln (Schritt 4).':((j.error&&j.error.message)||('HTTP '+r.status)))}
+}
+function canon(x){if(Array.isArray(x))return '['+x.map(canon).join(',')+']';if(x&&typeof x==='object')return '{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canon(x[k])).join(',')+'}';return JSON.stringify(x)}
+function sig(o){return hsh(canon({days:o.days,weights:[...(o.weights||[])].sort((a,b)=>a.d<b.d?-1:1),foods:[...(o.foods||[])].map(f=>f.id).sort(),recipes:[...(o.recipes||[])].map(f=>f.id).sort(),profile:o.profile,badges:o.badges,cele:o.cele}))}
+function dayEmpty(a){return !(a&&((a.e&&a.e.length)||(a.tr&&a.tr.length)||(a.sup&&(a.sup.kr||a.sup.az))||a.sa))}
+function mergeState(L,R){
+  const M=JSON.parse(JSON.stringify(L));M.dh=M.dh||{};M.dt=M.dt||{};
+  Object.keys(R.days||{}).forEach(d=>{
+    const a=L.days[d],b=R.days[d],rt=(R.dt&&R.dt[d])||0,lt=(L.dt&&L.dt[d])||0;
+    let take=false;
+    if(!a)take=true;
+    else if(dayEmpty(a)&&!dayEmpty(b))take=true;
+    else if(!dayEmpty(a)&&dayEmpty(b))take=false;
+    else if(rt>lt)take=true;
+    if(take){M.days[d]=JSON.parse(JSON.stringify(b));M.dh[d]=hsh(JSON.stringify(b));M.dt[d]=rt}
+  });
+  if(((R.pt||0)>(L.pt||0))&&R.profile){M.profile=Object.assign(defState().profile,R.profile);M.ph=hsh(JSON.stringify(M.profile));M.pt=R.pt}
+  const wm={};(R.weights||[]).forEach(w=>wm[w.d]=w);
+  const rNewer=(R.pt||0)>(L.pt||0);
+  (L.weights||[]).forEach(w=>{if(!wm[w.d]||!rNewer)wm[w.d]=w});
+  M.weights=Object.values(wm).sort((a,b)=>a.d<b.d?-1:1);
+  const uni=(a,b)=>{const ids=new Set((a||[]).map(x=>x.id));return (a||[]).concat((b||[]).filter(x=>!ids.has(x.id)))};
+  M.foods=uni(L.foods,R.foods);M.recipes=uni(L.recipes,R.recipes);M.recent=uni(L.recent,R.recent).slice(0,30);
+  M.badges=Object.assign({},R.badges||{},L.badges||{});M.cele=Object.assign({},R.cele||{},L.cele||{});
+  M.lastExport=Math.max(L.lastExport||0,R.lastExport||0)||L.lastExport;
+  M.ts=Math.max(L.ts||0,R.ts||0);
+  return M;
+}
+async function syncNow(manual){
+  const cfg=syncCfg();if(!cfg||!cfg.uid||!storReady)return;
+  if(syncing){syncAgain=true;return}
+  syncing=true;
+  try{
+    try{stamp()}catch(e){}
+    const idt=await fbToken(cfg);
+    const remote=await fsGet(cfg,idt);
+    let merged=S;
+    if(remote&&remote.days&&remote.profile)merged=mergeState(S,remote);
+    if(sig(merged)!==sig(S)){
+      try{localStorage.setItem(PREM,JSON.stringify(S))}catch(e){}
+      S=merged;initRewards();save();
+      if(!sheet)render();
+    }
+    if(!remote||sig(S)!==sig(remote))await fsPut(cfg,idt,S);
+    syncAt=Date.now();syncMsg='';
+  }catch(e){syncMsg=errText(e)}
+  syncing=false;
+  if(tab==='me'&&!sheet&&!(document.activeElement&&/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName)))render();
+  if(syncAgain){syncAgain=false;setTimeout(syncNow,1500)}
+}
+function syncCard(){
+  const c=syncCfg()||{},fin=document;
+  let h='<div class="card"><h3>Geräte-Sync</h3>';
+  const guide='<details style="margin:8px 0"><summary class="pill" style="display:inline-block;cursor:pointer">Einrichtung in 5 Schritten (einmalig, kostenlos)</summary><div class="note" style="line-height:1.6;margin-top:8px">'+
+   '1. Auf <b>console.firebase.google.com</b> mit einem Google-Konto ein Projekt erstellen (Google Analytics ausschalten).<br>'+
+   '2. <b>Authentication</b> öffnen, „Los geht’s“, dann <b>E-Mail/Passwort</b> aktivieren.<br>'+
+   '3. <b>Firestore Database</b> öffnen, „Datenbank erstellen“, Standort in Europa wählen, Produktionsmodus.<br>'+
+   '4. In Firestore auf <b>Regeln</b>, den Text unten komplett einfügen und veröffentlichen.<br>'+
+   '5. Zahnrad, <b>Projekteinstellungen</b>, Tab Allgemein, ganz unten eine Web-App (&lt;/&gt;) anlegen. Dort <b>apiKey</b> und <b>projectId</b> kopieren und hier eintragen.</div>'+
+   '<pre style="white-space:pre-wrap;font-size:11px;background:var(--bg);border:1px solid var(--line);border-radius:10px;padding:8px;user-select:all">rules_version = \'2\';\nservice cloud.firestore {\n  match /databases/{database}/documents {\n    match /users/{uid} {\n      allow read, write: if request.auth != null\n        && request.auth.uid == uid;\n    }\n  }\n}</pre></details>';
+  if(!c.key||!c.pid){
+    h+='<div class="note" style="margin-top:0">Melde dich auf allen Geräten mit demselben Konto an, dann gleichen sich deine Daten automatisch ab.</div>'+guide+
+     '<label class="f">Web-API-Key (apiKey)</label><input type="text" id="fbkey" autocomplete="off" autocapitalize="off" placeholder="AIza…">'+
+     '<div style="height:8px"></div><label class="f">Projekt-ID (projectId)</label><input type="text" id="fbpid" autocomplete="off" autocapitalize="off" placeholder="mein-projekt-1234">'+
+     '<div style="height:8px"></div><label class="f">Oder Setup-Code von deinem anderen Gerät</label><input type="text" id="fbcode" autocomplete="off" autocapitalize="off" placeholder="AIza…|mein-projekt-1234">'+
+     '<div style="height:10px"></div><button class="btn" data-act="syncsetup">Weiter</button><div class="note" id="syncmsg"></div>';
+  }else if(!c.uid){
+    h+='<div class="note" style="margin-top:0">Projekt: '+esc(c.pid)+'</div>'+
+     '<label class="f">E-Mail</label><input type="email" id="fbmail" autocomplete="email" autocapitalize="off">'+
+     '<div style="height:8px"></div><label class="f">Passwort (mind. 6 Zeichen)</label><input type="password" id="fbpw" autocomplete="current-password">'+
+     '<div style="height:10px"></div><div class="row"><button class="btn" data-act="synclogin" data-v="signInWithPassword">Anmelden</button><button class="btn sec" data-act="synclogin" data-v="signUp">Konto erstellen</button></div>'+
+     '<div class="note" id="syncmsg"></div><button class="pill" data-act="syncreset" style="margin-top:6px">Einrichtung ändern</button>';
+  }else{
+    h+='<div class="kv"><span>Konto</span><b>'+esc(c.email||'angemeldet')+'</b></div>'+
+     '<div class="kv"><span>Letzter Abgleich</span><b>'+(syncMsg?'⚠ Fehler':(syncAt?new Date(syncAt).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}):'noch nicht'))+'</b></div>'+
+     (syncMsg?'<div class="warn">'+esc(syncMsg)+'</div>':'')+
+     '<div class="row" style="margin-top:10px"><button class="btn" data-act="syncnow">Jetzt abgleichen</button><button class="btn sec" data-act="synccode">Setup-Code</button></div>'+
+     '<div class="note" id="syncmsg"></div><button class="pill" data-act="synclogout" style="margin-top:6px">Abmelden</button>';
+  }
+  return h+'</div>';
+}
 /* ---------- Helfer ---------- */
 /* ---------- Trend, Messung, Tipps ---------- */
 const clamp=(x,a,b)=>Math.min(b,Math.max(a,x));
@@ -406,7 +1940,7 @@ function adaptBanner(){
 function adaptCard(){
   const mode=S.profile.adapt||'ask',pl=plan();
   let h='<div class="card"><h3>Automatische Zielanpassung</h3>';
-  if(S.profile.manualKcal>0)return h+'<div class="note" style="margin-top:0">Pausiert, weil du ein eigenes Kalorienziel gesetzt hast. Entferne es im Profil, um die Zielanpassung zu nutzen.</div></div>';
+  if(S.profile.manualKcal>0)return '';
   if(mode==='off')return h+'<div class="note" style="margin-top:0">Aus. Dein Ziel kommt nur aus der Formel. Im Profil kannst du das ändern.</div></div>';
   const g=suggestion();
   if(!g)return h+'<div class="note" style="margin-top:0">Nach etwa 2 Wochen mit Essen und Gewicht (mindestens 10 vollständige Tage mit über 800 kcal) berechnet die App deinen echten Kalorienverbrauch und passt dein Ziel an.</div></div>';
@@ -442,14 +1976,14 @@ function pgFor(d,pl){const dd=S.days[d];return (d!==TODAY&&dd&&dd.pg)?dd.pg:pl.p
 function snapTargets(){const dd=S.days[cur];if(dd&&dd.e&&dd.e.length){const pl=plan();dd.tg=pl.target;dd.pg=pl.prot}}
 function dayStats(d,pl){
   const dd=S.days[d],t=dd?sumN(dd.e):zero(),tg=tgFor(d,pl),pg=pgFor(d,pl);
-  const meals=dd?new Set(dd.e.map(e=>e.meal)).size:0;
-  const kOk=t.k>=Math.max(800,tg*0.85)&&t.k<=tg*1.05;
-  const pOk=t.k>=800&&t.p>=pg*0.9,mOk=meals>=3;
-  const fOk=t.k>=800&&t.fi>=24,sOk=t.k>=800&&t.su<=50&&t.na*2.5/1000<=6;
-  return{t,tg,pg,kOk,pOk,mOk,fOk,sOk,stars:(kOk?1:0)+(pOk?1:0)+(mOk?1:0)+(fOk?1:0)+(sOk?1:0)};
+  const kr=tg?t.k/tg:0,pr=pg?t.p/pg:0,eat=t.k>=800;
+  let ks=0;
+  if(eat){if(kr>=0.95&&kr<=1.05)ks=3;else if((kr>=0.90&&kr<0.95)||(kr>1.05&&kr<=1.10))ks=2;else if((kr>=0.85&&kr<0.90)||(kr>1.10&&kr<=1.15))ks=1}
+  const ps=eat?(pr>=0.95?2:pr>=0.86?1:0):0,stars=ks+ps;
+  return{t,tg,pg,ks,ps,kOk:stars>=1,pOk:ps===2,stars};
 }
 function runs(pl){
-  const keys=Object.keys(S.days).filter(d=>S.days[d].e&&S.days[d].e.length&&dayStats(d,pl).kOk).sort();
+  const keys=Object.keys(S.days).filter(d=>d<=TODAY&&S.days[d].e&&S.days[d].e.length&&dayStats(d,pl).kOk).sort();
   let best=0,run=0,prev=null;
   keys.forEach(k=>{run=(prev&&shift(prev,1)===k)?run+1:1;best=Math.max(best,run);prev=k});
   const last=keys[keys.length-1];
@@ -457,7 +1991,7 @@ function runs(pl){
 }
 function rewardCtx(pl){
   const r=runs(pl);let entries=0,pDays=0,perfect=0;
-  Object.keys(S.days).forEach(d=>{const e=S.days[d].e||[];entries+=e.length;if(e.length){const ds=dayStats(d,pl);if(ds.pOk)pDays++;if(ds.stars===5)perfect++}});
+  Object.keys(S.days).forEach(d=>{if(d>TODAY)return;const e=S.days[d].e||[];entries+=e.length;if(e.length){const ds=dayStats(d,pl);if(ds.pOk)pDays++;if(ds.stars===5)perfect++}});
   const wk={};r.keys.forEach(k=>{const m=mondayOf(k);wk[m]=(wk[m]||0)+1});
   const weeksWon=Object.values(wk).filter(n=>n>=5).length;
   const ws=[...S.weights].sort((a,b)=>a.d<b.d?-1:1),ts=trendSeries();
@@ -466,7 +2000,7 @@ function rewardCtx(pl){
 }
 const BADGES=[
  {id:'first',e:'🌱',n:'Erster Eintrag',d:'Du hast dein erstes Essen eingetragen.',f:c=>c.entries>=1},
- {id:'s3',e:'🔥',n:'3 Tage am Stück',d:'3 Tage hintereinander im Kalorien-Zielfenster.',f:c=>c.best>=3},
+ {id:'s3',e:'🔥',n:'3 Tage am Stück',d:'3 Tage hintereinander mit mindestens 1 Stern.',f:c=>c.best>=3},
  {id:'s7',e:'🔥',n:'7 Tage am Stück',d:'Eine ganze Woche Streak.',f:c=>c.best>=7},
  {id:'s14',e:'⚡',n:'14 Tage am Stück',d:'Zwei Wochen ohne Unterbrechung.',f:c=>c.best>=14},
  {id:'s30',e:'👑',n:'30 Tage am Stück',d:'Ein ganzer Monat. Das ist Disziplin.',f:c=>c.best>=30},
@@ -519,26 +2053,36 @@ function checkRewards(silent){
 }
 function dayCard(){
   const pl=plan(),st=dayStats(cur,pl),r=runs(pl);
-  const lo=Math.round(Math.max(800,st.tg*0.85)),hi=Math.round(st.tg*1.05);
+  const lo3=Math.round(st.tg*0.95),hi3=Math.round(st.tg*1.05),lo1=Math.round(Math.max(800,st.tg*0.85));
   const days=weekDays(0),nm=['Mo','Di','Mi','Do','Fr','Sa','So'];
   const strip=days.map((d,i)=>{
     const has=S.days[d]&&S.days[d].e&&S.days[d].e.length,ok=has&&dayStats(d,pl).kOk,isT=d===TODAY,fut=d>TODAY;
     const bd=ok?'#ff8a1f':(isT?'var(--acc)':'var(--line)');
     return '<div style="text-align:center;flex:1"><div style="width:30px;height:30px;margin:0 auto;border-radius:50%;border:2px solid '+bd+';background:'+(ok?'#ff8a1f':'transparent')+';color:#fff;display:flex;align-items:center;justify-content:center;font-size:15px;opacity:'+(fut?.4:1)+'">'+(ok?'✓':'')+'</div><div class="note" style="margin:3px 0 0;'+(isT?'color:var(--ink);font-weight:700':'')+'">'+nm[i]+'</div></div>';
   }).join('');
-  const chip=(ok,t)=>'<span class="pill '+(ok?'sel':'')+'" style="cursor:default">'+(ok?'✓ ':'○ ')+t+'</span>';
+  const chip=(n,max,t)=>'<span class="pill '+(n>0?'sel':'')+'" style="cursor:default">'+(n>0?'✓ ':'○ ')+t+' '+n+'/'+max+' ★</span>';
   let msg;
-  if(cur!==TODAY)msg='Zielfenster '+lo+' bis '+hi+' kcal';
-  else if(st.kOk)msg='Heute geschafft. Streak gesichert 🔥';
-  else if(r.cur>0)msg='Heute noch offen. Triff '+lo+' bis '+hi+' kcal, um deinen Streak zu halten.';
-  else msg='Starte heute deinen Streak. Zielfenster '+lo+' bis '+hi+' kcal.';
-  return '<div class="card" data-act="tab" data-v="wk" style="cursor:pointer"><div class="row" style="justify-content:space-between;align-items:center"><div class="row" style="gap:10px"><div style="font-size:46px;line-height:1;'+(r.cur?'':'filter:grayscale(1);opacity:.5')+'">🔥</div><div><div style="font-size:34px;font-weight:800;line-height:1">'+r.cur+'</div><div class="note" style="margin:2px 0 0">'+(r.cur===1?'Tag':'Tage')+' in Folge</div></div></div><div style="text-align:right"><div style="font-size:20px;color:var(--c);letter-spacing:1px">'+'★'.repeat(st.stars)+'<span style="opacity:.3">'+'★'.repeat(5-st.stars)+'</span></div><div class="note" style="margin:2px 0 0">Rekord '+r.best+'</div></div></div><div class="row" style="margin:12px 0 4px">'+strip+'</div><div class="note">'+msg+'</div><div class="chips">'+chip(st.kOk,'Kalorien')+chip(st.pOk,'Protein')+chip(st.mOk,'3 Mahlzeiten')+chip(st.fOk,'Ballaststoffe')+chip(st.sOk,'Zucker und Salz')+'</div></div>';
+  if(cur!==TODAY)msg='3 Kalorien-Sterne: '+lo3+' bis '+hi3+' kcal';
+  else if(st.stars>=1)msg='Heute geschafft, Streak gesichert 🔥'+(st.stars<5?' Mehr Sterne: Kalorien '+lo3+' bis '+hi3+' kcal, Protein ab '+Math.round(st.pg*0.95)+' g.':'');
+  else if(r.cur>0)msg='Heute noch offen. Ab '+lo1+' kcal (oder 86 % deines Protein-Ziels) hältst du deinen Streak.';
+  else msg='Starte heute deinen Streak: mindestens 1 Stern reicht.';
+  return '<div class="card" data-act="tab" data-v="wk" style="cursor:pointer"><div class="row" style="justify-content:space-between;align-items:center"><div class="row" style="gap:10px"><div style="font-size:46px;line-height:1;'+(r.cur?'':'filter:grayscale(1);opacity:.5')+'">🔥</div><div><div style="font-size:34px;font-weight:800;line-height:1">'+r.cur+'</div><div class="note" style="margin:2px 0 0">'+(r.cur===1?'Tag':'Tage')+' in Folge</div></div></div><div style="text-align:right"><div style="font-size:20px;color:var(--c);letter-spacing:1px">'+'★'.repeat(st.stars)+'<span style="opacity:.3">'+'★'.repeat(5-st.stars)+'</span></div><div class="note" style="margin:2px 0 0">Rekord '+r.best+'</div></div></div><div class="row" style="margin:12px 0 4px">'+strip+'</div><div class="note">'+msg+'</div><div class="chips">'+chip(st.ks,3,'Kalorien')+chip(st.ps,2,'Protein')+'</div></div>';
+}
+function supStreak(k){let n=0,d=TODAY;const has=x=>S.days[x]&&S.days[x].sup&&S.days[x].sup[k];if(!has(d))d=shift(d,-1);while(has(d)){n++;d=shift(d,-1)}return n}
+function supCard(){
+  const dd=day(cur),sp=dd.sup||{},yd=S.days[shift(cur,-1)],yAz=!!(yd&&yd.sup&&yd.sup.az);
+  const b=(k,l,sub)=>'<button class="supb'+(sp[k]?' on':'')+'" data-act="sup" data-v="'+k+'"><span class="ck">'+(sp[k]?'✓':'')+'</span><div><b>'+l+'</b><i>'+sub+'</i></div></button>';
+  const ks=supStreak('kr'),as=supStreak('az');
+  return '<div class="card"><h3>Ergänzungen</h3><div class="supg">'+
+   b('kr','Kreatin',sp.kr?'genommen'+(ks>1?' · '+ks+' Tage in Folge':''):'täglich nötig'+(ks>0?' · '+ks+' Tage in Folge':''))+
+   b('az','A-Z Tablette',sp.az?'genommen':(yAz?'gestern genommen, heute optional':'heute fällig (alle 2 Tage reicht)'))+
+   '</div></div>';
 }
 function weekGoalCard(days,pl){
   const ok=days.map(d=>!!(d<=TODAY&&S.days[d]&&S.days[d].e&&S.days[d].e.length&&dayStats(d,pl).kOk));
   const n=ok.filter(Boolean).length,nm=['Mo','Di','Mi','Do','Fr','Sa','So'];
   let h='<div class="card"><h3>Wochenziel</h3><div class="row" style="margin-bottom:8px">'+ok.map((o,i)=>'<div style="text-align:center;flex:1"><div style="font-size:22px;opacity:'+(o?1:.3)+'">'+(o?'🔥':'○')+'</div><div class="note" style="margin:0">'+nm[i]+'</div></div>').join('')+'</div>';
-  h+='<div class="mrow"><div class="l"><b>'+n+' von 5 Tagen geschafft</b><span>'+(n>=5?'🏆 Wochen-Sieg!':(wkOff===0?'noch '+(5-n):'nicht erreicht'))+'</span></div><div class="bar"><i style="width:'+Math.min(100,n/5*100)+'%"></i></div></div><div class="note">Ein Tag ist geschafft (Streak), wenn du im Kalorien-Zielfenster landest (85 bis 105 % deines Ziels). Die 5 Sterne eines Tages: Kalorien, Protein, 3 Mahlzeiten, Ballaststoffe ab 24 g, Zucker unter 50 g und Salz unter 6 g. Unteressen wird nicht belohnt.</div></div>';
+  h+='<div class="mrow"><div class="l"><b>'+n+' von 5 Tagen geschafft</b><span>'+(n>=5?'🏆 Wochen-Sieg!':(wkOff===0?'noch '+(5-n):'nicht erreicht'))+'</span></div><div class="bar"><i style="width:'+Math.min(100,n/5*100)+'%"></i></div></div></div>';
   return h;
 }
 function badgesCard(){
@@ -577,8 +2121,11 @@ function plan(){
   return{manual,bmr,tdee,tdeeF,src,deficit,target:Math.round(target),limited,prot,fat,carb,w};
 }
 function budget(d,pl){return pl.target}
+function deDate(iso){const m=/^(\d{4})-(\d{2})-(\d{2})$/.exec(iso||'');return m?m[3]+'.'+m[2]+'.'+m[1]:iso}
+function parseDe(t){t=String(t||'').trim();let m=/^(\d{1,2})[.\/-](\d{1,2})[.\/-](\d{2}|\d{4})$/.exec(t);let y,mo,d;if(m){d=+m[1];mo=+m[2];y=+m[3];if(y<100)y+=2000}else if((m=/^(\d{4})-(\d{1,2})-(\d{1,2})$/.exec(t))){y=+m[1];mo=+m[2];d=+m[3]}else return null;const dt=new Date(y,mo-1,d,12);if(dt.getFullYear()!==y||dt.getMonth()!==mo-1||dt.getDate()!==d)return null;return dkey(dt)}
 function fmtDate(d){
   if(d===TODAY)return'Heute';
+  if(d===shift(TODAY,1))return'Morgen';
   const t=new Date(TODAY+'T12:00');t.setDate(t.getDate()-1);
   if(d===dkey(t))return'Gestern';
   return new Date(d+'T12:00').toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
@@ -599,21 +2146,58 @@ const ICONS={
  home:'<svg viewBox="0 0 24 24"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>',
  nut:'<svg viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
  wt:'<svg viewBox="0 0 24 24"><path d="M3 17l5-6 4 4 8-9"/><path d="M15 6h5v5"/></svg>',
+ tr:'<svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3.5 9v6M20.5 9v6M6.5 12h11"/></svg>',
  me:'<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>'
 };
 function render(){
-  const pg={home:pHome,wk:pWk,nut:pNut,wt:pWt,me:pMe}[tab]();
+  const pg={home:pHome,wk:pWk,nut:pNut,wt:pWt,tr:pTr,me:pMe}[tab]();
   document.getElementById('app').innerHTML=pg;
   document.getElementById('tabs').innerHTML=
    (tab==='home'?'<button class="fab" data-act="add" aria-label="Hinzufügen">+</button>':'')+
    '<div class="tabs"><div class="in">'+
-   [['home','Heute'],['wk','Woche'],['nut','Nährstoffe'],['wt','Gewicht'],['me','Profil']].map(t=>
+   [['home','Heute'],['wk','Woche'],['nut','Nährstoffe'],['wt','Gewicht'],['tr','Training'],['me','Profil']].map(t=>
     '<button class="tab '+(tab===t[0]?'on':'')+'" data-act="tab" data-v="'+t[0]+'">'+ICONS[t[0]]+t[1]+'</button>').join('')+
    '</div></div>';
 }
+const SRC=window.SpeechRecognition||window.webkitSpeechRecognition;
+let srec=null;
+function trScore(off){
+  const days=weekDays(off),tg=S.profile.trDays||4;let td=0,sa=0;
+  days.forEach(d=>{if(d>TODAY)return;const x=S.days[d];if(x&&x.tr&&x.tr.length)td++;if(x&&x.sa)sa++});
+  const a=Math.round(Math.min(1,td/tg)*75),b=sa>=2?25:sa===1?15:0;
+  return{td,sa,tg,a,b,score:a+b};
+}
+function scoreLabel(n){return n>=85?'Stark 💪':n>=60?'Gut 👍':n>=30?'Okay':n>0?'Da geht mehr':'Noch nichts diese Woche'}
+function pTr(){
+  const dd=day(cur),list=dd.tr||[];
+  let h=dayNav();
+  const sc=trScore(0),tg=S.profile.trDays||4;
+  h+='<div class="card"><h3>Wochen-Score</h3><div class="row" style="align-items:flex-end;gap:10px"><div style="font-size:44px;font-weight:800;line-height:1">'+sc.score+'</div><div class="note" style="margin:0 0 6px">von 100 · '+scoreLabel(sc.score)+'</div></div><div class="bar" style="margin:8px 0"><i style="width:'+sc.score+'%"></i></div>'+
+   '<div class="kv"><span>Trainingstage</span><b>'+sc.td+' von '+tg+'</b></div><div class="kv"><span>Sauna</span><b>'+sc.sa+' von 2'+(sc.sa>=2?' 🔥 perfekt':sc.sa===1?' ✓ gut':'')+'</b></div>'+
+   '<div class="chips" style="align-items:center"><span class="note" style="margin:0">Ziel Trainingstage:</span>'+[3,4,5,6].map(n=>'<button class="pill'+(n===tg?' sel':'')+'" data-act="trdays" data-v="'+n+'">'+n+'</button>').join('')+'</div></div>';
+  const sd=!!dd.sa;
+  h+='<div class="card"><h3>Sauna</h3><div class="supg" style="grid-template-columns:1fr"><button class="supb'+(sd?' on':'')+'" data-act="sauna"><span class="ck">'+(sd?'✓':'')+'</span><div><b>'+(cur===TODAY?'Heute':esc(fmtDate(cur)))+' in der Sauna</b><i>'+(sd?'eingetragen':'tippen zum Eintragen')+'</i></div></button></div>'+
+   '<div class="row" style="margin-top:10px;gap:8px;align-items:center"><span style="font-size:20px">'+[0,1].map(i=>i<sc.sa?'🧖':'○').join(' ')+'</span><span class="note" style="margin:0">'+(sc.sa>=2?'Diese Woche perfekt: 2 von 2':sc.sa===1?'Diese Woche gut: 1 von 2, eine zweite wäre perfekt':'Diese Woche noch keine, Ziel 1 bis 2')+'</span></div></div>';
+  h+='<div class="card"><h3>Training eintragen</h3><textarea id="trtext" rows="3" placeholder="z. B. Beintraining 75 Min, danach 20 Min Cardio"></textarea><div class="row" style="margin-top:8px">'+
+   (SRC?'<button class="pill" id="trmic" data-act="trmic">🎤 Sprechen</button>':'')+
+   '<button class="pill acc" data-act="tradd" style="padding:9px 16px;margin-left:auto">Hinzufügen</button></div>'+
+   '<div class="note" id="trmsg">'+(SRC?'':'Zum Diktieren tippe auf das Mikrofon deiner Tastatur.')+'</div></div>';
+  h+='<div class="card"><h3>'+esc(fmtDate(cur))+'</h3>';
+  if(!list.length)h+='<div class="empty">Noch kein Training eingetragen</div>';
+  list.forEach(x=>{h+='<div class="entry"><div class="n"><div>'+esc(x.t)+'</div></div><button class="pill" data-act="trdel" data-v="'+x.id+'" aria-label="Löschen">✕</button></div>'});
+  h+='</div>';
+  h+='<div class="card"><h3>Letzte Wochen</h3>'+[1,2,3,4].map(o=>{const x=trScore(o),w=weekDays(o);return '<div class="mrow"><div class="l"><b>'+new Date(w[0]+'T12:00').toLocaleDateString('de-DE',{day:'numeric',month:'short'})+'</b><span>'+x.score+' · '+x.td+' Tage, Sauna '+x.sa+'</span></div><div class="bar"><i style="width:'+x.score+'%"></i></div></div>'}).join('')+'</div>';
+  const past=Object.keys(S.days).filter(d=>d!==cur&&d<=TODAY&&S.days[d].tr&&S.days[d].tr.length).sort().reverse().slice(0,14);
+  if(past.length){
+    h+='<div class="card"><h3>Zuletzt</h3>';
+    past.forEach(d=>{h+='<div class="entry" data-act="trgo" data-v="'+d+'"><div class="n"><div>'+esc(S.days[d].tr.map(x=>x.t).join(' · '))+'</div><div class="m">'+esc(fmtDate(d))+'</div></div></div>'});
+    h+='</div>';
+  }
+  return h;
+}
 function dayNav(){
   return '<div class="top"><button class="iconbtn" data-act="day" data-v="-1">‹</button><div class="date">'+esc(fmtDate(cur))+'</div>'+
-   '<button class="iconbtn" data-act="day" data-v="1"'+(cur>=TODAY?' style="opacity:.3" disabled':'')+'>›</button></div>';
+   '<button class="iconbtn" data-act="day" data-v="1"'+(cur>=shift(TODAY,1)?' style="opacity:.3" disabled':'')+'>›</button></div>';
 }
 function macroRow(label,val,goal,color){
   const pct=goal?Math.min(100,val/goal*100):0;
@@ -628,12 +2212,13 @@ function pHome(){
   let h=dayNav();
   if(Object.keys(S.days).length>=2&&(!S.lastExport||Date.now()-S.lastExport>7*864e5))h+='<div class="info">Backup fällig: Du hast noch keins oder es ist älter als 7 Tage. <button class="pill" data-act="tab" data-v="me" style="margin-left:6px">Jetzt sichern</button></div>';
   h+=adaptBanner();
+  if(cur>TODAY)h+='<div class="info">Du planst Morgen. Das zählt erst ab morgen für Streak, Sterne und Wochenauswertung.</div>';
   h+='<div class="card"><div class="hero">'+ring+'<div class="stats">'+
    '<div class="stat" data-act="tab" data-v="me" style="cursor:pointer"><span>Ziel ✎</span><b>'+bud+'</b></div>'+
    '<div class="stat"><span>Gegessen</span><b>'+r0(t.k)+'</b></div>'+
    '<div class="stat"><span>Protein</span><b>'+r0(t.p)+' g</b></div>'+
    '</div></div></div>';
-  h+=dayCard();
+  h+=dayCard()+supCard();
   h+='<div class="card"><h3>Makros</h3>'+macroRow('Protein',t.p,pl.prot,'var(--p)')+macroRow('Kohlenhydrate',t.c,pl.carb,'var(--c)')+macroRow('Fett',t.f,pl.fat,'var(--f)')+'</div>';
   h+=tipCard(pl,t);
   MEALS.forEach(([id,name])=>{
@@ -665,7 +2250,7 @@ function pNut(){
     const vs=m.u==='g'?r1(val):r0(val);
     h+='<div class="mrow"><div class="l"><b>'+m.l+'</b><span>'+vs+' / '+(lim?'max. ':'')+ref+' '+m.u+'</span></div><div class="bar"><i style="width:'+Math.min(100,pct)+'%;background:'+col+'"></i></div></div>';
   });
-  h+='<div class="note">Referenzwerte für Männer, orientiert an DGE und WHO. Bei Zucker, gesättigten Fetten und Salz sind es Obergrenzen. Die Werte der Lebensmittel sind Richtwerte, Packungsangaben können abweichen.</div></div>';
+  h+='</div>';
   return h;
 }
 function pWt(){
@@ -685,7 +2270,7 @@ function pWt(){
   h+='</div>';
   h+='<div class="card chart"><h3>Verlauf und Prognose</h3>'+chart(ts,p,end)+'<div class="note">Linie: geglätteter Trend. Punkte: einzelne Messungen. Gestrichelt: Prognose bei deinem Wunschtempo.</div></div>';
   h+=adaptCard();
-  h+='<div class="card"><h3>Gewicht eintragen</h3><div class="grid2"><div><label class="f">Datum</label><input type="text" id="wd" value="'+TODAY+'" inputmode="numeric"></div><div><label class="f">Gewicht (kg)</label><input type="number" step="0.1" id="wk" inputmode="decimal" value="'+last.kg+'"></div></div><div style="height:10px"></div><button class="btn" data-act="addw">Speichern</button></div>';
+  h+='<div class="card"><h3>Gewicht eintragen</h3><div class="grid2"><div><label class="f">Datum</label><input type="text" id="wd" value="'+deDate(TODAY)+'" inputmode="numeric" placeholder="TT.MM.JJJJ"></div><div><label class="f">Gewicht (kg)</label><input type="number" step="0.1" id="wk" inputmode="decimal" value="'+last.kg+'"></div></div><div style="height:10px"></div><button class="btn" data-act="addw">Speichern</button></div>';
   h+='<div class="card"><h3>Einträge</h3>';
   [...ts].reverse().slice(0,12).forEach(w=>{h+='<div class="entry" data-act="delw" data-v="'+w.d+'"><div class="n"><div>'+new Date(w.d+'T12:00').toLocaleDateString('de-DE',{day:'numeric',month:'short',year:'numeric'})+'</div><div class="m">Trend '+r1(w.tr)+' kg · Tippen zum Löschen</div></div><div class="kc">'+r1(w.kg)+' kg</div></div>'});
   return h+'</div>';
@@ -718,7 +2303,7 @@ function pWkBody(){
   const elapsed=days.filter(d=>d<=TODAY).length;
   const lab=new Date(days[0]+'T12:00').toLocaleDateString('de-DE',{day:'numeric',month:'short'})+' – '+new Date(days[6]+'T12:00').toLocaleDateString('de-DE',{day:'numeric',month:'short'});
   let h='<div class="top"><button class="iconbtn" data-act="wkd" data-v="1">‹</button><div class="date">'+(wkOff===0?'Diese Woche':lab)+(wkOff===0?'<div class="note" style="margin:0;font-weight:400">'+lab+'</div>':'')+'</div><button class="iconbtn" data-act="wkd" data-v="-1"'+(wkOff===0?' style="opacity:.3" disabled':'')+'>›</button></div>';
-  h+='<div class="card chart"><h3>Kalorien pro Tag</h3>'+wkChart(rows,pl.target)+'<div class="note">Grün: im Ziel (85 bis 105 %). Orange: darüber. Grau: unvollständig (unter 800 kcal). Gestrichelt: Ziel '+pl.target+' kcal.</div></div>';
+  h+='<div class="card chart"><h3>Kalorien pro Tag</h3>'+wkChart(rows,pl.target)+'</div>';
   h+=weekGoalCard(days,pl);
   if(!n){return h+'<div class="card"><div class="empty">Noch keine vollständig eingetragenen Tage in dieser Woche.</div></div>'}
   h+='<div class="card"><h3>Auswertung</h3>'+
@@ -757,10 +2342,9 @@ function pMe(){
    '<div class="kv"><span>Kalorienziel'+(pl.manual?' (manuell)':'')+'</span><b style="color:var(--acc)">'+pl.target+' kcal</b></div>'+
    '<div class="kv"><span>Protein / Kohlenhydrate / Fett</span><b>'+pl.prot+' / '+pl.carb+' / '+pl.fat+' g</b></div>'+
    '<div style="height:10px"></div><label class="f">Eigenes Kalorienziel pro Tag (kcal), leer = automatisch</label><div class="row"><input id="manual" type="number" inputmode="numeric" placeholder="z. B. 2300" value="'+(p.manualKcal||'')+'" data-bind="manual"><button class="pill" data-act="manualclear">Automatisch</button></div>'+
-   '<div class="note">Wenn du hier etwas einträgst, ersetzt es die Berechnung aus deinem Abnehmtempo. Die Makros und die Prognose passen sich an.</div>'+
    (pl.manual&&pl.target<(p.sex==='m'?1500:1200)?'<div class="warn">Dieses Ziel ist sehr niedrig. Dauerhaft unter '+(p.sex==='m'?1500:1200)+' kcal ist ohne ärztliche Begleitung nicht sinnvoll.</div>':'')+
    (pl.limited?'<div class="warn">Das Ziel wurde auf das Minimum von '+pl.target+' kcal begrenzt. Ein größeres Defizit ist ohne ärztliche Begleitung nicht sinnvoll.</div>':'')+
-   '<div class="note">Berechnet mit Mifflin-St-Jeor und deinem aktuellen Gewicht ('+r1(pl.w)+' kg). Wenn du abnimmst, sinkt dein Umsatz und das Ziel passt sich automatisch an.</div></div>';
+   '</div>';
   h+='<div class="card"><h3>Angaben</h3><div class="grid2">'+
    '<div><label class="f">Geschlecht</label><select data-bind="sex"><option value="m"'+(p.sex==='m'?' selected':'')+'>Männlich</option><option value="f"'+(p.sex==='f'?' selected':'')+'>Weiblich</option></select></div>'+
    field('age','Alter',p.age)+field('h','Größe (cm)',p.h)+field('goal','Zielgewicht (kg)',p.goal)+'</div>'+
@@ -771,6 +2355,7 @@ function pMe(){
    (p.macroMode==='gkg'?'<div class="grid2">'+field('prot','Protein (g pro kg Zielgewicht)',p.prot)+field('fatPct','Fett (% der Kalorien)',p.fatPct)+'</div>':'<div class="grid2">'+field('protPct','Protein (% der Kalorien)',p.protPct)+field('fatPct','Fett (% der Kalorien)',p.fatPct)+'</div><div class="note">Kohlenhydrate: '+(100-p.protPct-p.fatPct)+' % (Rest)'+(100-p.protPct-p.fatPct<10?'. Das ist sehr wenig.':'')+'</div>')+
    '<div style="height:10px"></div><label class="f">Automatische Zielanpassung</label><select data-bind="adapt">'+[['ask','Vorschlag, ich bestätige'],['auto','Automatisch'],['off','Aus']].map(a=>'<option value="'+a[0]+'"'+((p.adapt||'ask')===a[0]?' selected':'')+'>'+a[1]+'</option>').join('')+'</select>'+
    '</div>';
+  h+=syncCard();
   h+='<div class="card"><h3>Scanner und Suche</h3><div class="note" style="margin-top:0">Wenn Scanner oder Online-Suche nicht klappen, prüft die Diagnose Kamera, Scanner-Modul und die Verbindung zur Produktdatenbank.</div><button class="btn sec" data-act="diag">Diagnose starten</button></div>';
   if(!HAS_AI){
     let mdl='claude-sonnet-5-5';try{mdl=localStorage.getItem(MODELK)||mdl}catch(e){}
@@ -812,7 +2397,7 @@ function mealChips(){
 }
 function shAdd(){
   return shell('Hinzufügen',mealChips()+
-   '<div class="acts3"><button data-act="gscan"><span class="e">▥</span>Barcode</button>'+'<button data-act="gai"><span class="e">📷</span>Foto schätzen</button>'+'<button data-act="gnew"><span class="e">＋</span>Neu</button></div>'+
+   '<div class="acts3"><button data-act="gscan"><span class="e">▥</span>Barcode</button>'+'<button data-act="gai"><span class="e">📷</span>Foto / Sprache</button>'+'<button data-act="gnew"><span class="e">＋</span>Neu</button></div>'+
    '<input type="search" id="q" data-bind="q" placeholder="Lebensmittel suchen (z. B. Skyr, Banane, Nutella)" value="'+esc(sheet.q||'')+'" autocomplete="off">'+
    '<div id="results"></div><div class="chips"><button class="pill" data-act="gquick">Nur Kalorien eintragen</button></div>');
 }
@@ -845,9 +2430,11 @@ function drawResults(){
   el.innerHTML=h;
 }
 function findFood(id){return allFoods().find(f=>f.id===id)||S.recent.find(f=>f.id===id)||Object.values((sheet&&sheet.onl)||{}).flatMap(o=>o.list||[]).find(f=>f.id===id)}
+const fold=t=>String(t).toLowerCase().replace(/ä/g,'a').replace(/ö/g,'o').replace(/ü/g,'u').replace(/ß/g,'ss');
+function stems(t){const a=[t];if(t.length>4&&t.endsWith('en'))a.push(t.slice(0,-2));if(t.length>3&&/[nes]$/.test(t))a.push(t.slice(0,-1));return a}
 function localSearch(q){
-  const toks=q.split(/\s+/).filter(Boolean);
-  const sc=f=>{const n=f.name.toLowerCase();if(f.bc&&f.bc===q)return 0;if(!toks.every(t=>n.includes(t)))return null;return (n.startsWith(toks[0])?0:1)+(n.split(/[\s(,]+/).some(w=>w.startsWith(toks[0]))?0:0.5)+(S.foods.includes(f)?-0.3:0)};
+  const toks=fold(q).split(/\s+/).filter(Boolean);
+  const sc=f=>{const n=fold(f.name);if(f.bc&&f.bc===q)return 0;if(!toks.every(t=>stems(t).some(x=>n.includes(x))))return null;return (n.startsWith(toks[0].slice(0,4))?0:1)+(n.split(/[\s(,]+/).some(w=>w.startsWith(toks[0].slice(0,4)))?0:0.5)+(S.foods.includes(f)?-0.3:0)};
   return allFoods().map(f=>({f,s:sc(f)})).filter(x=>x.s!==null).sort((a,b)=>a.s-b.s||a.f.name.length-b.f.name.length).map(x=>x.f);
 }
 function shAmt(){
@@ -888,7 +2475,8 @@ function keyPanel(){
 function shAi(){
   return shell('Foto oder Text schätzen',
    (sheet.needKey?keyPanel():'<div class="info">Fotografiere dein Essen oder beschreibe es. Claude schätzt Mengen und Nährwerte. Das ist eine Schätzung, kein exakter Wert.</div>')+mealChips()+
-   '<textarea id="aitext" rows="2" data-bind="aitext" placeholder="Optional: z. B. 2 Brötchen mit Nuss-Nougat-Creme und ein Glas Milch">'+esc(sheet.text||'')+'</textarea>'+
+   '<textarea id="aitext" rows="2" data-bind="aitext" placeholder="Sprich oder tippe, z. B. 2 Brötchen mit Nuss-Nougat-Creme und ein Glas Milch">'+esc(sheet.text||'')+'</textarea>'+
+   '<div class="row" style="margin-top:8px"><button class="pill" id="aimic" data-act="aimic">🎤 Einsprechen</button><button class="pill" data-act="ailocal">Aus Datenbank (ohne KI)</button></div><div class="note" id="aimsg" style="display:none"></div>'+
    '<div class="row" style="margin:10px 0"><label class="pill" style="cursor:pointer"><input type="file" accept="image/*" capture="environment" id="aifileinp" style="display:none" data-bind="aifile">📷 Foto '+(sheet.img?'(1 ausgewählt)':'aufnehmen')+'</label>'+
    '<button class="pill acc" data-act="airun" style="padding:9px 16px"'+(sheet.busy?' disabled':'')+'>Schätzen</button></div>'+
    '<div id="aires">'+aiResHtml()+'</div>','add');
@@ -896,13 +2484,13 @@ function shAi(){
 function aiResHtml(){
   if(sheet.needKey&&!sheet.busy)return '';
   if(sheet.busy)return '<div class="note"><span class="spin"></span>Claude schätzt …</div>';
-  if(sheet.err)return '<div class="warn">'+esc(sheet.err)+'</div>';
-  if(!sheet.items)return '';
-  let h='<div class="sec-h">Ergebnis</div>';
+  const eh=sheet.err?'<div class="warn">'+esc(sheet.err)+'</div>':'';
+  if(!sheet.items)return eh;
+  let h='<div class="sec-h">Ergebnis</div>'+(sheet.hint?'<div class="note">'+esc(sheet.hint)+'</div>':'');
   sheet.items.forEach((it,i)=>{h+='<div class="res" data-act="aidel" data-v="'+i+'"><div class="t"><div>'+esc(it.name)+'</div><div class="m">'+r0(it.g)+' g · P '+r0(it.p)+' K '+r0(it.c)+' F '+r0(it.f)+' · tippen = entfernen</div></div><div class="kc"><b>'+r0(it.k)+'</b><div class="m">kcal</div></div></div>'});
   h+='<div class="chips"><button class="pill" data-act="aiscale" data-v="0.8">Portion kleiner (−20 %)</button><button class="pill" data-act="aiscale" data-v="1.2">Portion größer (+20 %)</button></div>';
   h+='<button class="btn" data-act="aiadd" style="margin-top:10px">Alles hinzufügen ('+r0(sheet.items.reduce((a,x)=>a+x.k,0))+' kcal)</button>';
-  return h;
+  return eh+h;
 }
 function shQuick(){
   return shell('Schnell eintragen',mealChips()+
@@ -1133,7 +2721,7 @@ async function readLabel(file){
   }
 }
 async function runAi(){
-  sheet.busy=true;sheet.err=null;sheet.items=null;sheet.needKey=false;
+  sheet.busy=true;sheet.err=null;sheet.items=null;sheet.hint='';sheet.needKey=false;
   const sh=sheet,el0=document.getElementById('aires');if(el0)el0.innerHTML=aiResHtml();
   try{
     const blob=sh.img?(await shrink(sh.img,1280)).blob:null;
@@ -1151,10 +2739,80 @@ async function runAi(){
   if(sheet===sh)renderSheet();
 }
 
+
+/* ---------- Sprach-/Text-Zuordnung ohne KI ---------- */
+const NUMW={ein:1,eine:1,einen:1,einem:1,einer:1,zwei:2,drei:3,vier:4,fuenf:5,sechs:6,sieben:7,acht:8,neun:9,zehn:10,elf:11,zwoelf:12,halbe:0.5,halben:0.5,halbes:0.5,anderthalb:1.5};
+const UNITW={g:'g',gramm:'g',gr:'g',kg:'kg',kilo:'kg',ml:'ml',milliliter:'ml',l:'l',liter:'l',glas:'glas',glaeser:'glas',tasse:'glas',tassen:'glas',becher:'glas',el:'el',essloeffel:'el',tl:'tl',teeloeffel:'tl',loeffel:'el'};
+function parseSpoken(txt){
+  const parts=String(txt||'').split(/,|;|\n|\bund\b|\bsowie\b|\bplus\b|\bdazu\b|\banschliessend\b|\banschließend\b/i).map(x=>x.trim()).filter(Boolean);
+  const out=[];
+  parts.forEach(p0=>{
+    let p=p0.replace(/\b(ich habe|ich hab|hatte|gegessen|getrunken|zum fr(ü|ue)hst(ü|ue)ck|zum mittagessen|zum abendessen|heute|noch|dann|außerdem|ausserdem|von|vom|der|die|das|dem|den|ca\.?|circa|etwa|ungefähr)\b/gi,' ').replace(/\s+/g,' ').trim();
+    if(!p)return;
+    let qty=1,unit='',m;
+    const toks=p.split(' ');
+    let i=0;
+    const f0=fold(toks[0]||'');
+    if((m=toks[0].match(/^(\d+(?:[.,]\d+)?)(g|gr|kg|ml|l)?$/i))){qty=num(m[1]);if(m[2])unit=UNITW[m[2].toLowerCase()];i=1}
+    else if(NUMW[f0]!=null){qty=NUMW[f0];i=1}
+    if(i===1&&!unit&&toks[1]){const u=UNITW[fold(toks[1])];if(u){unit=u;i=2}}
+    if(toks[i]&&/^(von|vom|aus)$/i.test(toks[i]))i++;
+    const name=toks.slice(i).join(' ').trim();
+    if(name)out.push({name,qty,unit,raw:p0});
+  });
+  return out;
+}
+function matchSpoken(txt){
+  const res=[],miss=[];
+  parseSpoken(txt).forEach(it=>{
+    const best=nm=>{
+      let list=localSearch(nm);
+      if(!list.length){const w=nm.split(' ');for(let n=w.length-1;n>=1&&!list.length;n--)list=localSearch(w.slice(0,n).join(' '));if(!list.length&&w.length>1)list=localSearch(w[w.length-1])}
+      if(!list.length)return null;
+      const ALI={eier:'ei',eiern:'ei',spiegeleier:'ei',spiegelei:'ei'};
+      let q=fold(nm);const w0=q.split(' ')[0];if(ALI[w0]){list=localSearch(ALI[w0]).concat(list)}
+      const qs=stems(w0).concat(ALI[w0]?[ALI[w0]]:[]);
+      const exs=list.filter(x=>{const fw=fold(x.name).split(/[\s(,\/]+/)[0];return fold(x.name)===q||qs.includes(fw)});const ex=exs.find(x=>fold(x.name)===q)||exs.filter(x=>!/\bmit\b/i.test(x.name))[0]||exs[0];
+      return {f:ex||list[0],exact:!!ex,full:!!list.find(x=>fold(x.name)===q)};
+    };
+    let bm=best(it.name);
+    if(!(bm&&bm.full)&&/\bmit\b/i.test(it.name)){
+      const sub=it.name.split(/\bmit\b/i).map(x=>x.trim()).filter(Boolean);
+      if(sub.length>1&&sub.every(x=>best(x))){sub.forEach((x,j)=>{const b2=best(x);const srv=b2.f.serv||100;const g=(j===0?it.qty:1)*srv;const n=scale(b2.f,g);res.push({name:b2.f.name,g,k:n.k,p:n.p,c:n.c,f:n.f,fi:n.fi,su:n.su})});return}
+    }
+    const f=bm&&bm.f;
+    if(!f){miss.push(it.name);return}
+    const srv=f.serv||(f.u==='ml'?200:100);
+    let g;
+    if(it.unit==='g'||it.unit==='ml')g=it.qty;
+    else if(it.unit==='kg'||it.unit==='l')g=it.qty*1000;
+    else if(it.unit==='el')g=it.qty*15;
+    else if(it.unit==='tl')g=it.qty*5;
+    else if(it.unit==='glas')g=it.qty*(f.u==='ml'?200:srv);
+    else g=it.qty*srv;
+    const n=scale(f,g);
+    res.push({name:f.name,g,k:n.k,p:n.p,c:n.c,f:n.f,fi:n.fi,su:n.su});
+  });
+  return{items:res,miss};
+}
+function runLocal(){
+  const ta=document.getElementById('aitext');if(ta)sheet.text=ta.value;
+  sheet.err=null;sheet.items=null;sheet.needKey=false;
+  const t=(sheet.text||'').trim();
+  if(!t){sheet.err='Sprich oder tippe zuerst, was du gegessen hast.'}
+  else{
+    const r=matchSpoken(t);
+    if(r.items.length)sheet.items=r.items;
+    if(r.miss.length)sheet.err=(r.items.length?'Nicht gefunden: ':'Nichts gefunden: ')+r.miss.join(', ')+'. Tippe die Namen anders oder nutze die KI-Schätzung.';
+    sheet.hint=r.items.length?'Mengen ohne Angabe sind Portionsgrößen aus der Datenbank. Prüfe sie kurz, "Portion kleiner/größer" hilft.':'';
+  }
+  renderSheet();
+}
+
 /* ---------- Aktionen ---------- */
 const A={
- tab(el){tab=el.dataset.v;render();window.scrollTo(0,0)},
- day(el){const n=shift(cur,+el.dataset.v);if(n<=TODAY){cur=n;render()}},
+ tab(el){if(srec){try{srec.stop()}catch(e){}}tab=el.dataset.v;render();window.scrollTo(0,0)},
+ day(el){const n=shift(cur,+el.dataset.v);if(n<=shift(TODAY,1)){cur=n;render()}},
  add(el){openSheet({t:'add',meal:el.dataset.v||defMeal(),q:''})},
  close(){closeSheet()},
  ovl(el,e){if(e.target===el)closeSheet()},
@@ -1170,6 +2828,39 @@ const A={
    if(sh.onlBusy===q)sh.onlBusy=null;
    if(sheet===sh&&sh.t==='add'&&(sh.q||'').trim().toLowerCase()===q)drawResults();
  },
+ syncsetup(){
+   let k=(document.getElementById('fbkey').value||'').trim(),pid=(document.getElementById('fbpid').value||'').trim();const code=(document.getElementById('fbcode').value||'').trim();
+   if(code.includes('|')){[k,pid]=code.split('|').map(x=>x.trim())}
+   const m=document.getElementById('syncmsg');if(!k||!pid){m.textContent='Bitte API-Key und Projekt-ID eintragen.';return}
+   setCfg({key:k,pid});render()},
+ async synclogin(el){
+   const c=syncCfg(),m=document.getElementById('syncmsg'),mail=(document.getElementById('fbmail').value||'').trim(),pw=document.getElementById('fbpw').value||'';
+   if(!mail||!pw){m.textContent='Bitte E-Mail und Passwort eingeben.';return}
+   m.innerHTML='<span class="spin"></span>Einen Moment …';
+   try{const a=await fbAuth(el.dataset.v,mail,pw,c);setCfg(Object.assign({},c,a));await syncNow(true);render()}
+   catch(e){m.textContent=errText(e)}},
+ syncnow(){syncNow(true);const m=document.getElementById('syncmsg');if(m)m.innerHTML='<span class="spin"></span>Gleiche ab …'},
+ synccode(){const c=syncCfg(),m=document.getElementById('syncmsg');if(m)m.innerHTML='Setup-Code für dein anderes Gerät (kein Passwort):<br><span style="user-select:all;word-break:break-all">'+esc(c.key+'|'+c.pid)+'</span>'},
+ synclogout(){const c=syncCfg();if(c)setCfg({key:c.key,pid:c.pid});syncAt=0;syncMsg='';render()},
+ syncreset(){setCfg(null);render()},
+ sauna(){const dd=day(cur);dd.sa=dd.sa?0:1;save();render()},
+ trdays(el){S.profile.trDays=+el.dataset.v;save();render()},
+ tradd(){const ta=document.getElementById('trtext'),v=(ta.value||'').trim();if(!v)return;if(srec){try{srec.stop()}catch(e){}}const dd=day(cur);dd.tr=dd.tr||[];dd.tr.push({id:uidn(),t:v,ts:Date.now()});save();render()},
+ trdel(el){const dd=day(cur);dd.tr=(dd.tr||[]).filter(x=>x.id!==el.dataset.v);save();render()},
+ trgo(el){cur=el.dataset.v;render();window.scrollTo(0,0)},
+ trmic(el){
+   const msg=document.getElementById('trmsg'),ta=document.getElementById('trtext');
+   if(srec){try{srec.stop()}catch(e){}return}
+   try{
+     const r=new SRC();srec=r;r.lang='de-DE';r.interimResults=true;r.continuous=false;
+     const base=ta.value?ta.value.trim()+' ':'';
+     r.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;ta.value=base+t};
+     r.onend=()=>{srec=null;const b=document.getElementById('trmic');if(b)b.textContent='🎤 Sprechen'};
+     r.onerror=e=>{srec=null;const m=document.getElementById('trmsg');if(m)m.textContent='Spracheingabe hier nicht möglich ('+(e.error||'Fehler')+'). Tippe stattdessen auf das Mikrofon deiner Tastatur.';const b=document.getElementById('trmic');if(b)b.textContent='🎤 Sprechen'};
+     r.start();el.textContent='■ Stopp';if(msg)msg.textContent='Ich höre zu …';
+   }catch(e){srec=null;if(msg)msg.textContent='Spracheingabe hier nicht möglich. Tippe stattdessen auf das Mikrofon deiner Tastatur.'}
+ },
+ sup(el){const k=el.dataset.v,dd=day(cur);dd.sup=dd.sup||{};dd.sup[k]=dd.sup[k]?0:1;save();render()},
  tip(el){const f=findFood(el.dataset.v);if(f)openSheet({t:'amt',food:f,meal:defMeal(),amt:f.serv||100})},
  adapt(){const g=suggestion();if(!g)return;S.profile.tdeeRatio=g.ratio;save();render()},
  adaptoff(){delete S.profile.tdeeRatio;save();render()},
@@ -1197,6 +2888,21 @@ const A={
    if(f.serv)f.sl='Portion ('+f.serv+' '+f.u+')';
    S.foods.unshift(f);save();openSheet({t:'amt',food:f,meal:sheet.meal,amt:f.serv||100});
  },
+ ailocal(){runLocal()},
+ aimic(el){
+   const msg=document.getElementById('aimsg'),ta=document.getElementById('aitext'),show=t=>{if(msg){msg.style.display=t?'block':'none';msg.textContent=t||''}};
+   if(srec){try{srec.stop()}catch(e){}return}
+   if(!SRC){show('Spracheingabe geht hier nicht. Tippe auf das Mikrofon deiner Tastatur und sprich damit.');return}
+   try{
+     const r=new SRC();srec=r;r.lang='de-DE';r.interimResults=true;r.continuous=false;
+     const base=ta.value?ta.value.trim()+' ':'';
+     r.onresult=e=>{let t='';for(let i=0;i<e.results.length;i++)t+=e.results[i][0].transcript;ta.value=base+t;sheet.text=ta.value};
+     r.onend=()=>{srec=null;const b=document.getElementById('aimic');if(b)b.textContent='🎤 Einsprechen';show('');
+       const t=(document.getElementById('aitext')||{value:''}).value.trim();if(t&&sheet&&sheet.t==='ai'){sheet.text=t;if(HAS_AI||aiKey())runAi();else runLocal()}};
+     r.onerror=e=>{srec=null;const b=document.getElementById('aimic');if(b)b.textContent='🎤 Einsprechen';show('Spracheingabe hier nicht möglich ('+(e.error||'Fehler')+'). Tippe stattdessen auf das Mikrofon deiner Tastatur.')};
+     r.start();el.textContent='■ Stopp';show('Ich höre zu …');
+   }catch(e){srec=null;show('Spracheingabe hier nicht möglich. Tippe stattdessen auf das Mikrofon deiner Tastatur.')}
+ },
  airun(){runAi()},
  aidel(el){sheet.items.splice(+el.dataset.v,1);document.getElementById('aires').innerHTML=aiResHtml()},
  aiadd(){sheet.items.forEach(i=>{const n=zero();n.k=i.k;n.p=i.p;n.c=i.c;n.f=i.f;n.fi=i.fi;n.su=i.su;addEntry(sheet.meal,i.name+' (geschätzt)',i.g,'g',n)});save();closeSheet()},
@@ -1215,8 +2921,9 @@ const A={
  },
  reclog(){const r=S.recipes.find(x=>x.id===sheet.id);r.items.forEach(i=>addEntry(sheet.meal,i.name,i.qty,i.unit,Object.assign({},i.n)));save();closeSheet()},
  recdel(){S.recipes=S.recipes.filter(x=>x.id!==sheet.id);save();openSheet({t:'add',meal:sheet.meal,q:''})},
- addw(){const d=(document.getElementById('wd').value||'').trim(),k=num(document.getElementById('wk').value);
-   if(!/^\d{4}-\d{2}-\d{2}$/.test(d)||k<30||k>300)return;
+ addw(){const d=parseDe(document.getElementById('wd').value),k=num(document.getElementById('wk').value);
+   if(!d||d>TODAY){toast('Bitte ein gültiges Datum eingeben, z. B. '+deDate(TODAY));return}
+   if(k<30||k>300){toast('Bitte ein gültiges Gewicht eingeben');return}
    S.weights=S.weights.filter(w=>w.d!==d);S.weights.push({d,kg:k});save();render()},
  delw(el){if(S.weights.length<=1)return;S.weights=S.weights.filter(w=>w.d!==el.dataset.v);save();render()},
  export(){openSheet({t:'exp'})},
@@ -1281,6 +2988,7 @@ function registerSw(){try{if('serviceWorker' in navigator&&/^https?:/.test(locat
 registerSw();
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden){flush();return}
+  syncNow();
   const t=dkey(new Date());if(t!==TODAY){const wasToday=cur===TODAY;TODAY=t;if(wasToday)cur=TODAY;render()}
 });
 window.addEventListener('pagehide',flush);
