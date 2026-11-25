@@ -1660,6 +1660,8 @@ const MICROS=[
  {k:'vc',l:'Vitamin C',u:'mg',ref:110,t:'goal'}
 ];
 
+const AZV=[['Vitamin A',800,'µg',800],['Thiamin (B1)',3.3,'mg',1.1],['Riboflavin (B2)',4.2,'mg',1.4],['Niacin (B3)',48,'mg',16],['Pantothensäure (B5)',20,'mg',6],['Vitamin B6',4.2,'mg',1.4],['Biotin',150,'µg',50],['Folsäure',600,'µg',200],['Vitamin B12',6,'µg',2.5],['Vitamin C',250,'mg',80],['Vitamin D3',20,'µg',5],['Vitamin E',10,'mg',12],['Vitamin K1',100,'µg',75]];
+const AZ_VC=250;
 const HAS_AI=(typeof claude!=='undefined')&&!!claude&&typeof claude.use==='function';
 /* ---------- Zustand ---------- */
 const pad=n=>String(n).padStart(2,'0');
@@ -1811,7 +1813,7 @@ async function fsPut(cfg,idt,state){
 }
 function canon(x){if(Array.isArray(x))return '['+x.map(canon).join(',')+']';if(x&&typeof x==='object')return '{'+Object.keys(x).sort().map(k=>JSON.stringify(k)+':'+canon(x[k])).join(',')+'}';return JSON.stringify(x)}
 function sig(o){return hsh(canon({days:o.days,weights:[...(o.weights||[])].sort((a,b)=>a.d<b.d?-1:1),foods:[...(o.foods||[])].map(f=>f.id).sort(),recipes:[...(o.recipes||[])].map(f=>f.id).sort(),profile:o.profile,badges:o.badges,cele:o.cele}))}
-function dayEmpty(a){return !(a&&((a.e&&a.e.length)||(a.tr&&a.tr.length)||(a.sup&&(a.sup.kr||a.sup.az))||a.sa))}
+function dayEmpty(a){return !(a&&((a.e&&a.e.length)||(a.tr&&a.tr.length)||(a.sup&&(a.sup.kr||a.sup.az))||a.sa||(a.cd&&a.cd.length)||(a.ms&&Object.keys(a.ms).some(k=>a.ms[k]>0))))}
 function mergeState(L,R){
   const M=JSON.parse(JSON.stringify(L));M.dh=M.dh||{};M.dt=M.dt||{};
   Object.keys(R.days||{}).forEach(d=>{
@@ -2161,9 +2163,37 @@ function render(){
 }
 const SRC=window.SpeechRecognition||window.webkitSpeechRecognition;
 let srec=null;
+const MUSC=[['brust','Brust'],['ruecken','Rücken'],['schulter','Schultern'],['bizeps','Bizeps'],['trizeps','Trizeps'],['bauch','Bauch'],['beine','Beine']];
+const LEGK=['quad','beuger','gesaess','waden'];
+function msGet(ms,k){ms=ms||{};return k==='beine'?(ms.beine||0)+LEGK.reduce((a,x)=>a+(ms[x]||0),0):(ms[k]||0)}
+function msSum(d){const m=S.days[d]&&S.days[d].ms;return m?Object.keys(m).reduce((a,k)=>a+(m[k]||0),0):0}
+function isoWeek(d){const t=new Date(d+'T12:00'),wd=(t.getDay()+6)%7;t.setDate(t.getDate()-wd+3);const y=t.getFullYear(),j=new Date(y,0,4,12);return{kw:1+Math.round(((t-j)/864e5-3+((j.getDay()+6)%7))/7),y}}
+function trained(d){const x=S.days[d];return !!(x&&((x.tr&&x.tr.length)||(x.cd&&x.cd.length)||msSum(d)>0))}
+function weekSets(off){const t={};weekDays(off).forEach(d=>{if(d>TODAY)return;const m=S.days[d]&&S.days[d].ms;MUSC.forEach(g=>{const n=msGet(m,g[0]);if(n)t[g[0]]=(t[g[0]]||0)+n})});return t}
+function weekCardio(off){let n=0,min=0,hs=0,hm=0;weekDays(off).forEach(d=>{if(d>TODAY)return;((S.days[d]&&S.days[d].cd)||[]).forEach(c=>{n++;min+=c.min||0;if(c.hr&&c.min){hs+=c.hr*c.min;hm+=c.min}})});return{n,min,hr:hm?Math.round(hs/hm):0}}
+const CTYPES=['Joggen','Radfahren','Laufband','Crosstrainer','Rudern','Schwimmen','Fußball','Sonstiges'];
+let cdType='Joggen';
+function musCards(dd){
+  const ms=dd.ms||{},w0=weekSets(0),w1=weekSets(1),sum0=MUSC.reduce((a,m)=>a+(w0[m[0]]||0),0);
+  let h='<div class="card"><h3>Sätze eintragen</h3><div class="note" style="margin:0 0 8px">'+(cur===TODAY?'Heute':esc(fmtDate(cur)))+': tippe + für jeden Arbeitssatz, zum Beispiel Squats oder Beinpresse unter Beine.</div>';
+  MUSC.forEach(m=>{const n=msGet(ms,m[0]);h+='<div class="kv" style="align-items:center"><span>'+m[1]+'</span><span class="row" style="gap:8px;align-items:center"><button class="pill" data-act="msset" data-v="'+m[0]+'|-1" aria-label="Weniger">−</button><b style="min-width:22px;text-align:center">'+n+'</b><button class="pill acc" data-act="msset" data-v="'+m[0]+'|1" aria-label="Mehr">+</button></span></div>'});
+  h+='</div><div class="card"><h3>Sätze pro Muskelgruppe, diese Woche</h3>';
+  MUSC.forEach(m=>{const n=w0[m[0]]||0,p=w1[m[0]]||0,col=n>=10?'var(--acc)':'var(--warn)';h+='<div class="mrow"><div class="l"><b>'+m[1]+'</b><span>'+n+' Sätze'+(n>20?' · viel':n>=10?' · im Ziel':'')+' · Vorwoche '+p+'</span></div><div class="bar"><i style="width:'+Math.min(100,n/10*100)+'%;background:'+col+'"></i></div></div>'});
+  h+='<div class="note">Insgesamt '+sum0+' Sätze. Richtwert: 10 bis 20 Sätze pro Muskelgruppe und Woche. Die Woche läuft von Montag bis Sonntag.</div></div>';
+  return h;
+}
+function cardioCards(dd){
+  const list=dd.cd||[],wc=weekCardio(0),wp=weekCardio(1);
+  let h='<div class="card"><h3>Cardio eintragen</h3><div class="chips">'+CTYPES.map(t=>'<button class="pill'+(t===cdType?' sel':'')+'" data-act="cdtype" data-v="'+t+'">'+t+'</button>').join('')+'</div>'+
+   '<div class="grid2" style="margin:10px 0"><div><label class="f">Dauer (Min)</label><input type="number" id="cdmin" inputmode="numeric" placeholder="z. B. 30"></div><div><label class="f">Ø Puls (optional)</label><input type="number" id="cdhr" inputmode="numeric" placeholder="z. B. 145"></div></div>'+
+   '<button class="btn" data-act="cdadd">Cardio hinzufügen</button><div class="note" id="cdmsg"></div>';
+  list.forEach(c=>{h+='<div class="entry"><div class="n"><div>'+esc(c.type)+' · '+c.min+' Min'+(c.hr?' · Ø '+c.hr+' bpm':'')+'</div></div><button class="pill" data-act="cddel" data-v="'+c.id+'" aria-label="Löschen">✕</button></div>'});
+  h+='</div><div class="card"><h3>Cardio diese Woche</h3><div class="kv"><span>Einheiten</span><b>'+wc.n+'</b></div><div class="kv"><span>Gesamtdauer</span><b>'+wc.min+' Min</b></div><div class="kv"><span>Ø Puls</span><b>'+(wc.hr?wc.hr+' bpm':'–')+'</b></div><div class="note">Vorwoche: '+wp.n+' Einheiten, '+wp.min+' Min'+(wp.hr?', Ø '+wp.hr+' bpm':'')+'</div></div>';
+  return h;
+}
 function trScore(off){
   const days=weekDays(off),tg=S.profile.trDays||4;let td=0,sa=0;
-  days.forEach(d=>{if(d>TODAY)return;const x=S.days[d];if(x&&x.tr&&x.tr.length)td++;if(x&&x.sa)sa++});
+  days.forEach(d=>{if(d>TODAY)return;const x=S.days[d];if(trained(d))td++;if(x&&x.sa)sa++});
   const a=Math.round(Math.min(1,td/tg)*75),b=sa>=2?25:sa===1?15:0;
   return{td,sa,tg,a,b,score:a+b};
 }
@@ -2178,19 +2208,15 @@ function pTr(){
   const sd=!!dd.sa;
   h+='<div class="card"><h3>Sauna</h3><div class="supg" style="grid-template-columns:1fr"><button class="supb'+(sd?' on':'')+'" data-act="sauna"><span class="ck">'+(sd?'✓':'')+'</span><div><b>'+(cur===TODAY?'Heute':esc(fmtDate(cur)))+' in der Sauna</b><i>'+(sd?'eingetragen':'tippen zum Eintragen')+'</i></div></button></div>'+
    '<div class="row" style="margin-top:10px;gap:8px;align-items:center"><span style="font-size:20px">'+[0,1].map(i=>i<sc.sa?'🧖':'○').join(' ')+'</span><span class="note" style="margin:0">'+(sc.sa>=2?'Diese Woche perfekt: 2 von 2':sc.sa===1?'Diese Woche gut: 1 von 2, eine zweite wäre perfekt':'Diese Woche noch keine, Ziel 1 bis 2')+'</span></div></div>';
-  h+='<div class="card"><h3>Training eintragen</h3><textarea id="trtext" rows="3" placeholder="z. B. Beintraining 75 Min, danach 20 Min Cardio"></textarea><div class="row" style="margin-top:8px">'+
-   (SRC?'<button class="pill" id="trmic" data-act="trmic">🎤 Sprechen</button>':'')+
-   '<button class="pill acc" data-act="tradd" style="padding:9px 16px;margin-left:auto">Hinzufügen</button></div>'+
-   '<div class="note" id="trmsg">'+(SRC?'':'Zum Diktieren tippe auf das Mikrofon deiner Tastatur.')+'</div></div>';
-  h+='<div class="card"><h3>'+esc(fmtDate(cur))+'</h3>';
-  if(!list.length)h+='<div class="empty">Noch kein Training eingetragen</div>';
+  h+=musCards(dd)+cardioCards(dd);
+  if(list.length){h+='<div class="card"><h3>Notizen '+esc(fmtDate(cur))+'</h3>';
   list.forEach(x=>{h+='<div class="entry"><div class="n"><div>'+esc(x.t)+'</div></div><button class="pill" data-act="trdel" data-v="'+x.id+'" aria-label="Löschen">✕</button></div>'});
-  h+='</div>';
-  h+='<div class="card"><h3>Letzte Wochen</h3>'+[1,2,3,4].map(o=>{const x=trScore(o),w=weekDays(o);return '<div class="mrow"><div class="l"><b>'+new Date(w[0]+'T12:00').toLocaleDateString('de-DE',{day:'numeric',month:'short'})+'</b><span>'+x.score+' · '+x.td+' Tage, Sauna '+x.sa+'</span></div><div class="bar"><i style="width:'+x.score+'%"></i></div></div>'}).join('')+'</div>';
-  const past=Object.keys(S.days).filter(d=>d!==cur&&d<=TODAY&&S.days[d].tr&&S.days[d].tr.length).sort().reverse().slice(0,14);
+  h+='</div>'}
+  h+='<div class="card"><h3>Letzte Wochen</h3>'+[1,2,3,4].map(o=>{const x=trScore(o),w=weekDays(o),iw=isoWeek(w[0]);return '<div class="mrow"><div class="l"><b>KW '+iw.kw+'</b><span>'+x.score+' · '+x.td+' Tage, Sauna '+x.sa+'</span></div><div class="bar"><i style="width:'+x.score+'%"></i></div></div>'}).join('')+'</div>';
+  const past=Object.keys(S.days).filter(d=>d!==cur&&d<=TODAY&&trained(d)).sort().reverse().slice(0,14);
   if(past.length){
     h+='<div class="card"><h3>Zuletzt</h3>';
-    past.forEach(d=>{h+='<div class="entry" data-act="trgo" data-v="'+d+'"><div class="n"><div>'+esc(S.days[d].tr.map(x=>x.t).join(' · '))+'</div><div class="m">'+esc(fmtDate(d))+'</div></div></div>'});
+    past.forEach(d=>{h+='<div class="entry" data-act="trgo" data-v="'+d+'"><div class="n"><div>'+esc([].concat((S.days[d].tr||[]).map(x=>x.t),(S.days[d].cd||[]).map(c=>c.type+' '+c.min+' Min'),msSum(d)?[msSum(d)+' Sätze']:[]).join(' · '))+'</div><div class="m">'+esc(fmtDate(d))+'</div></div></div>'});
     h+='</div>';
   }
   return h;
@@ -2237,6 +2263,7 @@ function pHome(){
 }
 function pNut(){
   const pl=plan(),dd=day(cur),t=sumN(dd.e);
+  const azOn=!!(dd.sup&&dd.sup.az);if(azOn)t.vc+=AZ_VC;
   const kc=t.p*4+t.c*4+t.f*9||1;
   let h=dayNav();
   h+='<div class="card"><h3>Makronährstoffe</h3>'+macroRow('Protein',t.p,pl.prot,'var(--p)')+macroRow('Kohlenhydrate',t.c,pl.carb,'var(--c)')+macroRow('Fett',t.f,pl.fat,'var(--f)')+
@@ -2250,6 +2277,10 @@ function pNut(){
     const vs=m.u==='g'?r1(val):r0(val);
     h+='<div class="mrow"><div class="l"><b>'+m.l+'</b><span>'+vs+' / '+(lim?'max. ':'')+ref+' '+m.u+'</span></div><div class="bar"><i style="width:'+Math.min(100,pct)+'%;background:'+col+'"></i></div></div>';
   });
+  if(azOn){
+    AZV.filter(v=>v[0]!=='Vitamin C').forEach(v=>{const pc=v[1]/v[3]*100;h+='<div class="mrow"><div class="l"><b>'+v[0]+'</b><span>'+v[1]+' / '+v[3]+' '+v[2]+'</span></div><div class="bar"><i style="width:'+Math.min(100,pc)+'%;background:var(--acc)"></i></div></div>'});
+    h+='<div class="note">Die Vitamine A, B, D, E, K und Folsäure stammen aus der A-Z Tablette. Aus dem Essen werden sie nicht erfasst.</div>';
+  }
   h+='</div>';
   return h;
 }
@@ -2844,6 +2875,15 @@ const A={
  synclogout(){const c=syncCfg();if(c)setCfg({key:c.key,pid:c.pid});syncAt=0;syncMsg='';render()},
  syncreset(){setCfg(null);render()},
  sauna(){const dd=day(cur);dd.sa=dd.sa?0:1;save();render()},
+ msset(el){const [k,d]=el.dataset.v.split('|'),dd=day(cur);dd.ms=dd.ms||{};
+   if(k==='beine'){const v=msGet(dd.ms,'beine');LEGK.forEach(x=>delete dd.ms[x]);dd.ms.beine=Math.max(0,Math.min(40,v+(+d)))}
+   else dd.ms[k]=Math.max(0,Math.min(40,(dd.ms[k]||0)+(+d)));save();render()},
+ cdtype(el){cdType=el.dataset.v;document.querySelectorAll('[data-act=cdtype]').forEach(b=>b.classList.toggle('sel',b.dataset.v===cdType))},
+ cdadd(){const min=Math.round(num(document.getElementById('cdmin').value)),hr=Math.round(num(document.getElementById('cdhr').value)),m=document.getElementById('cdmsg');
+   if(min<=0||min>600){if(m)m.textContent='Bitte die Dauer in Minuten eintragen.';return}
+   if(hr&&(hr<40||hr>230)){if(m)m.textContent='Bitte einen gültigen Puls eintragen (40 bis 230) oder das Feld leer lassen.';return}
+   const dd=day(cur);dd.cd=dd.cd||[];dd.cd.push({id:uidn(),type:cdType,min,hr:hr||0,ts:Date.now()});save();render()},
+ cddel(el){const dd=day(cur);dd.cd=(dd.cd||[]).filter(x=>x.id!==el.dataset.v);save();render()},
  trdays(el){S.profile.trDays=+el.dataset.v;save();render()},
  tradd(){const ta=document.getElementById('trtext'),v=(ta.value||'').trim();if(!v)return;if(srec){try{srec.stop()}catch(e){}}const dd=day(cur);dd.tr=dd.tr||[];dd.tr.push({id:uidn(),t:v,ts:Date.now()});save();render()},
  trdel(el){const dd=day(cur);dd.tr=(dd.tr||[]).filter(x=>x.id!==el.dataset.v);save();render()},
