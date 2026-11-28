@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Kalorientracker</title>
 <link rel="manifest" href="manifest.webmanifest">
-<meta name="theme-color" content="#1f9d6b">
+<meta name="theme-color" content="#272E87">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Kalorien">
@@ -14,15 +14,11 @@
 <link rel="icon" href="icon-192.png">
 <style>
 :root{
-  --bg:#f6f7f5;--card:#ffffff;--ink:#1b1f1d;--mute:#6b736f;--line:#e3e6e2;
-  --acc:#1f9d6b;--acc-soft:#e3f5ed;--warn:#d9822b;--warn-soft:#fbeedd;--bad:#c9473d;
-  --p:#3b82c4;--c:#e0a526;--f:#c75b7a;--blue-soft:#e6f0fa;
-  --shadow:0 1px 2px rgba(0,0,0,.05);
-}
-@media (prefers-color-scheme:dark){
-  :root{--bg:#121513;--card:#1b1f1d;--ink:#eef1ef;--mute:#98a29d;--line:#2a302d;
-  --acc:#35c58d;--acc-soft:#17352a;--warn:#f0a050;--warn-soft:#3a2b17;--bad:#ee7066;
-  --p:#6aa8e6;--c:#f0c14d;--f:#e987a3;--blue-soft:#1b2a3a;--shadow:none}
+  color-scheme:dark;
+  --bg:#272E87;--card:#303996;--ink:#ffffff;--mute:#b9c0f2;--line:#4752b4;
+  --acc:#FF057C;--acc-t:#ff6fb0;--acc-soft:#5b2a97;--warn:#ffb347;--warn-soft:#5a3f6e;--bad:#ff7b7b;
+  --p:#7fd0ff;--c:#ffd166;--f:#ff8fbf;--blue-soft:#3a45a8;
+  --shadow:0 1px 2px rgba(0,0,0,.25);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.4 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif}
@@ -55,7 +51,7 @@ h1,h2,h3{margin:0;font-weight:600}
 .mh .acts{display:flex;gap:6px}
 .pill{border:1px solid var(--line);background:var(--card);border-radius:99px;padding:6px 12px;font-size:13px;cursor:pointer;white-space:nowrap}
 .pill.acc{background:var(--acc);border-color:var(--acc);color:#fff;font-weight:600}
-.pill.sel{background:var(--acc-soft);border-color:var(--acc);color:var(--acc);font-weight:600}
+.pill.sel{background:var(--acc-soft);border-color:var(--acc);color:#fff;font-weight:600}
 .entry{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line);cursor:pointer}
 .entry .n{min-width:0}
 .entry .n div:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -66,7 +62,7 @@ h1,h2,h3{margin:0;font-weight:600}
 .tabs .in{display:flex;max-width:560px;width:100%;gap:2px}
 .tab{flex:1;border:0;background:none;padding:6px 1px;color:var(--mute);font-size:10.5px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px}
 .tab svg{width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.tab.on{color:var(--acc);font-weight:600}
+.tab.on{color:var(--acc-t);font-weight:600}
 .fab{position:fixed;right:max(16px,calc(50% - 264px));bottom:calc(74px + env(safe-area-inset-bottom));width:56px;height:56px;border-radius:50%;border:0;background:var(--acc);color:#fff;font-size:30px;line-height:1;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;z-index:6}
 .water{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .row{display:flex;gap:8px;align-items:center}
@@ -100,16 +96,16 @@ input:focus,select:focus,textarea:focus{border-color:var(--acc)}
 .warn{background:var(--warn-soft);color:var(--warn);border-radius:12px;padding:10px 12px;font-size:13px;margin:8px 0}
 .info{background:var(--blue-soft);border-radius:12px;padding:10px 12px;font-size:13px;margin:8px 0}
 svg text{fill:var(--mute);font-size:10px}
-.redbox{display:flex;gap:10px;margin:12px 0}.redbox button{border:0;border-radius:18px;background:#e5484d;color:#fff;font-size:28px;font-weight:700;height:64px;cursor:pointer}.redbox button:first-child{flex:1}.redbox button:last-child{width:64px;background:#f1a9ab}
+.redbox{display:flex;gap:10px;margin:12px 0}.redbox button{border:0;border-radius:18px;background:#8d4be6;color:#fff;font-size:28px;font-weight:700;height:64px;cursor:pointer}.redbox button:first-child{flex:1}.redbox button:last-child{width:64px;background:#4f58b8}
 .chart .gl{stroke:var(--line)}
 #wtchart svg{touch-action:none;cursor:grab;user-select:none;-webkit-user-select:none}
-.chart .ln{stroke:#2f7df6;fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
-.chart .pj{stroke:#1e9e5a;fill:none;stroke-width:2.5;stroke-dasharray:6 5;opacity:1}
-.chart .raw{fill:#2f7df6;opacity:.9}
+.chart .ln{stroke:#ff5aa8;fill:none;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round}
+.chart .pj{stroke:#6fe7ff;fill:none;stroke-width:2.5;stroke-dasharray:6 5;opacity:1}
+.chart .raw{fill:#ff5aa8;opacity:.9}
 .chart .ln{stroke-width:3}
-.chart .gt{stroke:var(--warn);stroke-dasharray:3 4;stroke-width:1.5}
+.chart .gt{stroke:#d3d6e6;stroke-width:1.5}
 .chart circle{fill:var(--acc)}
-.chart .raw{fill:#2f7df6}
+.chart .raw{fill:#ff5aa8}
 .kv{display:flex;justify-content:space-between;padding:6px 0;border-top:1px solid var(--line);font-size:14px}
 .kv:first-of-type{border-top:0}
 .kv span{color:var(--mute)}
@@ -2304,7 +2300,7 @@ function pWt(){
     h+='<div class="kv"><span>Trend-Tempo (letzte '+tr.span+' Tage)</span><b>'+(r>=0?'−':'+')+r1(Math.abs(r))+' kg/Woche</b></div><div class="note">'+v+'</div>';
   }else h+='<div class="note">Für das Tempo braucht die App mindestens 3 Einträge über 10 Tage.</div>';
   h+='</div>';
-  h+='<div class="card chart"><h3>Verlauf und Prognose</h3><div class="chips">'+Object.keys(WTR).map(k=>'<button class="pill'+(k===wtRange?' sel':'')+'" data-act="wtrange" data-v="'+k+'">'+WTR[k][0]+'</button>').join('')+(wtTW||wtYW?'<button class="pill acc" data-act="wtreset">Zurücksetzen</button>':'')+'</div>'+'<div id="wtchart">'+chart(ts,p,end)+'</div><div class="note">Mit zwei Fingern zoomst du hinein, mit einem Finger verschiebst du das Diagramm. Blau: deine Einträge. Grün gestrichelt: Prognose, wenn dein aktuelles Tempo bleibt.</div></div>';
+  h+='<div class="card chart"><h3>Verlauf und Prognose</h3><div class="chips">'+Object.keys(WTR).map(k=>'<button class="pill'+(k===wtRange?' sel':'')+'" data-act="wtrange" data-v="'+k+'">'+WTR[k][0]+'</button>').join('')+(wtTW||wtYW?'<button class="pill acc" data-act="wtreset">Zurücksetzen</button>':'')+'</div>'+'<div id="wtchart">'+chart(ts,p,end)+'</div><div class="note">Mit zwei Fingern zoomst du hinein, mit einem Finger verschiebst du das Diagramm. Pink: deine Einträge. Hellblau gestrichelt: Prognose, wenn dein aktuelles Tempo bleibt. Grau: Zielgewicht.</div></div>';
   h+=adaptCard();
   h+='<div class="card"><h3>Gewicht eintragen</h3><div class="grid2"><div><label class="f">Datum</label><input type="text" id="wd" value="'+deDate(TODAY)+'" inputmode="numeric" placeholder="TT.MM.JJJJ"></div><div><label class="f">Gewicht (kg)</label><input type="number" step="0.1" id="wk" inputmode="decimal" value="'+last.kg+'"></div></div><div style="height:10px"></div><button class="btn" data-act="addw">Speichern</button></div>';
   h+='<div class="card"><h3>Einträge</h3>';
